@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}
+Index
+{% endblock title %}
+{% block content %}
+<h1>Index</h1>
+
+<a href="{% url 'posts:create' %}">[Create]</a>
+
+<hr>
+
+ {% for post in posts %}
+  <p>번호
+  <a href="{% url 'posts:detail' post.pk %}">{{ post.pk }}</a>
+  </p>
+  <p>제목
+  <a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a>
+  </p>
+  <hr>  
+{% endfor %}
+
+{% endblock content %}

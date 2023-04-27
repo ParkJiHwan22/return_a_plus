@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <h1>{{ person.username }} 님의 프로필 페이지</h1>
+      {% comment %} 팔로우 버튼 {% endcomment %}
+      {% if request.user.is_authenticated %}
+        {% if request.user != person %}
+          <form id="follow-form" data-user-id="{{ person.pk }}" >
+            {% csrf_token %}
+            {% if request.user in person.followers.all %}
+              <input type="submit" value="언팔로우" class="btn btn-primary">
+            {% else %}
+              <input type="submit" value="팔로우" class="btn btn-primary">
+            {% endif %}
+          </form>
+        {% else %}
+        {% endif %}
+      {% else %}
+      <input type="submit" value="팔로우" class="btn btn-primary disabled">
+      {% endif %}
+
+      <div class="d-flex">
+		<div class="mx-2">
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+				팔로잉 {{ person.followings.count }} 명
+			</button>
+		</div>
+		<div class="mx-2">
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+				팔로워 <span id="followers-count">{{ person.followers.count }}</span> 명
+			</button>
+		</div>
+		<div class="mx-2">
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+				맞팔 목록
+			</button>
+		</div>
+	</div>
+
+    <div class="row">
+		<h2>{{ person.username }} 님이 좋아요한 시설</h2>
+		{% for post in person.like_posts.all %}
+			<a href="{% url 'posts:detail' post.pk %}">
+				{{ post.title }}
+			</a>
+		{% endfor %}
+		<hr> 
+	</div>
+	<div class="row">
+		<h2>{{ person.username }} 님이 작성한 게시글</h2>
+		{% for post in person.post_set.all %}
+			<a href="{% url 'posts:detail' post.pk %}">
+				{{ post.title }}
+			</a>
+		{% endfor %}
+		<hr> 
+	</div>
+	<div class="row">
+		<h2>{{ person.username }} 님이 작성한 리뷰</h2>
+		{% for review in reviews %}
+			<p>
+				<a href="{% url 'posts:detail' review.post.pk %}">
+					{{ review.content }}
+				</a>
+			</p>
+        {% endfor %}
+	</div>
+  <hr>
+
+    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{ person.username }} 님의 팔로잉 목록</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% for following in person.followings.all %}
+                        <p><a href="{% url 'accounts:profile' following.username %}">{{ following.username }}</a></p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">{{ person.username }} 님의 팔로워 목록</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					{% for follower in person.followers.all %}
+						<p><a href="{% url 'accounts:profile' follower.username %}">{{ follower.username }}</a></p>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">{{ person.username }} 님의 맞팔로워 목록</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					{% for follower in person.followers.all %}
+						{% if person in follower.followers.all %}
+						<p>
+								<a href="{% url 'accounts:profile' follower.username %}">{{ follower.username }}</a>
+						</p>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+		const form = document.querySelector('#follow-form')
+		const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+		form.addEventListener('submit', function (event) {
+			event.preventDefault()
+			const userId = event.target.dataset.userId
+			axios({
+				method: 'post',
+				url: `/accounts/${userId}/follow/`,
+				headers: {'X-CSRFToken': csrftoken},
+			})
+				.then((response) => {
+					console.log(response.data)
+					const isFollowed = response.data.is_followed
+					const followBtn = document.querySelector('#follow-form > input[type=submit]')
+					if (isFollowed == true) {
+						followBtn.value = '언팔로우'
+					} else {
+						followBtn.value = '팔로우'
+					}
+					
+					const followerCountTag = document.querySelector('#followers-count')
+					const followersCountData = response.data.followers_count
+					followerCountTag.textContent = followersCountData
+				})
+		})
+	</script>
+{% endblock script %}
