@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+    <form action="{% url 'accounts:login' %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="로그인" class="btn btn-success fw-bold" style="width:100%; padding:20px; font-size:22px;">
+    </form>
+</div>
+{% endblock content %}

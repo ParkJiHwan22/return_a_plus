@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class='d-flex justify-content-center'>
+    <form action="{% url 'accounts:update' %}" method = "POST">
+        {% csrf_token %}
+        <div class="update-size mt-5 mb-5">
+            <div class="mb-2">
+                <label>이메일</label>
+                {{ form.email }}
+            </div>
+            <div class="mb-2">
+                <label>성</label>
+                {{ form.first_name }}
+            </div>
+            <div class="mb-2">
+                <label>이름</label>
+                {{ form.last_name }}
+            </div>
+        </div>
+        <input type="submit" value='회원정보 수정' class="btn btn-success mb-3" style="width:100%; padding:20px; font-size: 21px;"> 
+        <a class="change-password btn btn-success" style="width:100%; padding:20px; font-size: 22px;" on-click='func()' href="{% url 'accounts:change_password' %}">비밀번호 변경</a>
+    </form>
+</div>
+{% endblock content %}

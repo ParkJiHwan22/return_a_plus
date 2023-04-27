@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Detail
+{% endblock title %}
+{% block content %}
+
+  <h1>Detail</h1>
+
+    <a href="{% url 'posts:index' %}" class="btn btn-primary ms-1 me-1 mt-3">Home</a>
+
+    {% if request.user == post.user %}
+      <form action="{% url 'posts:delete' post.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="게시글 삭제" class="btn btn-secondary ms-1 me-1 mt-3">
+      </form>
+      <a href="{% url 'posts:update' post.pk %}" class="btn btn-success ms-1 me-1 mt-3">수정하기</a>
+    {% endif %}
+
+    <p>글번호 : {{ post.pk }}</p>
+    <p>설명 : {{ post.description }}</p>
+    <p>나라 : {{ post.country }}</p>
+    <p>도시 : {{ post.city }}</p>
+    <p>가격 : {{ post.price }}</p>
+    <p>주소 : {{ post.address }}</p>
+
+    {% if post.post_image %}
+      <img src="{{ post.post_image.url }}" alt="post_image">
+    {% endif %}
+    
+  <hr>
+
+  <h4>comment list</h4>
+
+    {% for comment in reviews %}
+      <p>리뷰번호 {{ comment.pk }}</p>
+      <p>by {{ comment.user }}</p>
+      <p>리뷰: {{ comment.review }}</p>
+      <p>정확도: {{ comment.accuracy }}</p>
+      <p>의사소통: {{ comment.communication }}</p>
+      <p>청결: {{ comment.cleaniness }}</p>
+      <p>위치: {{ comment.location }}</p>
+      <p>체크인: {{ comment.check_in }}</p>
+      <p>시설: {{ comment.value }}</p>
+
+      {% if comment.review_image %}
+        <img src="{{ comment.review_image.url }}" alt="review_image">
+      {% endif %}
+
+      {% if request.user == comment.user %}
+        <form action="{% url 'posts:review_delete' post.pk comment.pk %}" method="POST">
+          {% csrf_token %}
+          <input type="submit" value="댓글 삭제" class="btn btn-secondary ms-1 me-1 mt-3">
+        </form>
+      {% endif %}
+
+    {% endfor %}
+  
+  <hr>
+  {% if user.is_authenticated %}
+    <form action="{% url 'posts:review_create' post.pk %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ review_form.as_p }}
+      <input type="submit" value="댓글작성" class="btn btn-primary ms-1 me-1 mt-3">
+    </form>
+  {% endif %}
+
+{% endblock content %}
