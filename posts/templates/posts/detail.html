@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% block link %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+{% endblock link %}
 {% block title %}
   Detail
 {% endblock title %}
@@ -93,5 +96,7 @@
   {% else %}
     <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
   {% endif %}
+
+  <script src="{% static 'js/base.js' %}"></script>
 
 {% endblock content %}

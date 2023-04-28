@@ -14,8 +14,8 @@ class PostForm(forms.ModelForm):
             "post_image",
         )
 
+
 class ReviewForm(forms.ModelForm):
-    
     class Meta:
         model = Review
         fields = (
