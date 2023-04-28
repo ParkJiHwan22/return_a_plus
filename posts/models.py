@@ -10,7 +10,7 @@ class Post(models.Model):
     city = models.CharField(max_length=80)
     price = models.IntegerField()
     address = models.CharField(max_length=80)
-    post_image = models.ImageField(blank=True)
+    post_image = models.ImageField(blank=True, upload_to='post_images/')
 
 
 class Review(models.Model):
@@ -23,5 +23,5 @@ class Review(models.Model):
     location = models.IntegerField() 
     check_in = models.IntegerField() 
     value = models.IntegerField() 
-    review_image = models.ImageField(blank=True)
+    review_image = models.ImageField(blank=True, upload_to='review_images/')
     
