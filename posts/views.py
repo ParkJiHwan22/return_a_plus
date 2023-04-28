@@ -30,8 +30,16 @@ def create(request):
 def detail(request, posts_pk):
     post = Post.objects.get(pk=posts_pk)
     reviews = post.review_set.all()
+    review_form = ReviewForm(request.POST, request.FILES)
+    # if review_form.is_valid():
+    #     review = review_form.save(commit=False)
+    #     review.user = request.user
+    #     review.post = post
+    #     review.save()
+    #     return redirect('posts:detail', post.pk)
     context = {
         'post': post,
+        'review_form': review_form,
         'reviews': reviews,
     }
     return render(request, 'posts/detail.html', context)

@@ -1,68 +1,101 @@
 {% extends "base.html" %}
 {% load static %}
+{% block link %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+{% endblock link %}
 {% block title %}
-Detail
+  Detail
 {% endblock title %}
 {% block content %}
 
   <h1>Detail</h1>
 
-    <a href="{% url 'posts:index' %}" class="btn btn-primary ms-1 me-1 mt-3">Home</a>
+  <a href="{% url 'posts:index' %}" class="btn btn-primary ms-1 me-1 mt-3">Home</a>
 
-    {% if request.user == post.user %}
-      <form action="{% url 'posts:delete' post.pk %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="게시글 삭제" class="btn btn-secondary ms-1 me-1 mt-3">
-      </form>
-      <a href="{% url 'posts:update' post.pk %}" class="btn btn-success ms-1 me-1 mt-3">수정하기</a>
-    {% endif %}
+  {% if request.user == post.user %}
+    <form action="{% url 'posts:delete' post.pk %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="게시글 삭제" class="btn btn-secondary ms-1 me-1 mt-3">
+    </form>
+    <a href="{% url 'posts:update' post.pk %}" class="btn btn-success ms-1 me-1 mt-3">수정하기</a>
+  {% endif %}
 
-    <p>글번호 : {{ post.pk }}</p>
-    <p>설명 : {{ post.description }}</p>
-    <p>나라 : {{ post.country }}</p>
-    <p>도시 : {{ post.city }}</p>
-    <p>가격 : {{ post.price }}</p>
-    <p>주소 : {{ post.address }}</p>
+  <p>글번호 :
+    {{ post.pk }}</p>
+  <p>설명 :
+    {{ post.description }}</p>
+  <p>나라 :
+    {{ post.country }}</p>
+  <p>도시 :
+    {{ post.city }}</p>
+  <p>가격 :
+    {{ post.price }}</p>
+  <p>주소 :
+    {{ post.address }}</p>
 
-    {% if post.post_image %}
-      <img src="{{ post.post_image.url }}" alt="post_image">
-    {% endif %}
-    
+  {% if post.post_image %}
+    <img src="{{ post.post_image.url }}" alt="post_image">
+  {% endif %}
+
   <hr>
 
-  <h4>comment list</h4>
+  <h4>review list</h4>
 
-    {% for comment in reviews %}
-      <p>리뷰번호 {{ comment.pk }}</p>
-      <p>by {{ comment.user }}</p>
-      <p>리뷰: {{ comment.review }}</p>
-      <p>정확도: {{ comment.accuracy }}</p>
-      <p>의사소통: {{ comment.communication }}</p>
-      <p>청결: {{ comment.cleaniness }}</p>
-      <p>위치: {{ comment.location }}</p>
-      <p>체크인: {{ comment.check_in }}</p>
-      <p>시설: {{ comment.value }}</p>
+  {% for review in reviews %}
+    <p>no.
+      {{ review.pk }}</p>
+    <p>by
+      {{ review.user }}</p>
+    <p>리뷰:
+      {{ review.review }}</p>
+    <p>정확도:
+      {{ review.accuracy }}</p>
+    <p>의사소통:
+      {{ review.communication }}</p>
+    <p>청결:
+      {{ review.cleaniness }}</p>
+    <p>위치:
+      {{ review.location }}</p>
+    <p>체크인:
+      {{ review.check_in }}</p>
+    <p>시설:
+      {{ review.value }}</p>
 
-      {% if comment.review_image %}
-        <img src="{{ comment.review_image.url }}" alt="review_image">
-      {% endif %}
+    {% if review.review_image %}
+      <img src="{{ review.review_image.url }}" alt="review_image">
+    {% endif %}
 
-      {% if request.user == comment.user %}
-        <form action="{% url 'posts:review_delete' post.pk comment.pk %}" method="POST">
-          {% csrf_token %}
-          <input type="submit" value="댓글 삭제" class="btn btn-secondary ms-1 me-1 mt-3">
-        </form>
-      {% endif %}
+    {% if request.user == review.user %}
+      <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="댓글 삭제" class="btn btn-secondary ms-1 me-1 mt-3">
+      </form>
+    {% endif %}
 
-    {% endfor %}
-  
+  {% endfor %}
+
   <hr>
   {% if user.is_authenticated %}
-    <form action="{% url 'posts:review_create' post.pk %}" method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ review_form.as_p }}
-      <input type="submit" value="댓글작성" class="btn btn-primary ms-1 me-1 mt-3">
-    </form>
+
+    <button>
+      리뷰남기기
+    </button>
+
+    <div class="modal">
+      <div class="modal_content" title="close">
+
+        <form action="{% url 'posts:review_create' post.pk %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ review_form.as_p }}
+          <input type="submit" value="댓글작성" class="btn btn-primary ms-1 me-1 mt-3 modal_form">
+        </form>
+      </div>
+    </div>
+
+  {% else %}
+    <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
   {% endif %}
+
+  <script src="{% static 'js/base.js' %}"></script>
 
 {% endblock content %}
