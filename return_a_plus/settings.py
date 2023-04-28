@@ -39,7 +39,31 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # allauth 소셜로그인 기능
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    # 소셜로그인 로드
+    'allauth.socialaccount.providers.naver', 
+    'allauth.socialaccount.providers.google', 
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',    
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+SOCIALACCOUNT_PROVIDERS = {
+    'naver': {'APP': {
+                        'client_id': 'alfDQd2wRrqed3VChg5_',
+                        'secret': 'sXZHUow0OV',
+                        'key': ''
+                }},
+}
+
+LOGIN_REDIRECT_URL = 'http://localhost:8000/'   # social login redirect
+ACCOUNT_LOGOUT_REDIRECT_URL = 'http://localhost:8000/'  # logout redirect
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

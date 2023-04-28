@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 app_name = 'accounts'
@@ -13,4 +13,5 @@ urlpatterns = [
     # 팔로우
     path('<int:user_pk>/follow/', views.follow, name='follow'),
     path('profile/<username>/', views.profile, name='profile'),
+    path('accounts/', include('allauth.urls'))
 ]
