@@ -1,15 +1,30 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block link %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
 {% endblock link %}
+
 {% block title %}
-  Detail
+  {{ post.name }}
 {% endblock title %}
+
 {% block content %}
+<div class="container">
+  <h2>{{post.name}}</h2>
+<!-- 이미지 -->
+  <div class="row border rounded w-50"> 
+    <div class="col-sm-3">
+      {% if post.post_image %}
+      <img src="{{ post.post_image.url }}" alt="post_image">
+    </div>
+      {% endif %}
+  </div>
+  <hr>
+<!-- 이미지 -->
+<!-- 설명 -->
 
-  <h1>Detail</h1>
-
+<!-- 설명 -->
   <a href="{% url 'posts:index' %}" class="btn btn-primary ms-1 me-1 mt-3">Home</a>
 
   {% if request.user == post.user %}
@@ -32,11 +47,6 @@
     {{ post.price }}</p>
   <p>주소 :
     {{ post.address }}</p>
-
-  {% if post.post_image %}
-    <img src="{{ post.post_image.url }}" alt="post_image">
-  {% endif %}
-
   <hr>
 
   <h4>review list</h4>
@@ -77,6 +87,8 @@
   <hr>
   {% if user.is_authenticated %}
 
+  <h2>⭐</h2>
+
     <button>
       리뷰남기기
     </button>
@@ -91,7 +103,7 @@
         </form>
       </div>
     </div>
-
+</div>
   {% else %}
     <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
   {% endif %}
