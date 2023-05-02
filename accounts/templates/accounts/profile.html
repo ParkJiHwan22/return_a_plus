@@ -6,8 +6,6 @@
       display: inline-block;
       flex-flow: row;
       justify-content: flex-start;
-      width: 80%;
-
       align-items: center;
     }
 
@@ -19,7 +17,7 @@
     }
 
     .profile-img {
-      width: 40%;
+      width: 40vh;
     }
   </style>
 {% endblock style%}
@@ -27,67 +25,84 @@
   <div class="container">
 
     <!-- 프로필 정보 -->
-    <div class="row align-items-center profile-title">
+    <div class="col align-items-center profile-title">
       <div class="row">
         <!-- 프로필 이미지 -->
-        {% if post.post_image %}
-          <img src="{{ post.post_image.url }}" alt="post_image" class="col-4 rounded-circle profile-img">
-        {% else %}
-          <img src="https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/134557216-no-thumbnail-image-placeholder-for-forums-blogs-and-websites.jpg?ver=6" alt="no_image" class="col-4 rounded-circle profile-img">
-        {% endif %}
+        <form action="{% url 'accounts:update' %}" method="POST">
+          {% csrf_token %}
 
-        <!-- 사용자 이름 -->
-
-        <h1 class="col-3 text-center">{{ person.username }}</h1>
-        <!-- 팔로우 버튼 / 회원정보 수정 -->
-        <div class="col-5">
-          {% if request.user.is_authenticated %}
-            {% if request.user != person %}
-              <form id="follow-form" data-user-id="{{ person.pk }}">
-                {% csrf_token %}
-                {% if request.user in person.followers.all %}
-                  <input type="submit" value="언팔로우" class="btn btn-success">
-                {% else %}
-                  <input type="submit" value="팔로우" class="btn btn-success">
-                {% endif %}
-              </form>
-            {% else %}
-              <a href="{% url 'accounts:update' %}" class="button btn btn-success me-5">회원정보 수정</a>
-            {% endif %}
+          {% if post.post_image %}
+            <img src="{{ post.post_image.url }}" alt="post_image" class="col-4 rounded-circle profile-img">
           {% else %}
-            <input type="submit" value="팔로우" class="btn btn-secondary disabled">
+            <img src="https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/134557216-no-thumbnail-image-placeholder-for-forums-blogs-and-websites.jpg?ver=6" alt="no_image" class="col-4 rounded-circle profile-img">
           {% endif %}
 
+          <input type="submit" value='이미지 업데이트' class="btn btn-success mb-2" style="width:10%; padding:10px; font-size: 13px;">
+
+        </form>
+
+        <!-- 사용자 이름 -->
+        <h1 class="col-2 text-center">{{ person.username }}</h1>
+
+        <div class="col-5">
+          <!-- 팔로우 버튼 / 회원정보 수정 버튼 -->
           <div class="row">
-            <div class="col-12 col-md-9">
+            <div class="col">
+              {% if request.user.is_authenticated %}
+                {% if request.user != person %}
+                  <form id="follow-form" data-user-id="{{ person.pk }}">
+                    {% csrf_token %}
+                    {% if request.user in person.followers.all %}
+                      <input type="submit" value="언팔로우" class="btn btn-success">
+                    {% else %}
+                      <input type="submit" value="팔로우" class="btn btn-success">
+                    {% endif %}
+                  </form>
+                {% else %}
+                  <a href="{% url 'accounts:update' %}" class="button btn btn-success">회원정보 수정</a>
+                {% endif %}
+              {% else %}
+                <input type="submit" value="팔로우" class="btn btn-secondary disabled">
+              {% endif %}
+            </div>
+          </div>
 
-              <!-- 팔로잉 / 팔로워 / 맞팔 목록 -->
-
-              <div class="col-8">
-                <div class="row justify-content-end">
-                  <div class="col">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-                      팔로잉
-                      {{ person.followings.all|length }}
-                      명
-                    </button>
-                  </div>
-                  <div class="col">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                      팔로워
-                      <span id="followers-count">{{ person.followers.all|length }}</span>
-                      명
-                    </button>
-                  </div>
-                  <div class="col">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal3">
-                      맞팔 목록
-                    </button>
-                  </div>
-                </div>
+          <!-- 팔로잉 / 팔로워 / 맞팔 목록 -->
+          <div class="col">
+            <div class="row justify-content-end mt-3 ms-1">
+              <div class="col">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                  팔로잉
+                  {{ person.followings.all|length }}
+                  명
+                </button>
+              </div>
+              <div class="col">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                  팔로워
+                  <span id="followers-count">{{ person.followers.all|length }}</span>
+                  명
+                </button>
+              </div>
+              <div class="col">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+                  맞팔 목록
+                </button>
               </div>
             </div>
           </div>
+
+          <!-- 사용자 정보 -->
+          <div class="col">
+            <div class="row justify-content-end mt-3 ms-1">
+              <div class="col">
+                이메일:
+                {{ person.email }}
+
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -96,8 +111,8 @@
 
     <div class="m-1 col">
       <!-- 사용자가 작성한 게시글 -->
-      <div class="col bg-secondary-subtle">
-        <h2 class="m-3">게시글</h2>
+      <div class="col">
+        <h1 class="m-3">게시글</h1>
         <hr>
         {% for post in person.post_set.all %}
           <div class="card mb-3 mx-5" style="max-width: 90%;">
@@ -111,11 +126,11 @@
               </div>
               <div class="col-10">
                 <div class="card-body">
-                  <h5 class="card-title">
+                  <h2 class="card-title">
                     <a href="{% url 'posts:detail' post.pk %}" style="text-decoration: none;">
                       {{ post.name }}
                     </a>
-                  </h5>
+                  </h2>
                   <p class="card-text">{{ post.description }}</p>
                   <p class="card-text">
                     <small class="text-body-secondary">no.
@@ -135,9 +150,32 @@
         <div class="row">
           <h2>좋아요</h2>
           {% for post in person.like_posts.all %}
-            <a href="{% url 'posts:detail' post.pk %}" style="text-decoration: none;">
-              {{ post.name }}
-            </a>
+            <div class="card mb-3 mx-5" style="max-width: 90%;">
+              <div class="row g-0">
+                <div class="col-2">
+                  {% if post.post_image %}
+                    <img src="{{ post.post_image.url }}" alt="post_image" class="card-img rounded-start">
+                  {% else %}
+                    <img src="https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/134557216-no-thumbnail-image-placeholder-for-forums-blogs-and-websites.jpg?ver=6" alt="no_image" class="card-img rounded-start">
+                  {% endif %}
+                </div>
+                <div class="col-10">
+                  <div class="card-body">
+                    <h2 class="card-title">
+                      <a href="{% url 'posts:detail' post.pk %}" style="text-decoration: none;">
+                        {{ post.name }}
+                      </a>
+                    </h2>
+                    <p class="card-text">{{ post.description }}</p>
+                    <p class="card-text">
+                      <small class="text-body-secondary">no.
+                        {{ post.pk }}</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           {% endfor %}
         </div>
       </div>
@@ -147,15 +185,38 @@
       <div class="row-3">
         <h2>리뷰</h2>
         {% for revieww in reviews_set.all %}
-          <p>
-            <a href="{% url 'posts:detail' review.post.pk %}" style="text-decoration: none;">
-              {{ revieww.review }}
-            </a>
-          </p>
+          <div class="card mb-3 mx-5" style="max-width: 90%;">
+            <div class="row g-0">
+              <div class="col-2">
+                {% if revieww.post_image %}
+                  <img src="{{ post.post_image.url }}" alt="post_image" class="card-img rounded-start">
+                {% else %}
+                  <img src="https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/134557216-no-thumbnail-image-placeholder-for-forums-blogs-and-websites.jpg?ver=6" alt="no_image" class="card-img rounded-start">
+                {% endif %}
+              </div>
+              <div class="col-10">
+                <div class="card-body">
+                  <h2 class="card-title">
+                    <a href="{% url 'posts:detail' review.post.pk %}" style="text-decoration: none;">
+                      {{ revieww.review }}
+                    </a>
+                  </h2>
+                  <p class="card-text">{{ revieww.description }}</p>
+                  <p class="card-text">
+                    <small class="text-body-secondary">no.
+                      {{ revieww.pk }}</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         {% endfor %}
       </div>
     </div>
     <hr>
+    <!-- 비밀번호 변경 -->
+    <a class="change-passwosrd btn btn-success" style="width:100%; padding:10px; font-size: 22px;" on-click='func()' href="{% url 'accounts:change_password' %}">비밀번호 변경</a>
+    <!-- 회원 탈퇴-->
 
     <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
