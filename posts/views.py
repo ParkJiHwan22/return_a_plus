@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import Post, Review
 from .forms import PostForm, ReviewForm
 import googlemaps
@@ -12,7 +13,7 @@ def index(request):
     }
     return render(request, 'posts/index.html', context)
 
-
+@login_required
 def create(request):
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
@@ -48,14 +49,14 @@ def detail(request, posts_pk):
     }
     return render(request, 'posts/detail.html', context,)
 
-
+@login_required
 def delete(request, posts_pk):
     post = Post.objects.get(pk=posts_pk)
     if post.user == request.user:
         post.delete()
     return redirect('posts:index')
 
-
+@login_required
 def update(request, posts_pk):
     post = Post.objects.get(pk=posts_pk)
     if post.user == request.user:
@@ -73,7 +74,7 @@ def update(request, posts_pk):
     else:
         return redirect('posts:detail', post.pk)
 
-
+@login_required
 def review_create(request, posts_pk):
     post = Post.objects.get(pk=posts_pk)
     review_form = ReviewForm(request.POST, request.FILES)
@@ -90,14 +91,14 @@ def review_create(request, posts_pk):
     return render(request, 'posts/detail.html', context)
 
 
-
+@login_required
 def review_delete(request, posts_pk, review_pk):
     review = Review.objects.get(pk=review_pk)
     if review.user == request.user:
         review.delete()
     return redirect('posts:detail', posts_pk)
 
-
+@login_required
 def like(request, post_pk):
     post = Post.objects.get(pk=post_pk)
     if request.user in post.like_users.all():
