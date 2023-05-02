@@ -21,10 +21,8 @@
     </div>
   </div>
   <hr>
-  <!-- 이미지 -->
   <!-- 설명 -->
 
-  <!-- 설명 -->
   <a href="{% url 'posts:index' %}" class="btn btn-primary ms-1 me-1 mt-3">Home</a>
 
   {% if request.user == post.user %}
@@ -35,19 +33,8 @@
     <a href="{% url 'posts:update' post.pk %}" class="btn btn-success ms-1 me-1 mt-3">수정하기</a>
   {% endif %}
 
-  <p>글번호 :
-    {{ post.pk }}</p>
-  <p>설명 :
-    {{ post.description }}</p>
-  <p>도시 :
-    {{ post.city }}</p>
-  <p>주소 :
-    {{ post.address }}</p>
-  <p>가격 :
-    {{ post.price }}</p>
   <hr>
   <div id="map" style="width:50%; height: 600px; margin-top: 20px;"></div>
-
   <h2>이용 후기 {{ reviews|length }}개</h2>
   <br>
   {% for review in reviews %}
@@ -55,7 +42,6 @@
     <p>{{ review.created_at }}</p>
     <p>리뷰:
       {{ review.review }}</p>
-
     <p>접근성:
       {{ review.accessibility }}</p>
     <p>비용:
@@ -86,6 +72,7 @@
       <a href="{% url 'posts:update' post.pk %}" class="btn btn-success ms-1 me-1 mt-3">수정하기</a>
     {% endif %}
   {% endfor %}
+
 
     <hr>
     <h4>review list</h4>
@@ -132,6 +119,7 @@
             <input type="submit" value="댓글작성" class="btn btn-primary ms-1 me-1 mt-3 modal_form">
           </form>
         </div>
+
       </div>
     </div>
     {% else %}
@@ -156,5 +144,4 @@
     });
   }
   </script>
-
 {% endblock content %}

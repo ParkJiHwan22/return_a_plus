@@ -6,6 +6,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
+
 # Create your views here.
 def login(request):
     if request.user.is_authenticated:
@@ -57,7 +58,7 @@ def delete(request):
 @login_required
 def update(request):
     if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, instance=request.user)
+        form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             return redirect('posts:index')
@@ -95,17 +96,30 @@ def profile(request, username):
     }
     return render(request, 'accounts/profile.html', context)
 
+from django.http import JsonResponse
+from posts.models import Post
 
+@login_required
 def follow(request, user_pk):
     User = get_user_model()
     you = User.objects.get(pk=user_pk)
     me = request.user
+    recent_posts = Post.objects.order_by('-pk')
     
     if you != me:
-        if me in you.following.all():
+        if me in you.followers.all():
             you.followers.remove(me)
+            is_followed = False
         else:
             you.followers.add(me)
-    return redirect('posts:profile', you.username)
+            is_followed = True
+        context = {
+            'is_followed': is_followed,
+            'followings_count': you.followings.count(),
+            'followers_count': you.followers.count(),
+            'recent_posts': recent_posts,
+        }
+        return JsonResponse(context)
+    return redirect('posts:profile', you.username, context)
                 
             
