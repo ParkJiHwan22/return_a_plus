@@ -7,7 +7,7 @@ class Post(models.Model):
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')
     description = models.TextField()
     city = models.CharField(max_length=80)
-    price = models.IntegerField()
+    price = models.IntegerField(null=True)
     address = models.CharField(max_length=80)
     post_image = models.ImageField(blank=True, upload_to='post_images/')
 

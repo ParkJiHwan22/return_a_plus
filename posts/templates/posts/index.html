@@ -26,6 +26,7 @@
             <a style="color:#198754; text-decoration-line: none;" href="{% url 'posts:detail' post.pk %}">{{ post.city }}</a>
           </h5>
           <p class="card-text m-0 text" style="font-size:small">{{ post.user.username }}님의 후기</p>
+          <p class="card-text m-0 text" style="font-size:small">{{ post.user.title }}</p>
           <form action="{% url 'posts:like' post_pk=post.pk %}" method="POST">
             {% csrf_token %}
             {% if request.user in post.like_users.all %}
