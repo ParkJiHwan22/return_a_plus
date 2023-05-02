@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from .models import Post, Review
 from .forms import PostForm, ReviewForm
 import googlemaps
-import json
 
 
 # Create your views here.
@@ -36,21 +35,17 @@ def detail(request, posts_pk):
     review_form = ReviewForm(request.POST, request.FILES)
     my_key = "AIzaSyAd9M3rcxiyzS9IxbErxaMv45mw94kQFxY"
     maps = googlemaps.Client(key=my_key)
-    lat = []
-    lng = []
     places = [post.address]
     # geo_location = maps.geocode(places)[0].get('geometry')
     print(places)
     geo_location = maps.geocode(places)[0].get('geometry')
-    lat.append(geo_location['location']['lat'])
-    lng.append(geo_location['location']['lng'])
-    print(lat, lng)
+    location = geo_location['location']
+    print(location)
     context = {
         'post': post,
         'review_form': review_form,
         'reviews': reviews,
-        'lat':lat,
-        'lng':lng,
+        'location':location
     }
     return render(request, 'posts/detail.html', context,)
 

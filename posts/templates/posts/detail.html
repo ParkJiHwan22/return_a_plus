@@ -47,10 +47,6 @@
     {{ post.price }}</p>
   <p>주소 :
     {{ post.address }}</p>
-  <p>시설:
-      {{ lat }}</p>
-  <p>시설:
-      {{ lng }}</p>
   <hr>
 
   <div id="map" style="height: 600px;"></div>
@@ -113,16 +109,15 @@
   {% else %}
     <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
   {% endif %}
-
-  <script src="{% static 'js/test.js' %}"></script>
   <script>
-    var lats = "{{ lat }}"
-    var lags = "{{ lng }}"
-    window.initMap = function () {
-      const map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 37.5400456, lng: 126.9921017 },
-        zoom: 10
-      });
-    }
+  const place = "{{ location }}".replace(/&#x27;/g, "\"");
+  const places = JSON.parse(place)
+  
+  window.initMap = function () {
+    const map = new google.maps.Map(document.getElementById("map"), {
+      center: places,
+      zoom: 15
+    });
+  }
   </script>
 {% endblock content %}
