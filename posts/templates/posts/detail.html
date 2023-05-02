@@ -1,4 +1,4 @@
-{% extends "basemap_index_detail.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% block link %}
   {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}"> {% endcomment %}
@@ -46,6 +46,7 @@
   <p>가격 :
     {{ post.price }}</p>
   <hr>
+  <div id="map" style="width:50%; height: 600px; margin-top: 20px;"></div>
 
   <h2>이용 후기 {{ reviews|length }}개</h2>
   <br>
