@@ -19,12 +19,13 @@
           <img src="{{ post.post_image.url }}" alt="post_image">
         {% endif %}
       </div>
+    </div>
   </div>
   <hr>
-<!-- 이미지 -->
-<!-- 설명 -->
+  <!-- 이미지 -->
+  <!-- 설명 -->
 
-<!-- 설명 -->
+  <!-- 설명 -->
   <a href="{% url 'posts:index' %}" class="btn btn-primary ms-1 me-1 mt-3">Home</a>
 
   {% if request.user == post.user %}
@@ -48,8 +49,8 @@
   <hr>
 
   <h2>이용 후기 {{ reviews|length }}개</h2>
-    <br>
-    {% for review in reviews %}
+  <br>
+  {% for review in reviews %}
     <h4>{{ review.user }}</h4>
     <p>{{ review.created_at }}</p>
     <p>리뷰:
@@ -73,6 +74,7 @@
     {% if request.user == review.user %}
       <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
     {% endif %}
+
     <hr>
     <!-- 이미지 -->
     <!-- 설명 -->
@@ -85,19 +87,6 @@
     {% endif %}
     {% endfor %}
 
-  {% if user.is_authenticated %}
-    <p>글번호 :
-      {{ post.pk }}</p>
-    <p>설명 :
-      {{ post.description }}</p>
-    <p>나라 :
-      {{ post.country }}</p>
-    <p>도시 :
-      {{ post.city }}</p>
-    <p>가격 :
-      {{ post.price }}</p>
-    <p>주소 :
-      {{ post.address }}</p>
     <hr>
     <h4>review list</h4>
     {% for review in reviews %}
@@ -126,15 +115,7 @@
 
       {% if request.user == review.user %}
         <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
-          {% csrf_token %}
-          <input type="submit" value="댓글 삭제" class="btn btn-secondary ms-1 me-1 mt-3">
-        </form>
-      {% endif %}
-      
 
-    {% endfor %}
-    {% endif %}
-    <hr>
     {% if user.is_authenticated %}
 
       <h2>⭐</h2>
@@ -154,9 +135,11 @@
         </div>
       </div>
     </div>
+    
   {% else %}
     <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
   {% endif %}
+
   <script>
   const place = "{{ location }}".replace(/&#x27;/g, "\"");
   const places = JSON.parse(place)
@@ -168,4 +151,5 @@
     });
   }
   </script>
+
 {% endblock content %}
