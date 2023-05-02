@@ -23,10 +23,6 @@
     <hr>
     <!-- 이미지 -->
     <!-- 설명 -->
-
-    <!-- 설명 -->
-    <a href="{% url 'posts:index' %}" class="btn btn-primary ms-1 me-1 mt-3">Home</a>
-
     {% if request.user == post.user %}
       <form action="{% url 'posts:delete' post.pk %}" method="POST">
         {% csrf_token %}
@@ -107,7 +103,15 @@
   {% else %}
     <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
   {% endif %}
-
-  <script src="{% static 'js/base.js' %}"></script>
-
+  <script>
+  const place = "{{ location }}".replace(/&#x27;/g, "\"");
+  const places = JSON.parse(place)
+  
+  window.initMap = function () {
+    const map = new google.maps.Map(document.getElementById("map"), {
+      center: places,
+      zoom: 15
+    });
+  }
+  </script>
 {% endblock content %}
