@@ -40,9 +40,6 @@
     {% endif %}
   <hr>
 
-  <a href="{% url 'posts:index' %}" class="btn btn-primary ms-1 me-1 mt-3">Home</a>
-
-
   {% if request.user == post.user %}
     <form action="{% url 'posts:delete' post.pk %}" method="POST">
       {% csrf_token %}
@@ -51,29 +48,29 @@
     </form>
   {% endif %}
 
-    {% for review in reviews %}
-      {% with total_accessibility=total_acessibility|add:review.accessibility %}
-        <h4>{{ review.user }}</h4>
-        <p>{{ review.created_at }}</p>
+  <hr>
 
-        {% if review.review_image %}
-          <img src="{{ review.review_image.url }}" alt="review_image">
-        {% endif %}
+  {% for review in reviews %}
+    <h4>{{ review.user }}</h4>
+    <p>{{ review.created_at }}</p>
 
-        {% if request.user == review.user %}
-          <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
-        {% endif %}
+    {% if review.review_image %}
+      <img src="{{ review.review_image.url }}" alt="review_image">
+    {% endif %}
 
-        <p>리뷰: {{ review.review }}</p>
-        <p>접근성: {{ review.accessibility }}</p>
-        <p>비용: {{ review.cost }}</p>
-        <p>서비스: {{ review.service }}</p>
-        <p>편의시설: {{ review.convenience_facilities }}</p>
-        <p>만족도: {{ review.satisfaction }}</p>
-        <hr>
-      {% endwith %}
-    {% endfor %}
-  {% endwith %}
+    {% if request.user == review.user %}
+      <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
+    {% endif %}
+
+    <p>리뷰: {{ review.review }}</p>
+    <p>접근성: {{ review.accessibility }}</p>
+    <p>비용: {{ review.cost }}</p>
+    <p>서비스: {{ review.service }}</p>
+    <p>편의시설: {{ review.convenience_facilities }}</p>
+    <p>만족도: {{ review.satisfaction }}</p>
+    <hr>
+  {% endfor %}
+
 
   <br>
 
