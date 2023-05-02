@@ -1,8 +1,7 @@
-{% extends "basemap_index_detail.html" %}
+{% extends "base.html" %}
 {% load static %}
-
 {% block link %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+  {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}"> {% endcomment %}
 {% endblock link %}
 
 {% block title %}
@@ -26,6 +25,7 @@
     </div>
   </div>
   <hr>
+
   <h2>관광 명소 설명</h2>
   <p>{{ post.description }}</p>
   <hr>
@@ -40,6 +40,9 @@
     {% endif %}
   <hr>
 
+  <a href="{% url 'posts:index' %}" class="btn btn-primary ms-1 me-1 mt-3">Home</a>
+
+
   {% if request.user == post.user %}
     <form action="{% url 'posts:delete' post.pk %}" method="POST">
       {% csrf_token %}
@@ -47,11 +50,7 @@
       <a href="{% url 'posts:update' post.pk %}" class="btn btn-success ms-1 me-1 mt-3">수정하기</a>
     </form>
   {% endif %}
-    <hr>
 
-  <h2>이용 후기 {{ reviews|length }}개</h2>
-  <br>
-  {% with total_accessibility=0 %}
     {% for review in reviews %}
       {% with total_accessibility=total_acessibility|add:review.accessibility %}
         <h4>{{ review.user }}</h4>
@@ -90,6 +89,7 @@
             <input type="submit" value="댓글작성" class="btn btn-primary ms-1 me-1 mt-3 modal_form">
           </form>
         </div>
+
       </div>
     </div>
     {% else %}
@@ -99,13 +99,19 @@
   <script>
   const place = "{{ location }}".replace(/&#x27;/g, "\"");
   const places = JSON.parse(place)
+  const name = "{{ post.name }}"
+  const names = JSON.parse(name)
   
   window.initMap = function () {
     const map = new google.maps.Map(document.getElementById("map"), {
       center: places,
       zoom: 15
     });
+    new google.maps.Marker({
+      position: places,
+      map,
+      title: names,
+    });
   }
   </script>
-
 {% endblock content %}

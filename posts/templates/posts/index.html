@@ -1,10 +1,8 @@
-{% extends "basemap_index_detail.html" %}
+{% extends "base.html" %}
 {% load static %}
-{% block title %}{% endblock title %}
+{% block title %}onClickTravel{% endblock title %}
 {% block content %}
-
   <a href="{% url 'posts:create' %}">Create</a>
-
   {% for post in posts %}
     <p>번호
       <a href="{% url 'posts:detail' post.pk %}">{{ post.pk }}</a>
@@ -14,7 +12,5 @@
     </p>
     <hr>
   {% endfor %}
-
   <script src="{% static 'js/base.js' %}"></script>
-
 {% endblock content %}

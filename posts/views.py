@@ -36,7 +36,6 @@ def detail(request, posts_pk):
     my_key = "AIzaSyAd9M3rcxiyzS9IxbErxaMv45mw94kQFxY"
     maps = googlemaps.Client(key=my_key)
     places = [post.address]
-    # geo_location = maps.geocode(places)[0].get('geometry')
     print(places)
     geo_location = maps.geocode(places)[0].get('geometry')
     location = geo_location['location']
