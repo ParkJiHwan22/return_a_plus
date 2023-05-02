@@ -6,8 +6,7 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = (
             "name", 
-            "description", 
-            "country", 
+            "description",  
             "city", 
             "price", 
             "address", 
@@ -19,12 +18,11 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = (
-            "review", 
-            "accuracy", 
-            "communication", 
-            "cleaniness", 
-            "location", 
-            "check_in", 
-            "value", 
+            "review",
+            "accessibility", 
+            "cost", 
+            "service", 
+            "convenience_facilities", 
+            "satisfaction",
             "review_image", 
         )
