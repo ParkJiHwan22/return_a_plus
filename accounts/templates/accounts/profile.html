@@ -28,7 +28,7 @@
     <div class="col align-items-center profile-title">
       <div class="row">
         <!-- 프로필 이미지 -->
-        <form action="{% url 'accounts:update' %}" method="POST">
+        <form action="{% url 'accounts:update' %}" method="POST" enctype="multipart/form-data">
           {% csrf_token %}
 
           {% if post.post_image %}
@@ -36,8 +36,10 @@
           {% else %}
             <img src="https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/134557216-no-thumbnail-image-placeholder-for-forums-blogs-and-websites.jpg?ver=6" alt="no_image" class="col-4 rounded-circle profile-img">
           {% endif %}
-
-          <input type="submit" value='이미지 업데이트' class="btn btn-success mb-2" style="width:10%; padding:10px; font-size: 13px;">
+          <div id="profile-image">
+            {{ form.profile_image }}
+          </div>
+          <input type="submit" value='프로필 이미지' class="btn btn-success mb-2" style="width:10%; padding:10px; font-size: 13px;">
 
         </form>
 

@@ -73,12 +73,68 @@ class CustomUserCreationForm(UserCreationForm):
         
 
 class CustomUserChangeForm(UserChangeForm):
-    
+    gender = forms.CharField(
+        label='성별',
+        widget= forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': '성별을 입력하세요',
+            }
+        )
+    )
+    nick_name = forms.CharField(
+        label='닉네임',
+        widget= forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': '닉네임을 입력하세요',
+            }
+        )
+    )
+
+    email = forms.EmailField(
+        label='이메일',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': '이메일을 입력하세요',
+            }
+        ),
+    )
+    first_name = forms.CharField(
+        label='이름',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': '이름을 입력하세요',
+            }
+        ),
+    )
+    last_name = forms.CharField(
+        label='성',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': '성을 입력하세요',
+            }
+        ),
+    )
+    profile_image = forms.ImageField(
+        label='프로필 이미지',
+        widget=forms.FileInput(
+            attrs={
+                'id': 'profile-image',
+                'class': 'form-control'
+            }
+        ),
+    )
     class Meta(UserChangeForm.Meta):
         model = get_user_model()
-        field = (
-            'nickname',
+        fields = (
+            'gender',
+            'nick_name',
             'email',
             'first_name',
             'last_name',
+            'profile_image',
         )
