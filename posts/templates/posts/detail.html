@@ -10,8 +10,12 @@
 {% endblock title %}
 
 {% block content %}
-  <div class="container">
-    <h2>{{post.name}}</h2>
+  <hr>
+  <h1>{{post.name}} ( {{ post.address }} )</h1>
+  <p>작성자: {{ post.user }}</p> 
+  {% comment %} profile로 이동하는 링크 걸어야 함 {% endcomment %}
+    <br>
+  <div class="container">  
     <!-- 이미지 -->
     <div class="row border rounded w-50">
       <div class="col-sm-3">
@@ -22,106 +26,60 @@
     </div>
   </div>
   <hr>
-  <!-- 이미지 -->
-  <!-- 설명 -->
+  <h2>관광 명소 설명</h2>
+  <p>{{ post.description }}</p>
+  <hr>
 
-  <!-- 설명 -->
-  <a href="{% url 'posts:index' %}" class="btn btn-primary ms-1 me-1 mt-3">Home</a>
+  <h2>관광 명소 종류</h2>
+  <p></p>
+  <p> 입장료 :
+    {% if post.price == 0 %}
+      없음
+    {% else %}
+      {{ post.price }}</p>
+    {% endif %}
+  <hr>
 
   {% if request.user == post.user %}
     <form action="{% url 'posts:delete' post.pk %}" method="POST">
       {% csrf_token %}
       <input type="submit" value="게시글 삭제" class="btn btn-secondary ms-1 me-1 mt-3">
+      <a href="{% url 'posts:update' post.pk %}" class="btn btn-success ms-1 me-1 mt-3">수정하기</a>
     </form>
-    <a href="{% url 'posts:update' post.pk %}" class="btn btn-success ms-1 me-1 mt-3">수정하기</a>
   {% endif %}
-
-  <p>글번호 :
-    {{ post.pk }}</p>
-  <p>설명 :
-    {{ post.description }}</p>
-  <p>도시 :
-    {{ post.city }}</p>
-  <p>주소 :
-    {{ post.address }}</p>
-  <p>가격 :
-    {{ post.price }}</p>
-  <hr>
+    <hr>
 
   <h2>이용 후기 {{ reviews|length }}개</h2>
   <br>
-  {% for review in reviews %}
-    <h4>{{ review.user }}</h4>
-    <p>{{ review.created_at }}</p>
-    <p>리뷰:
-      {{ review.review }}</p>
-
-    <p>접근성:
-      {{ review.accessibility }}</p>
-    <p>비용:
-      {{ review.cost }}</p>
-    <p>서비스:
-      {{ review.service }}</p>
-    <p>편의시설:
-      {{ review.convenience_facilities }}</p>
-    <p>만족도:
-      {{ review.satisfaction }}</p>
-
-    {% if review.review_image %}
-      <img src="{{ review.review_image.url }}" alt="review_image">
-    {% endif %}
-
-    {% if request.user == review.user %}
-      <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
-    {% endif %}
-
-    <hr>
-    <!-- 이미지 -->
-    <!-- 설명 -->
-    {% if request.user == post.user %}
-      <form action="{% url 'posts:delete' post.pk %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="게시글 삭제" class="btn btn-secondary ms-1 me-1 mt-3">
-      </form>
-      <a href="{% url 'posts:update' post.pk %}" class="btn btn-success ms-1 me-1 mt-3">수정하기</a>
-    {% endif %}
-  {% endfor %}
-
-    <hr>
-    <h4>review list</h4>
-
+  {% with total_accessibility=0 %}
     {% for review in reviews %}
-      <p>no.
-        {{ review.pk }}</p>
-      <p>by
-        {{ review.user }}</p>
-      <p>리뷰:
-        {{ review.review }}</p>
-      <p>정확도:
-        {{ review.accuracy }}</p>
-      <p>의사소통:
-        {{ review.communication }}</p>
-      <p>청결:
-        {{ review.cleaniness }}</p>
-      <p>위치:
-        {{ review.location }}</p>
-      <p>체크인:
-        {{ review.check_in }}</p>
-      <p>시설:
-        {{ review.value }}</p>
+      {% with total_accessibility=total_acessibility|add:review.accessibility %}
+        <h4>{{ review.user }}</h4>
+        <p>{{ review.created_at }}</p>
 
-      {% if review.review_image %}
-        <img src="{{ review.review_image.url }}" alt="review_image">
-      {% endif %}
+        {% if review.review_image %}
+          <img src="{{ review.review_image.url }}" alt="review_image">
+        {% endif %}
 
-      {% if request.user == review.user %}
-        <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
-      {% endif %}
+        {% if request.user == review.user %}
+          <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
+        {% endif %}
+
+        <p>리뷰: {{ review.review }}</p>
+        <p>접근성: {{ review.accessibility }}</p>
+        <p>비용: {{ review.cost }}</p>
+        <p>서비스: {{ review.service }}</p>
+        <p>편의시설: {{ review.convenience_facilities }}</p>
+        <p>만족도: {{ review.satisfaction }}</p>
+        <hr>
+      {% endwith %}
     {% endfor %}
+  {% endwith %}
+
+  <br>
 
     {% if user.is_authenticated %}
-      <h2>⭐</h2>
-      <button>
+      <button class="btn btn-primary ms-1 me-1 mt-3">
         리뷰남기기
       </button>
       <div class="modal">
@@ -137,7 +95,7 @@
     {% else %}
     <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
     {% endif %}
-
+ 
   <script>
   const place = "{{ location }}".replace(/&#x27;/g, "\"");
   const places = JSON.parse(place)
