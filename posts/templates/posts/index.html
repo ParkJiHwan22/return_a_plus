@@ -1,17 +1,20 @@
-{% extends "base.html" %}
-{% block title %}
-{% endblock title %}
+{% extends "basemap_index_detail.html" %}
+{% load static %}
+{% block title %}{% endblock title %}
 {% block content %}
-<a href="{% url 'posts:create' %}">Create</a>
 
- {% for post in posts %}
-  <p>번호
-  <a href="{% url 'posts:detail' post.pk %}">{{ post.pk }}</a>
-  </p>
-  <p>제목
-  <a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a>
-  </p>
-  <hr>  
-{% endfor %}
+  <a href="{% url 'posts:create' %}">Create</a>
+
+  {% for post in posts %}
+    <p>번호
+      <a href="{% url 'posts:detail' post.pk %}">{{ post.pk }}</a>
+    </p>
+    <p>제목
+      <a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a>
+    </p>
+    <hr>
+  {% endfor %}
+
+  <script src="{% static 'js/base.js' %}"></script>
 
 {% endblock content %}
