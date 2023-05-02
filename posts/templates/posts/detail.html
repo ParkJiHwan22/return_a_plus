@@ -20,14 +20,12 @@
         {% endif %}
       </div>
     </div>
-
-      {% endif %}
   </div>
   <hr>
-<!-- 이미지 -->
-<!-- 설명 -->
+  <!-- 이미지 -->
+  <!-- 설명 -->
 
-<!-- 설명 -->
+  <!-- 설명 -->
   <a href="{% url 'posts:index' %}" class="btn btn-primary ms-1 me-1 mt-3">Home</a>
 
   {% if request.user == post.user %}
@@ -51,8 +49,8 @@
   <hr>
 
   <h2>이용 후기 {{ reviews|length }}개</h2>
-    <br>
-    {% for review in reviews %}
+  <br>
+  {% for review in reviews %}
     <h4>{{ review.user }}</h4>
     <p>{{ review.created_at }}</p>
     <p>리뷰:
@@ -75,7 +73,8 @@
 
     {% if request.user == review.user %}
       <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
-
+    {% endif %}
+    
     <hr>
     <!-- 이미지 -->
     <!-- 설명 -->
@@ -93,80 +92,27 @@
 
   {% if user.is_authenticated %}
 
+    <h2>⭐⭐⭐⭐⭐</h2>
 
-    <p>글번호 :
-      {{ post.pk }}</p>
-    <p>설명 :
-      {{ post.description }}</p>
-    <p>나라 :
-      {{ post.country }}</p>
-    <p>도시 :
-      {{ post.city }}</p>
-    <p>가격 :
-      {{ post.price }}</p>
-    <p>주소 :
-      {{ post.address }}</p>
-    <hr>
+    <button>
+      리뷰남기기
+    </button>
 
-    <h4>review list</h4>
+    <div class="modal">
+      <div class="modal_content" title="close">
 
-    {% for review in reviews %}
-      <p>no.
-        {{ review.pk }}</p>
-      <p>by
-        {{ review.user }}</p>
-      <p>리뷰:
-        {{ review.review }}</p>
-      <p>정확도:
-        {{ review.accuracy }}</p>
-      <p>의사소통:
-        {{ review.communication }}</p>
-      <p>청결:
-        {{ review.cleaniness }}</p>
-      <p>위치:
-        {{ review.location }}</p>
-      <p>체크인:
-        {{ review.check_in }}</p>
-      <p>시설:
-        {{ review.value }}</p>
-
-      {% if review.review_image %}
-        <img src="{{ review.review_image.url }}" alt="review_image">
-      {% endif %}
-
-      {% if request.user == review.user %}
-        <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
+        <form action="{% url 'posts:review_create' post.pk %}" method="POST" enctype="multipart/form-data">
           {% csrf_token %}
-          <input type="submit" value="댓글 삭제" class="btn btn-secondary ms-1 me-1 mt-3">
+          {{ review_form.as_p }}
+          <input type="submit" value="댓글작성" class="btn btn-primary ms-1 me-1 mt-3 modal_form">
         </form>
-      {% endif %}
-      
-
-    {% endfor %}
-
-    <hr>
-    {% if user.is_authenticated %}
-
-      <h2>⭐</h2>
-
-      <button>
-        리뷰남기기
-      </button>
-
-      <div class="modal">
-        <div class="modal_content" title="close">
-
-          <form action="{% url 'posts:review_create' post.pk %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ review_form.as_p }}
-            <input type="submit" value="댓글작성" class="btn btn-primary ms-1 me-1 mt-3 modal_form">
-          </form>
-        </div>
       </div>
     </div>
+    
   {% else %}
     <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
   {% endif %}
+
   <script>
   const place = "{{ location }}".replace(/&#x27;/g, "\"");
   const places = JSON.parse(place)
@@ -178,4 +124,5 @@
     });
   }
   </script>
+
 {% endblock content %}
