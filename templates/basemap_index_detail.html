@@ -67,10 +67,7 @@
               {% else %}
                 <div class="h p-0 col-6 d-flex align-items-center justify-content-end">
                   <a href="{% url 'accounts:login' %}" class="button btn btn-outline-success ms-3 me-2 mt-4">로그인</a>
-                  <a href="{% url 'accounts:signup' %}" class="button btn btn-outline-success me-2 mt-4">회원가입</a>
-                  {% load socialaccount %} 
-                  <a href="{% provider_login_url 'naver'%}" class="button align-items-center btn btn-outline-success me-1 mt-4">NAVER로 로그인</a> 
-                  <a href="{% provider_login_url 'google'%}" class="button align-items-center btn btn-outline-success me-3 mt-4">Google로 로그인</a>    
+                  <a href="{% url 'accounts:signup' %}" class="button btn btn-outline-success me-2 mt-4">회원가입</a> 
                 </div>
               {% endif %}
               {% comment %} 소셜 로그인 바 나중에 모달및 로그인 화면에 추가해주세요 {% endcomment %}

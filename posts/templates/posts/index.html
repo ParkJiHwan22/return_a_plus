@@ -2,16 +2,23 @@
 {% load static %}
 {% block title %}onClickTravel{% endblock title %}
 {% block content %}
-  <a href="{% url 'posts:create' %}">Create</a>
+  <div class="row mt-5 mb-5 d-flex justify-content-end">
+    <div class="col-10"></div>
+    <div class="col-2">
+      <div class="mt-5 button btn btn-success">
+        <a style="color:white; text-decoration-line: none;" href="{% url 'posts:create' %}">Create</a>
+      </div>
+    </div>
+  </div>
   <div class="container-fluid d-flex justify-content-center">
     {% for post in posts %}
     <div class='col-6 col-md-4 col-lg-3 col-xxl-2'>
       <div class="card m-2" style="width:17rem;">
         <a class="d-flex justify-content-center" href="{% url 'posts:detail' post.pk %}">
-          {% if post.image %}
-          <img style="width: 190px; height: 200px;" class='mt-2 d-flex justify-content-center' src=" {{post.post_image.url}} " alt="movie_img">
+          {% if post.post_image %}
+            <img style="width: 190px; height: 200px;" class='mt-2 d-flex justify-content-center' src=" {{post.post_image.url}} " alt="movie_img">
           {% else %}
-          <img style="width: 190px; height: 200px;" class='mt-2 d-flex justify-content-center' src="{% static 'no_image.jpg' %}" alt="no_img">
+            <img style="width: 190px; height: 200px;" class='mt-2 d-flex justify-content-center' src="{% static 'no_image.jpg' %}" alt="no_img">
           {% endif %}
         </a>
         <div class="card-body">
