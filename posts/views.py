@@ -105,4 +105,4 @@ def like(request, post_pk):
         post.like_users.remove(request.user)
     else:
         post.like_users.add(request.user)
-    return redirect('posts:detail', post_pk)
+    return redirect('posts:index')
