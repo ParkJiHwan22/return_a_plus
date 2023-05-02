@@ -20,16 +20,79 @@
         {% endif %}
       </div>
     </div>
+
+      {% endif %}
+  </div>
+  <hr>
+<!-- 이미지 -->
+<!-- 설명 -->
+
+<!-- 설명 -->
+  <a href="{% url 'posts:index' %}" class="btn btn-primary ms-1 me-1 mt-3">Home</a>
+
+  {% if request.user == post.user %}
+    <form action="{% url 'posts:delete' post.pk %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="게시글 삭제" class="btn btn-secondary ms-1 me-1 mt-3">
+    </form>
+    <a href="{% url 'posts:update' post.pk %}" class="btn btn-success ms-1 me-1 mt-3">수정하기</a>
+  {% endif %}
+
+  <p>글번호 :
+    {{ post.pk }}</p>
+  <p>설명 :
+    {{ post.description }}</p>
+  <p>도시 :
+    {{ post.city }}</p>
+  <p>주소 :
+    {{ post.address }}</p>
+  <p>가격 :
+    {{ post.price }}</p>
+  <hr>
+
+  <h2>이용 후기 {{ reviews|length }}개</h2>
+    <br>
+    {% for review in reviews %}
+    <h4>{{ review.user }}</h4>
+    <p>{{ review.created_at }}</p>
+    <p>리뷰:
+      {{ review.review }}</p>
+
+    <p>접근성:
+      {{ review.accessibility }}</p>
+    <p>비용:
+      {{ review.cost }}</p>
+    <p>서비스:
+      {{ review.service }}</p>
+    <p>편의시설:
+      {{ review.convenience_facilities }}</p>
+    <p>만족도:
+      {{ review.satisfaction }}</p>
+
+    {% if review.review_image %}
+      <img src="{{ review.review_image.url }}" alt="review_image">
+    {% endif %}
+
+    {% if request.user == review.user %}
+      <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
+
     <hr>
     <!-- 이미지 -->
     <!-- 설명 -->
     {% if request.user == post.user %}
       <form action="{% url 'posts:delete' post.pk %}" method="POST">
+
         {% csrf_token %}
         <input type="submit" value="게시글 삭제" class="btn btn-secondary ms-1 me-1 mt-3">
       </form>
       <a href="{% url 'posts:update' post.pk %}" class="btn btn-success ms-1 me-1 mt-3">수정하기</a>
     {% endif %}
+
+    <hr>
+  {% endfor %}
+
+  {% if user.is_authenticated %}
+
 
     <p>글번호 :
       {{ post.pk }}</p>
@@ -77,6 +140,7 @@
           <input type="submit" value="댓글 삭제" class="btn btn-secondary ms-1 me-1 mt-3">
         </form>
       {% endif %}
+      
 
     {% endfor %}
 
