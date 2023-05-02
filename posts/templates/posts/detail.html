@@ -141,11 +141,18 @@
   <script>
   const place = "{{ location }}".replace(/&#x27;/g, "\"");
   const places = JSON.parse(place)
+  const name = "{{ post.name }}"
+  const names = JSON.parse(name)
   
   window.initMap = function () {
     const map = new google.maps.Map(document.getElementById("map"), {
       center: places,
       zoom: 15
+    });
+    new google.maps.Marker({
+      position: places,
+      map,
+      title: name,
     });
   }
   </script>
