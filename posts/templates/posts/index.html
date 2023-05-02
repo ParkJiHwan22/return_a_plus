@@ -3,14 +3,44 @@
 {% block title %}onClickTravel{% endblock title %}
 {% block content %}
   <a href="{% url 'posts:create' %}">Create</a>
-  {% for post in posts %}
-    <p>번호
-      <a href="{% url 'posts:detail' post.pk %}">{{ post.pk }}</a>
-    </p>
-    <p>제목
-      <a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a>
-    </p>
-    <hr>
-  {% endfor %}
+  <div class="container-fluid d-flex justify-content-center">
+    {% for post in posts %}
+    <div class='col-6 col-md-4 col-lg-3 col-xxl-2'>
+      <div class="card m-2" style="width:17rem;">
+        <a class="d-flex justify-content-center" href="{% url 'posts:detail' post.pk %}">
+          {% if post.image %}
+          <img style="width: 190px; height: 200px;" class='mt-2 d-flex justify-content-center' src=" {{post.post_image.url}} " alt="movie_img">
+          {% else %}
+          <img style="width: 190px; height: 200px;" class='mt-2 d-flex justify-content-center' src="{% static 'no_image.jpg' %}" alt="no_img">
+          {% endif %}
+        </a>
+        <div class="card-body">
+          <h5 class="card-title text">
+            <a style="color:#198754; text-decoration-line: none;" href="{% url 'posts:detail' post.pk %}">{{ post.city }}</a>
+          </h5>
+          <p class="card-text m-0 text" style="font-size:small">{{ post.user.username }}님의 후기</p>
+          <form action="{% url 'posts:like' post_pk=post.pk %}" method="POST">
+            {% csrf_token %}
+            {% if request.user in post.like_users.all %}
+                <div class="mt-2 d-flex justify-content-between">
+                    <input class="d-flex justify-content-center btn btn-outline-success" type="submit" value="Cancel">
+                    <div class="text-center align-self-center">
+                        💚 {{ post.like_users.count }}
+                    </div>
+                </div>
+            {% else %}
+                <div class="mt-2 d-flex justify-content-between">
+                    <input class="d-flex justify-content-center btn btn-success" type="submit" value="Like">
+                    <div class="text-center align-self-center">
+                        💚 {{ post.like_users.count }}
+                    </div>
+                </div>
+            {% endif %}
+        </form>     
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
   <script src="{% static 'js/base.js' %}"></script>
 {% endblock content %}
