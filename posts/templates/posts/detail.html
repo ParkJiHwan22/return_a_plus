@@ -74,38 +74,65 @@
     {% if request.user == review.user %}
       <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
     {% endif %}
-    
+
     <hr>
     <!-- 이미지 -->
     <!-- 설명 -->
     {% if request.user == post.user %}
       <form action="{% url 'posts:delete' post.pk %}" method="POST">
-
         {% csrf_token %}
         <input type="submit" value="게시글 삭제" class="btn btn-secondary ms-1 me-1 mt-3">
       </form>
       <a href="{% url 'posts:update' post.pk %}" class="btn btn-success ms-1 me-1 mt-3">수정하기</a>
     {% endif %}
+    {% endfor %}
 
     <hr>
-  {% endfor %}
+    <h4>review list</h4>
+    {% for review in reviews %}
+      <p>no.
+        {{ review.pk }}</p>
+      <p>by
+        {{ review.user }}</p>
+      <p>리뷰:
+        {{ review.review }}</p>
+      <p>정확도:
+        {{ review.accuracy }}</p>
+      <p>의사소통:
+        {{ review.communication }}</p>
+      <p>청결:
+        {{ review.cleaniness }}</p>
+      <p>위치:
+        {{ review.location }}</p>
+      <p>체크인:
+        {{ review.check_in }}</p>
+      <p>시설:
+        {{ review.value }}</p>
 
-  {% if user.is_authenticated %}
+      {% if review.review_image %}
+        <img src="{{ review.review_image.url }}" alt="review_image">
+      {% endif %}
 
-    <h2>⭐⭐⭐⭐⭐</h2>
+      {% if request.user == review.user %}
+        <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
 
-    <button>
-      리뷰남기기
-    </button>
+    {% if user.is_authenticated %}
 
-    <div class="modal">
-      <div class="modal_content" title="close">
+      <h2>⭐</h2>
 
-        <form action="{% url 'posts:review_create' post.pk %}" method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          {{ review_form.as_p }}
-          <input type="submit" value="댓글작성" class="btn btn-primary ms-1 me-1 mt-3 modal_form">
-        </form>
+      <button>
+        리뷰남기기
+      </button>
+
+      <div class="modal">
+        <div class="modal_content" title="close">
+
+          <form action="{% url 'posts:review_create' post.pk %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ review_form.as_p }}
+            <input type="submit" value="댓글작성" class="btn btn-primary ms-1 me-1 mt-3 modal_form">
+          </form>
+        </div>
       </div>
     </div>
     

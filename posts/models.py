@@ -16,7 +16,7 @@ class Review(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     review = models.TextField()
-    accessibility = models.IntegerField() 
+    accessibility = models.IntegerField(null=True) 
     cost = models.IntegerField() 
     service = models.IntegerField() 
     convenience_facilities = models.IntegerField() 
