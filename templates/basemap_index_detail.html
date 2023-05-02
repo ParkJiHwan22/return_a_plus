@@ -54,11 +54,11 @@
           </div>
           <div class="h p-0 col-8 d-flex justify-content-end">
             {% if user.is_authenticated %}
-                <p class="h mt-4 pt-2 m-0 me-3 pe-1 hidden justify-content-center text-center align-items-center">
+                <div class="h mt-4 pt-2 m-0 me-3 pe-1 hidden justify-content-center text-center align-items-center">
                   <a class="h link-success link-underline-light m-1 text-center align-items-center" style="text-decoration-line:none;" href="{% url 'accounts:profile' user %}">
                     {{ user }}
                   </a>
-                </p>
+                </div>
                 <form class="text-white" action="{% url 'accounts:logout' %}" method="POST">
                   {% csrf_token %}
                   <a href="{% url 'accounts:update' %}"  class="button btn btn-outline-success me-1 mt-4 ">회원정보 수정</a>
@@ -68,16 +68,12 @@
               <div class="h p-0 col-6 d-flex align-items-center justify-content-end">
                 <a href="{% url 'accounts:login' %}" class="button btn btn-outline-success ms-3 me-2 mt-4">로그인</a>
                 <a href="{% url 'accounts:signup' %}" class="button btn btn-outline-success me-2 mt-4">회원가입</a>
+                {% load socialaccount %} 
+                <a href="{% provider_login_url 'naver'%}" class="button align-items-center btn btn-outline-success me-1 mt-4">NAVER로 로그인</a> 
+                <a href="{% provider_login_url 'google'%}" class="button align-items-center btn btn-outline-success me-3 mt-4">Google로 로그인</a>    
               </div>
             {% endif %}
             {% comment %} 소셜 로그인 바 나중에 모달및 로그인 화면에 추가해주세요 {% endcomment %}
-            {% load socialaccount %} 
-              <div>
-                {% if user.is_authenticated %}
-                {% else %}                
-                    <a href="{% provider_login_url 'naver'%}" class="button align-items-center btn btn-outline-success me-1 mt-4">NAVER로 로그인</a> 
-                    <a href="{% provider_login_url 'google'%}" class="button align-items-center btn btn-outline-success me-3 mt-4">Google로 로그인</a>          
-                {% endif %}
           </div>
         </div>
       </div>
