@@ -2,14 +2,20 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Post, Review
 from .forms import PostForm, ReviewForm
+from django.db.models import Count
 import googlemaps
 
 
 # Create your views here.
 def index(request):
     posts = Post.objects.all()
+    post_likes = [post.like_users.count() for post in posts]
+    total_likes = sum(post_likes)
+    ratios = [like_count / total_likes for like_count in post_likes]
     context = {
         'posts': posts,
+        'post_likes': post_likes,
+        'ratios': ratios,
     }
     return render(request, 'posts/index.html', context)
 
