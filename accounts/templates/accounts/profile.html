@@ -24,44 +24,45 @@
 {% block content %}
   <div class="container">
 
-    <!-- 프로필 정보 -->
+    <!-- 사용자 프로필 정보 -->
     <div class="col align-items-center profile-title">
       <div class="row">
         <!-- 프로필 이미지 -->
-        <form action="{% url 'accounts:update' %}" method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
+        {% comment %} <form action="{% url 'accounts:update' %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %} {% endcomment %}
 
-          {% if post.post_image %}
+          {% if user.profile_image %}
             <img src="{{ post.post_image.url }}" alt="post_image" class="col-4 rounded-circle profile-img">
           {% else %}
-            <img src="https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/134557216-no-thumbnail-image-placeholder-for-forums-blogs-and-websites.jpg?ver=6" alt="no_image" class="col-4 rounded-circle profile-img">
+            <img src="https://i.pinimg.com/564x/dc/93/f7/dc93f70b6620fc090ef6d1249f01f55a.jpg" alt="no_image" class="col-4 rounded-circle profile-img">
           {% endif %}
+                 {% comment %}
           <div id="profile-image">
             {{ form.profile_image }}
           </div>
-          <input type="submit" value='프로필 이미지' class="btn btn-success mb-2" style="width:10%; padding:10px; font-size: 13px;">
+    <input type="submit" value='프로필 이미지' class="btn btn-success mb-2" style="width:10%; padding:10px; font-size: 13px;">
 
-        </form>
+        </form> {% endcomment %}
 
         <!-- 사용자 이름 -->
-        <h1 class="col-2 text-center">{{ person.username }}</h1>
+        <h1 class="col-2 text-center">{{ user.username }}</h1>
 
         <div class="col-5">
           <!-- 팔로우 버튼 / 회원정보 수정 버튼 -->
           <div class="row">
             <div class="col">
               {% if request.user.is_authenticated %}
-                {% if request.user != person %}
-                  <form id="follow-form" data-user-id="{{ person.pk }}">
-                    {% csrf_token %}
-                    {% if request.user in person.followers.all %}
-                      <input type="submit" value="언팔로우" class="btn btn-success">
-                    {% else %}
-                      <input type="submit" value="팔로우" class="btn btn-success">
-                    {% endif %}
-                  </form>
+                {% if user.username != person.username %}
+                {% if request.user in person.followers.all %}
+                <input type="submit" value="언팔로우" class="btn btn-success">
                 {% else %}
+                <input type="submit" value="팔로우" class="btn btn-success">
+                {% endif %}
+                {% else %}
+                <form id="follow-form" data-user-id="{{ person.pk }}">
+                  {% csrf_token %}
                   <a href="{% url 'accounts:update' %}" class="button btn btn-success">회원정보 수정</a>
+                </form>
                 {% endif %}
               {% else %}
                 <input type="submit" value="팔로우" class="btn btn-secondary disabled">
@@ -95,13 +96,26 @@
           </div>
 
           <!-- 사용자 정보 -->
-          <div class="col">
-            <div class="row justify-content-end mt-3 ms-1">
-              <div class="col">
+          <div class="col p-3">
+            <div class="col">
+              <h4>
+                닉네임:
+                {{ person.nickname }}
+              </h4>
+            </div>
+            <div class="col">
+              <h4>
                 이메일:
                 {{ person.email }}
-
-              </div>
+              </h4>
+            </div>
+            <div class="col">
+              <h4>
+                상태 메세지:
+              </h4>
+                {{ person.status_message }}
+            </div>
+            <div class="row justify-content-end mt-3 ms-1">
             </div>
           </div>
 
@@ -123,7 +137,7 @@
                 {% if post.post_image %}
                   <img src="{{ post.post_image.url }}" alt="post_image" class="card-img rounded-start">
                 {% else %}
-                  <img src="https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/134557216-no-thumbnail-image-placeholder-for-forums-blogs-and-websites.jpg?ver=6" alt="no_image" class="card-img rounded-start">
+                  <img src="{% static 'no_image.jpg' %}" alt="no_image" class="card-img rounded-start">
                 {% endif %}
               </div>
               <div class="col-10">
@@ -152,32 +166,31 @@
         <div class="row">
           <h2>좋아요</h2>
           {% for post in person.like_posts.all %}
-            <div class="card mb-3 mx-5" style="max-width: 90%;">
-              <div class="row g-0">
-                <div class="col-2">
-                  {% if post.post_image %}
-                    <img src="{{ post.post_image.url }}" alt="post_image" class="card-img rounded-start">
-                  {% else %}
-                    <img src="https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/134557216-no-thumbnail-image-placeholder-for-forums-blogs-and-websites.jpg?ver=6" alt="no_image" class="card-img rounded-start">
-                  {% endif %}
-                </div>
-                <div class="col-10">
-                  <div class="card-body">
-                    <h2 class="card-title">
-                      <a href="{% url 'posts:detail' post.pk %}" style="text-decoration: none;">
+            <a href="{% url 'posts:detail' post.pk %}" style="text-decoration: none;">
+              <div class="card mb-3 mx-5" style="max-width: 90%;">
+                <div class="row g-0">
+                  <div class="col-2">
+                    {% if post.post_image %}
+                      <img src="{{ post.post_image.url }}" alt="post_image" class="card-img rounded-start">
+                    {% else %}
+                      <img src="{% static 'no_image.jpg' %}" alt="no_image" class="card-img rounded-start">
+                    {% endif %}
+                  </div>
+                  <div class="col-10">
+                    <div class="card-body">
+                      <h2 class="card-title">
                         {{ post.name }}
-                      </a>
-                    </h2>
-                    <p class="card-text">{{ post.description }}</p>
-                    <p class="card-text">
-                      <small class="text-body-secondary">no.
-                        {{ post.pk }}</small>
-                    </p>
+                      </h2>
+                      <p class="card-text">{{ post.description }}</p>
+                      <div class="text-center align-self-start">
+                        💚
+                        {{ post.like_users.count }}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
+            </a>
           {% endfor %}
         </div>
       </div>
@@ -193,7 +206,7 @@
                 {% if revieww.post_image %}
                   <img src="{{ post.post_image.url }}" alt="post_image" class="card-img rounded-start">
                 {% else %}
-                  <img src="https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/134557216-no-thumbnail-image-placeholder-for-forums-blogs-and-websites.jpg?ver=6" alt="no_image" class="card-img rounded-start">
+                  <img src="{% static 'no_image.jpg' %}" alt="no_image" class="card-img rounded-start">
                 {% endif %}
               </div>
               <div class="col-10">

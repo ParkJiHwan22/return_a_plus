@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash, get_user_model
 from django.contrib.auth.decorators import login_required
-from .forms import CustomUserCreationForm, CustomUserChangeForm
-
+from django.http import JsonResponse
 
 # Create your views here.
 def login(request):
@@ -61,7 +61,7 @@ def update(request):
         form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('posts:index')
+            return redirect('accounts:profile', request.user)
     else:
         form = CustomUserChangeForm(instance=request.user)
     context = {
@@ -86,8 +86,6 @@ def change_password(request):
     return render(request, 'accounts/change_password.html', context)
 
 
-from django.contrib.auth import get_user_model
-
 def profile(request, username):
     User = get_user_model()
     person = User.objects.get(username=username)
@@ -96,15 +94,11 @@ def profile(request, username):
     }
     return render(request, 'accounts/profile.html', context)
 
-from django.http import JsonResponse
-from posts.models import Post
-
 @login_required
 def follow(request, user_pk):
     User = get_user_model()
     you = User.objects.get(pk=user_pk)
     me = request.user
-    recent_posts = Post.objects.order_by('-pk')
     
     if you != me:
         if me in you.followers.all():
@@ -117,7 +111,6 @@ def follow(request, user_pk):
             'is_followed': is_followed,
             'followings_count': you.followings.count(),
             'followers_count': you.followers.count(),
-            'recent_posts': recent_posts,
         }
         return JsonResponse(context)
     return redirect('posts:profile', you.username, context)
