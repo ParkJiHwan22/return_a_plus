@@ -1,36 +1,42 @@
-.modal{
-  position:absolute;
-  width:100%; 
-  height:100%; 
-  background: rgba(0,0,0,0.8);
-  top:0; 
-  left:O; 
-  display:none;
+/* base.html */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.button{
-  position:absolute; 
-  top:50%; left:50%;
-  width:120px; 
-  height:30px; 
-  margin-top:-15px; 
-  margin-left:-60px;
-  line-height:15px; 
-  cursor:pointer;
+@font-face {
+  font-family: 'establishRetrosansOTF';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
-.modal_content{
-  width:600px; 
-  height:600px;
-  background:#fff; 
-  border-radius:10px;
-  position:relative; 
-  top:50%; left:50%;
-  transform: translate(-50%, -50%);
-  text-align:center;
-  box-sizing:border-box; 
-  padding:74px 0;
-  line-height:23px; 
-  cursor:pointer;
+section {
+  height : 120vh
 }
 
+p > a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.button {
+  flex-shrink: 0;
+  margin-left: 10px;
+}
+
+footer {
+  padding: 2rem;
+  background-color: rgb(65, 55, 48);
+  font-size: 15px;
+}
