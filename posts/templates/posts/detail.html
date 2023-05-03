@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block link %}
-  {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}"> {% endcomment %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
 {% endblock link %}
 
 {% block title %}
@@ -55,10 +55,9 @@
     <p>{{ review.created_at }}</p>
     <p>리뷰:
       {{ review.review }}</p>
-
     <p>접근성:
       {{ review.accessibility }}</p>
-    <p>점수:
+    <p>비용:
       {{ review.cost }}</p>
     <p>서비스:
       {{ review.service }}</p>
