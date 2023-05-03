@@ -1,8 +1,18 @@
 {% extends 'base.html' %}
 
+{% block style %}
+  <style>
+    . {
+      margin-bottom: 200px;
+    }
+  </style>
+{% endblock style%}
+
 {% block content %}
   <div class="container">
-    <div class='d-flex justify-content-center'>
+    <h1 class="text-center my-3">회원정보 가입</h1>
+    <hr>
+    <div class='d-flex justify-content-center box'>
       <form action="{% url 'accounts:signup' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="signup-size">

@@ -112,3 +112,6 @@ def like(request, post_pk):
     else:
         post.like_users.add(request.user)
     return redirect('posts:index')
+
+def about_us(request):
+    return render(request, 'posts/about_us.html')

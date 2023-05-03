@@ -3,9 +3,8 @@
 {% block style %}
   <style>
     .profile-title {
-      display: inline-block;
+      display: flex;
       flex-flow: row;
-      justify-content: flex-start;
       align-items: center;
     }
 
@@ -17,7 +16,8 @@
     }
 
     .profile-img {
-      width: 40vh;
+      width: 30vh;
+      margin-right: 3rem;
     }
   </style>
 {% endblock style%}
@@ -25,101 +25,89 @@
   <div class="container">
 
     <!-- 사용자 프로필 정보 -->
-    <div class="col align-items-center profile-title">
-      <div class="row">
-        <!-- 프로필 이미지 -->
-        {% comment %} <form action="{% url 'accounts:update' %}" method="POST" enctype="multipart/form-data">
-          {% csrf_token %} {% endcomment %}
+    <div class="align-items-center profile-title">
+      <!-- 프로필 이미지 -->
 
-          {% if user.profile_image %}
-            <img src="{{ post.post_image.url }}" alt="post_image" class="col-4 rounded-circle profile-img">
-          {% else %}
-            <img src="https://i.pinimg.com/564x/dc/93/f7/dc93f70b6620fc090ef6d1249f01f55a.jpg" alt="no_image" class="col-4 rounded-circle profile-img">
-          {% endif %}
-                 {% comment %}
-          <div id="profile-image">
-            {{ form.profile_image }}
-          </div>
-    <input type="submit" value='프로필 이미지' class="btn btn-success mb-2" style="width:10%; padding:10px; font-size: 13px;">
+      {% if person.profile_image %}
+        <img src="{{ person.profile_image.url }}" alt="post_image" class="col-4 rounded-circle profile-img">
+      {% else %}
+        <img src="https://i.pinimg.com/564x/dc/93/f7/dc93f70b6620fc090ef6d1249f01f55a.jpg" alt="no_image" class="col-4 rounded-circle profile-img">
+      {% endif %}
 
-        </form> {% endcomment %}
+      <div class="col-8">
 
-        <!-- 사용자 이름 -->
-        <h1 class="col-2 text-center">{{ user.username }}</h1>
-
-        <div class="col-5">
+        <div class="row align-items-center">
+          <!-- 사용자 이름 -->
+          <h1 class="col-2 mx-3 text-center">{{ user.username }}</h1>
           <!-- 팔로우 버튼 / 회원정보 수정 버튼 -->
-          <div class="row">
-            <div class="col">
-              {% if request.user.is_authenticated %}
-                {% if user.username != person.username %}
+          <div class="col-8">
+            {% if request.user.is_authenticated %}
+              {% if user.username != person.username %}
                 {% if request.user in person.followers.all %}
-                <input type="submit" value="언팔로우" class="btn btn-success">
+                  <input type="submit" value="언팔로우" class="btn btn-success">
                 {% else %}
-                <input type="submit" value="팔로우" class="btn btn-success">
+                  <input type="submit" value="팔로우" class="btn btn-success">
                 {% endif %}
-                {% else %}
+              {% else %}
                 <form id="follow-form" data-user-id="{{ person.pk }}">
                   {% csrf_token %}
                   <a href="{% url 'accounts:update' %}" class="button btn btn-success">회원정보 수정</a>
                 </form>
-                {% endif %}
-              {% else %}
-                <input type="submit" value="팔로우" class="btn btn-secondary disabled">
               {% endif %}
-            </div>
+            {% else %}
+              <input type="submit" value="팔로우" class="btn btn-secondary disabled">
+            {% endif %}
           </div>
-
-          <!-- 팔로잉 / 팔로워 / 맞팔 목록 -->
-          <div class="col">
-            <div class="row justify-content-end mt-3 ms-1">
-              <div class="col">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-                  팔로잉
-                  {{ person.followings.all|length }}
-                  명
-                </button>
-              </div>
-              <div class="col">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                  팔로워
-                  <span id="followers-count">{{ person.followers.all|length }}</span>
-                  명
-                </button>
-              </div>
-              <div class="col">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal3">
-                  맞팔 목록
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- 사용자 정보 -->
-          <div class="col p-3">
-            <div class="col">
-              <h4>
-                닉네임:
-                {{ person.nickname }}
-              </h4>
-            </div>
-            <div class="col">
-              <h4>
-                이메일:
-                {{ person.email }}
-              </h4>
-            </div>
-            <div class="col">
-              <h4>
-                상태 메세지:
-              </h4>
-                {{ person.status_message }}
-            </div>
-            <div class="row justify-content-end mt-3 ms-1">
-            </div>
-          </div>
-
         </div>
+
+        <!-- 팔로잉 / 팔로워 / 맞팔 목록 -->
+        <div class="col-8">
+          <div class="row justify-content-end mt-3 ms-1">
+            <div class="col">
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                팔로잉
+                {{ person.followings.all|length }}
+                명
+              </button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                팔로워
+                <span id="followers-count">{{ person.followers.all|length }}</span>
+                명
+              </button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+                맞팔 목록
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 사용자 정보 -->
+        <div class="col p-3">
+          <div class="col">
+            <h4>
+              닉네임:
+              {{ person.nickname }}
+            </h4>
+          </div>
+          <div class="col">
+            <h4>
+              이메일:
+              {{ person.email }}
+            </h4>
+          </div>
+          <div class="col">
+            <h4>
+              상태 메세지:
+            </h4>
+            {{ person.status_message }}
+          </div>
+          <div class="row justify-content-end mt-3 ms-1"></div>
+        </div>
+
       </div>
     </div>
 
