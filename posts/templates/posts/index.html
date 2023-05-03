@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="container-fluid d-flex justify-content-center">
-    <div class="row" style="width:90%;">
+    <div class="row d-flex justify-content-center align-items-center" style="width:90%;">
       {% for post in posts %}
       <div class='col-6 col-sm-6 col-md-4 col-lg-4 col-xxl-2 d-flex justify-content-center'>
         <div class="card m-2" style="width:15rem;">
@@ -26,6 +26,7 @@
             <h5 class="card-title text">
               <a style="color:#198754; text-decoration-line: none;" href="{% url 'posts:detail' post.pk %}">{{ post.city }}</a>
             </h5>
+            <p class="card-text m-0 text" style="font-size:medium">{{ post.address }}</p>
             <p class="card-text m-0 text" style="font-size:small">{{ post.user.username }}님의 후기</p>
             <p class="card-text m-0 text" style="font-size:small">{{ post.user.title }}</p>
             <form action="{% url 'posts:like' post_pk=post.pk %}" method="POST">
@@ -52,40 +53,41 @@
       {% endfor %}
     </div>
   </div>
-  <div>
-    <canvas id="myChart" width="100%" height="100%"></canvas>
+  <div class="mt-5 mb-5 container-fluid d-flex justify-content-center">
+    <div class="card d-flex justify-content-center" style="width: 24rem;">
+      <p class="mt-5 mb-3 card-text d-flex justify-content-center">현재 HOT한 관광지 분포</p>
+      <div class="ms-4 mt-3 mb-5 ps-4 pe-1 d-flex justify-content-center align-items-center" style="width:300px; height:300px;">
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="{% static 'js/base.js' %}"></script>
   <script>
     const ratios = {{ratios|safe}};
+    const colorDict = {{color_dict|safe}};  // 수정된 부분
+    const labels = Array.from(new Set([{% for post in posts %}'{{ post.address }}',{% endfor %}]));
+    const colorList = labels.map(label => colorDict[label]);  // 수정된 부분
     const canvas = document.getElementById('myChart');
     const ctx = canvas.getContext('2d');
     const chart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: [{% for post in posts %}'{{ post.address }}',{% endfor %}],
-            datasets: [{
-                data: ratios,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(75, 192, 192, 0.7)',
-                    'rgba(153, 102, 255, 0.7)',
-                    'rgba(255, 159, 64, 0.7)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                display: true,
-                position: 'bottom'
-            }
+    type: 'pie',
+    data: {
+        labels: labels,
+        datasets: [{
+            data: ratios,
+            backgroundColor: colorList,
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            display: true,
+            position: 'bottom'
         }
+    }
     });
-</script>
+  </script>  
 {% endblock content %}

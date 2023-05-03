@@ -5,17 +5,57 @@ from .forms import PostForm, ReviewForm
 from django.db.models import Count
 import googlemaps
 
+colors = [
+    'rgba(255, 99, 132, 0.7)',
+    'rgba(54, 162, 235, 0.7)',
+    'rgba(255, 206, 86, 0.7)',
+    'rgba(75, 192, 192, 0.7)',
+    'rgba(153, 102, 255, 0.7)',
+    'rgba(255, 159, 64, 0.7)',
+    'rgba(123, 104, 238, 0.7)',
+    'rgba(255, 250, 205, 0.7)',
+    'rgba(128, 0, 0, 0.7)',
+    'rgba(0, 128, 0, 0.7)',
+    'rgba(0, 0, 128, 0.7)',
+    'rgba(255, 215, 0, 0.7)',
+    'rgba(255, 105, 180, 0.7)',
+    'rgba(0, 255, 255, 0.7)',
+    'rgba(218, 165, 32, 0.7)',
+    'rgba(128, 128, 0, 0.7)',
+    'rgba(75, 0, 130, 0.7)',
+    'rgba(165, 42, 42, 0.7)',
+    'rgba(0, 128, 128, 0.7)',
+    'rgba(139, 69, 19, 0.7)',
+    'rgba(25, 25, 112, 0.7)',
+    'rgba(0, 255, 0, 0.7)',
+    'rgba(255, 20, 147, 0.7)',
+]
+
+color_dict = {}
+color_index = 0
 
 # Create your views here.
 def index(request):
+    global color_index
     posts = Post.objects.all()
     post_likes = [post.like_users.count() for post in posts]
     total_likes = sum(post_likes)
-    ratios = [like_count / total_likes for like_count in post_likes]
+    ratios = []
+    if total_likes > 0:
+        ratios = [like_count / total_likes for like_count in post_likes]
+    for post in posts:
+        if post.address not in color_dict:
+            color_dict[post.address] = colors[color_index]
+            color_index += 1
+
+    color_list = [color_dict[post.address] for post in posts]
+    
     context = {
         'posts': posts,
         'post_likes': post_likes,
         'ratios': ratios,
+        'color_dict': color_dict, 
+        'color_list': color_list,
     }
     return render(request, 'posts/index.html', context)
 
