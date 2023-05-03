@@ -11,7 +11,7 @@
 {% block content %}
   <hr>
   <h1>{{post.name}} ( {{ post.address }} )</h1>
-  <p>작성자:<a href="{% url 'profile' post.user.username %}">{{ post.user }}</a></p> 
+  <p>작성자:<a href="{% url 'accounts:profile' post.user.username %}">{{ post.user }}</a></p> 
   {% comment %} profile로 이동하는 링크 걸어야 함 {% endcomment %}
     <br>
   <div class="container">  
@@ -82,27 +82,26 @@
     <p>만족도: {{ review.satisfaction }}</p>
     <hr>
   {% endfor %}
-  {% if user.is_authenticated %}
-      <h2>⭐</h2>
-    {% if user.is_authenticated %}
-      <button class="btn btn-primary ms-1 me-1 mt-3">
-        리뷰남기기
-      </button>
-      <div class="modal">
-        <div class="modal_content" title="close">
-          <form action="{% url 'posts:review_create' post.pk %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ review_form.as_p }}
-            <input type="submit" value="댓글작성" class="btn btn-primary ms-1 me-1 mt-3 modal_form">
-          </form>
-        </div>
 
+  {% if user.is_authenticated %}
+    <button class="btn btn-primary ms-1 me-1 mt-3">
+      리뷰남기기
+    </button>
+    <div class="modal">
+      <div class="modal_content" title="close">
+        <form action="{% url 'posts:review_create' post.pk %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ review_form.as_p }}
+          <input type="submit" value="댓글작성" class="btn btn-primary ms-1 me-1 mt-3 modal_form">
+        </form>
       </div>
+
     </div>
-    {% else %}
-    <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
-    {% endif %}
- 
+  </div>
+  {% else %}
+  <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
+  {% endif %}
+
   <script>
   const place = "{{ location }}".replace(/&#x27;/g, "\"");
   const places = JSON.parse(place)
