@@ -7,7 +7,7 @@ class Post(models.Model):
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')
     description = models.TextField()
     city = models.CharField(max_length=80)
-    price = models.IntegerField()
+    price = models.IntegerField(null=True)
     address = models.CharField(max_length=80)
     post_image = models.ImageField(blank=True, upload_to='post_images/')
 
@@ -20,7 +20,7 @@ class Review(models.Model):
     cost = models.IntegerField() 
     service = models.IntegerField() 
     convenience_facilities = models.IntegerField() 
-    satisfaction = models.IntegerField() 
+    satisfaction = models.CharField(max_length=100)
     review_image = models.ImageField(blank=True, upload_to='review_images/')
     created_at = models.DateTimeField(auto_now_add=True)
     
