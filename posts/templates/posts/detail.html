@@ -11,7 +11,7 @@
 {% block content %}
   <hr>
   <h1>{{post.name}} ( {{ post.address }} )</h1>
-  <p>작성자: {{ post.user }}</p> 
+  <p>작성자:<a href="{% url 'profile' post.user.username %}">{{ post.user }}</a></p> 
   {% comment %} profile로 이동하는 링크 걸어야 함 {% endcomment %}
     <br>
   <div class="container">  
