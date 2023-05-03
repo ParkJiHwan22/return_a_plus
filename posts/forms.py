@@ -3,7 +3,7 @@ from .models import Post, Review
 
 class PostForm(forms.ModelForm):
     name = forms.CharField(
-        label='숙소 명',
+        label='관광지 이름',
         widget= forms.TextInput(
             attrs= {
                 'class': 'form-control'
@@ -11,16 +11,26 @@ class PostForm(forms.ModelForm):
         )
     )
 
-    address = forms.CharField(
-        label='숙소 주소',
+    city = forms.CharField(
+        label='도시',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control'
             }
         )
     )
+    
+    address = forms.CharField(
+        label='관광지 주소',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
+    
     description = forms.CharField(
-        label= '숙소 설명',
+        label= '관광지 설명',
         widget= forms.Textarea(
             attrs={
                 'class': 'form-control',
@@ -39,7 +49,8 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = (
             "post_image",
-            "name", 
+            "name",
+            "city",
             "address", 
             "description",  
         )
