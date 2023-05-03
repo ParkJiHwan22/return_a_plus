@@ -11,7 +11,7 @@ def index(request):
     posts = Post.objects.all()
     post_likes = [post.like_users.count() for post in posts]
     total_likes = sum(post_likes)
-    ratios = [like_count / total_likes for like_count in post_likes]
+    ratios = [like_count / total_likes if total_likes != 0 else 0 for like_count in post_likes]
     context = {
         'posts': posts,
         'post_likes': post_likes,

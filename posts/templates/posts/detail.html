@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 {% block link %}
-  {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}"> {% endcomment %}
+
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}"> {% endcomment %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
 {% endblock link %}
 
 {% block title %}
@@ -11,7 +13,7 @@
 {% block content %}
   <hr>
   <h1>{{post.name}} ( {{ post.address }} )</h1>
-  <p>작성자: {{ post.user }}</p> 
+  <p>작성자:<a href="{% url 'accounts:profile' post.user.username %}">{{ post.user }}</a></p> 
   {% comment %} profile로 이동하는 링크 걸어야 함 {% endcomment %}
     <br>
   <div class="container">  
@@ -53,6 +55,18 @@
   {% for review in reviews %}
     <h4>{{ review.user }}</h4>
     <p>{{ review.created_at }}</p>
+    <p>리뷰:
+      {{ review.review }}</p>
+    <p>접근성:
+      {{ review.accessibility }}</p>
+    <p>비용:
+      {{ review.cost }}</p>
+    <p>서비스:
+      {{ review.service }}</p>
+    <p>편의시설:
+      {{ review.convenience_facilities }}</p>
+    <p>만족도:
+      {{ review.satisfaction }}</p>
 
     {% if review.review_image %}
       <img src="{{ review.review_image.url }}" alt="review_image">
@@ -71,34 +85,29 @@
     <hr>
   {% endfor %}
 
-
-  <br>
-
-    {% if user.is_authenticated %}
-      <button class="btn btn-primary ms-1 me-1 mt-3">
-        리뷰남기기
-      </button>
-      <div class="modal">
-        <div class="modal_content" title="close">
-          <form action="{% url 'posts:review_create' post.pk %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ review_form.as_p }}
-            <input type="submit" value="댓글작성" class="btn btn-primary ms-1 me-1 mt-3 modal_form">
-          </form>
-        </div>
-
+  {% if user.is_authenticated %}
+    <button class="btn btn-primary ms-1 me-1 mt-3">
+      리뷰남기기
+    </button>
+    <div class="modal">
+      <div class="modal_content" title="close">
+        <form action="{% url 'posts:review_create' post.pk %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ review_form.as_p }}
+          <input type="submit" value="댓글작성" class="btn btn-primary ms-1 me-1 mt-3 modal_form">
+        </form>
       </div>
+
     </div>
-    {% else %}
-    <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
-    {% endif %}
- 
+  </div>
+  {% else %}
+  <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
+  {% endif %}
+
   <script>
   const place = "{{ location }}".replace(/&#x27;/g, "\"");
   const places = JSON.parse(place)
   const name = "{{ post.name }}"
-  const names = JSON.parse(name)
-  
   window.initMap = function () {
     const map = new google.maps.Map(document.getElementById("map"), {
       center: places,
@@ -107,8 +116,16 @@
     new google.maps.Marker({
       position: places,
       map,
-      title: names,
+      title: name,
     });
   }
   </script>
+{% comment %}
+<script>defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAd9M3rcxiyzS9IxbErxaMv45mw94kQFxY&callback=initMap"
+></script>
+<script src="{% static 'js/base.js' %}"></script>
+{% endcomment %}
 {% endblock content %}
+
+
+

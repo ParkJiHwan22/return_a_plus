@@ -64,7 +64,7 @@
     const chart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: [{% for post in posts %}'{{ post.address }}',{% endfor %}],
+            labels: [{% for post in posts %}'{{ post.name }}',{% endfor %}],
             datasets: [{
                 data: ratios,
                 backgroundColor: [
