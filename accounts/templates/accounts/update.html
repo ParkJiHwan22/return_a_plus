@@ -9,24 +9,7 @@
         {% csrf_token %}
         <div class="update-size my-5">
           <div class="mb-2">
-            <label>이메일</label>
-            {{ form.email }}
-          </div>
-          <div class="mb-2">
-            <label>닉네임</label>
-            {{ form.nick_name }}
-          </div>
-          <div class="mb-2">
-            <label>성</label>
-            {{ form.first_name }}
-          </div>
-          <div class="mb-2">
-            <label>이름</label>
-            {{ form.last_name }}
-          </div>
-          <div class="mb-2">
-            <label>프로필 이미지</label>
-            {{ form.profile_image }}
+            {{ form.as_p }}
           </div>
         </div>
         <input type="submit" value='회원정보 수정' class="btn btn-success mb-2" style="width:100%; padding:10px; font-size: 21px;">
