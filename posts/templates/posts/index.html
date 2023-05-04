@@ -1,46 +1,41 @@
 {% extends "base.html" %}
 {% load static %}
 {% block style %}
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  @font-face {
-    font-family: 'establishRetrosansOTF';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
+section {
+  height : 120vh
+}
 
-  section {
-    height : 120vh
-  }
+p > a {
+  text-decoration: none;
+  color: inherit;
+}
 
-  p > a {
-    text-decoration: none;
-    color: inherit;
-  }
 
-  .button-container {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-    margin: 0 auto;
-  }
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+}
 
-  .button {
-    flex-shrink: 0;
-    margin-left: 10px;
-  }
+.button {
+  flex-shrink: 0;
+  margin-left: 10px;
+}
 
-  footer {
-    padding: 2rem;
-    background-color: rgb(65, 55, 48);
-    font-size: 15px;
-  }
+footer {
+  padding: 2rem;
+  background-color: rgb(65, 55, 48);
+  font-size: 15px;
+}
+
 {% endblock style %}
 
 {% block title %}onClickTravel{% endblock title %}
@@ -57,7 +52,7 @@
     <div class="row d-flex justify-content-center align-items-center" style="width:90%;">
       {% for post in posts %}
       <div class='col-6 col-sm-6 col-md-4 col-lg-4 col-xxl-2 d-flex justify-content-center'>
-        <div class="card m-2" style="width:15rem;">
+        <div class="card m-2" style="width:15rem; height:300px">
           <a class="d-flex justify-content-center" href="{% url 'posts:detail' post.pk %}">
             {% if post.post_image %}
               <img style="width: 140px; height: 150px;" class='mt-2 d-flex justify-content-center' src=" {{post.post_image.url}} " alt="movie_img">
