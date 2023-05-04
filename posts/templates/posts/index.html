@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block style %}
-  * {
+  {% comment %} * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -40,7 +40,7 @@
     padding: 2rem;
     background-color: rgb(65, 55, 48);
     font-size: 15px;
-  }
+  } {% endcomment %}
 {% endblock style %}
 
 {% block title %}onClickTravel{% endblock title %}
