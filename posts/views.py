@@ -44,6 +44,8 @@ def index(request):
     post_likes = [post.like_users.count() for post in posts]
     total_likes = sum(post_likes)
     ratios = []
+    likes_order_posts = Post.objects.annotate(like_count=Count('like_users')).order_by('-like_count')
+    posts_with_images = likes_order_posts.exclude(post_image__exact='')
     if total_likes > 0:
         ratios = [like_count / total_likes for like_count in post_likes]
     for post in posts:
@@ -59,6 +61,7 @@ def index(request):
         'ratios': ratios,
         'color_dict': color_dict, 
         'color_list': color_list,
+        'posts_with_images': posts_with_images,
     }
     return render(request, 'posts/index.html', context)
 

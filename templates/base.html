@@ -19,8 +19,14 @@
         font-weight: normal;
         font-style: normal;
       }
+      @media (max-width: 560px) {
+        .user_hidden {
+          display: none;
+        }
+      }
+      {% block style %}
+      {% endblock style%}
     </style>
-    {% block style %}{% endblock style%}
   </head>
 
   <body>
@@ -37,29 +43,30 @@
               </div>
             </a>
           </div>
-          <div class="h p-0 col-10 d-flex justify-content-end">
-            {% if user.is_authenticated %}
-              <div class="h mt-4 pt-2 m-0 me-3 pe-1 hidden justify-content-center text-center align-items-center">
+            <div class="h p-0 col-10 d-flex justify-content-end">
+              {% if user.is_authenticated %}
+              <div class="user_hidden h mt-4 pt-2 m-0 me-3 pe-1 hidden justify-content-center text-center align-items-center">
                 <a class="h link-success link-underline-light m-1 text-center align-items-center" style="text-decoration-line:none;" href="{% url 'accounts:profile' user %}">
                   {{ user }}
                 </a>
               </div>
               <form class="text-white" action="{% url 'accounts:logout' %}" method="POST">
                 {% csrf_token %}
-                <a href="{% url 'accounts:update' %}" class="button btn btn-outline-success me-1 mt-4 ">회원정보 수정</a>
+                <a href="{% url 'accounts:update' %}"  class="button btn btn-outline-success me-1 mt-4 ">회원정보 수정</a>
                 <input class="button btn btn-outline-success mt-4" type="submit" value="로그아웃">
               </form>
-            {% else %}
+              {% else %}
               <div class="h p-0 col-6 d-flex align-items-center justify-content-end">
                 <a href="{% url 'accounts:login' %}" class="button btn btn-outline-success ms-3 me-2 mt-4">로그인</a>
-                <a href="{% url 'accounts:signup' %}" class="button btn btn-outline-success me-2 mt-4">회원가입</a>
+                <a href="{% url 'accounts:signup' %}" class="button btn btn-outline-success me-2 mt-4">회원가입</a> 
               </div>
-            {% endif %}
+              {% endif %}
+            </div>           
           </div>
         </div>
-      </div>
-    </nav>
-    {% block content %}{% endblock content %}
+      </nav>
+    {% block content %}
+    {% endblock content %}
     <!-- Footer -->
     <footer style="position: sticky; background-color: rgb(65, 55, 48); margin-top: 150px; padding: 20px;
         font-size: 15px;">
