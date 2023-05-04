@@ -4,6 +4,7 @@ from .models import Post, Review
 from .forms import PostForm, ReviewForm
 from django.db.models import Count
 import googlemaps
+from django.contrib.auth import get_user_model
 
 colors = [
     'rgba(255, 99, 132, 0.7)',

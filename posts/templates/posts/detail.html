@@ -59,32 +59,30 @@
 
 {% block content %}
 
+<div class="container">  
   <hr>
-
-  <h1>{{post.name}} ( {{ post.address }} )</h1>
   <p>작성자:<a href="{% url 'accounts:profile' post.user.username %}">{{ post.user }}</a></p> 
   {% comment %} profile로 이동하는 링크 걸어야 함 {% endcomment %}
-    
   <br>
-
   <!-- 이미지 -->
-  <div class="container">  
-    <div class="row border rounded w-50">
-      <div class="col-sm-3">
-        {% if post.post_image %}
-          <img src="{{ post.post_image.url }}" alt="post_image">
-        {% endif %}
-      </div>
+  <div class="row border rounded w-50">
+    <div class="col-sm-3">
+      {% if post.post_image %}
+      <img src="{{ post.post_image.url }}" alt="post_image">
+      {% endif %}
     </div>
   </div>
+  <!-- 이미지 -->
 
+  <!-- 이름 -->
+  <h1>{{post.name}} ( {{ post.address }} )</h1>
   <hr>
+  <!-- 이름 -->
+
 
   <h2 class='my-4'>관광 명소 설명</h2> <br>
   <h4>{{ post.description }}</h4>
-
   <hr>
-
   <h2 class='my-4'>관광 명소 종류</h2>
   <h3>
     {% if post.price == 0 %}
@@ -147,6 +145,7 @@
   </h3>
   {% comment %} 저작권 표기 - eyJjb2xJZCI6eyJJRCI6MSwibmFtZSI6Ilx1YjBiNCBcdWM1NDRcdWM3NzRcdWNmNTggXHVjZWVjXHViODA5XHVjMTU4IiwiYm9va21hcmtfaWQiOjMxMjAyMDI5LCJjcmVhdGVkIjoxNjgzMTgwNDE4LCJ1cGRhdGVkIjoxNjgzMTgwNjUyLCJhY3RpdmUiOjEsInNvdXJjZSI6InJlbW90ZSIsIm9yZGVyIjowLCJjb2xvciI6IjAwMDAwMCIsInN0YXR1cyI6MX0sImNvbEJvb2ttYXJrSWQiOlt7ImlkIjozMTI3MzQ4LCJuYW1lIjoiaWNvbi0zMTI3MzQ4IiwiY29sb3IiOiIjMDAwMDAwIiwicHJlbWl1bSI6IjAiLCJzb3J0IjoxfSx7ImlkIjo0MDk5MDYyLCJuYW1lIjoiaWNvbi00MDk5MDYyIiwiY29sb3IiOiIjMDAwMDAwIiwicHJlbWl1bSI6IjAiLCJzb3J0IjoyfSx7ImlkIjo0Mzc1MjIsIm5hbWUiOiJpY29uLTQzNzUyMiIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6M30seyJpZCI6NjYzMzMxOCwibmFtZSI6Imljb24tNjYzMzMxOCIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6NH0seyJpZCI6MjkxOTU5LCJuYW1lIjoiLSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6NX0seyJpZCI6MjYyMjU4NywibmFtZSI6Imljb24tMjYyMjU4NyIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6Nn0seyJpZCI6MTI1OTcxOCwibmFtZSI6Imljb24tMTI1OTcxOCIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6N30seyJpZCI6ODcwNzgzOSwibmFtZSI6Imljb24tODcwNzgzOSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6OH0seyJpZCI6NTAzNTk1OSwibmFtZSI6Imljb24tNTAzNTk1OSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6OX0seyJpZCI6NzIyNDAxMSwibmFtZSI6Imljb24tNzIyNDAxMSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6MTB9LHsiaWQiOjQ5MjMwOTAsIm5hbWUiOiIiLCJjb2xvciI6IiMwMDAwMDAiLCJwcmVtaXVtIjowLCJzb3J0IjoxMX1dfQ=={% endcomment %}
   <hr>
+  <!-- 시설 -->
 
   {% if request.user == post.user %}
     <form action="{% url 'posts:delete' post.pk %}" method="POST">
@@ -156,23 +155,44 @@
     </form>
   {% endif %}
 
-  <hr>
-
+  <!-- 후기 -->
   {% for review in reviews %}
-    <h4>{{ review.user }}</h4>
-    <p>{{ review.created_at }}</p>
-    <p>리뷰:
-      {{ review.review }}</p>
-    <p>접근성:
-      {{ review.accessibility }}</p>
-    <p>비용:
-      {{ review.cost }}</p>
-    <p>서비스:
-      {{ review.service }}</p>
-    <p>편의시설:
-      {{ review.convenience_facilities }}</p>
-    <p>만족도:
-      {{ review.satisfaction }}</p>
+    <div class="row">
+      <div class="col">
+        <p>접근성:
+          {{ review.accessibility }}</p>
+        <p>비용:
+          {{ review.cost }}</p>
+        <p>서비스:
+          {{ review.service }}</p>
+      </div>
+      <div class="col">
+        <p>편의시설:
+          {{ review.convenience_facilities }}</p>
+        <p>만족도:
+          {{ review.satisfaction }}</p>
+      </div>
+    </div>
+
+    <div class="row justify-content-start">
+      {% if review.profile_image %}
+        <img src="{{ person.profile_image.url }}" alt="post_image" class="col-4 rounded-circle profile-img w-50">
+      {% else %}
+        <img src="https://i.pinimg.com/564x/dc/93/f7/dc93f70b6620fc090ef6d1249f01f55a.jpg" alt="no_image" class="col-4 rounded-circle profile-img">
+      {% endif %}
+
+      <div class="col-6">
+        <p>{{ review.user }}</p>
+        <p>작성일:{{ review.created_at }}</p>
+    </div>
+
+      <div>
+        {% if review.review_image %}
+        <img src="{{ review.review_image.url }}" alt="review_image">
+        {% endif %}
+      </div>
+      <p>{{ review.review }}</p>
+    </div>
 
     {% if review.review_image %}
       <img src="{{ review.review_image.url }}" alt="review_image">
@@ -181,16 +201,9 @@
     {% if request.user == review.user %}
       <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
     {% endif %}
-
-    <p>리뷰: {{ review.review }}</p>
-    <p>접근성: {{ review.accessibility }}</p>
-    <p>비용: {{ review.cost }}</p>
-    <p>서비스: {{ review.service }}</p>
-    <p>편의시설: {{ review.convenience_facilities }}</p>
-    <p>만족도: {{ review.satisfaction }}</p>
-
-    <hr>
   {% endfor %}
+  <!-- 후기 -->
+
 
   {% if user.is_authenticated %}
     <button class="btn btn-primary ms-1 me-1 mt-3">
@@ -205,18 +218,17 @@
         </form>
       </div>
     </div>
-  {% else %}
+    
+    {% else %}
     <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
-  {% endif %}
+    {% endif %}
+    
+    
+    <!-- 위치 -->
+    <h4> 숙소 위치 </h4>
+    <div id="map" style="height: 600px;"></div>
+  </div>
 
-  {% comment %}
-  <script>defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAd9M3rcxiyzS9IxbErxaMv45mw94kQFxY&callback=initMap"
-    ></script>
-    <script src="{% static 'js/base.js' %}"></script>
-    {% endcomment %}
-
-{% endblock content %}
-{% block script %}
   <script>
   const place = "{{ location }}".replace(/&#x27;/g, "\"");
   const places = JSON.parse(place)
@@ -233,4 +245,9 @@
     });
   }
   </script>
-{% endblock script %}
+{% comment %}
+<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAd9M3rcxiyzS9IxbErxaMv45mw94kQFxY&callback=initMap">
+</script>
+{% endcomment %}
+{% endblock content %}
+

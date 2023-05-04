@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from accounts.models import User
 
 class Post(models.Model):
     name = models.CharField(max_length=140)
