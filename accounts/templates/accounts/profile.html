@@ -56,7 +56,9 @@
 
         <div class="row justify-content-start align-items-center my-1">
           <!-- 사용자 이름 -->
-          <h1 class="col-4 px-3">{{ user.username }}</h1>
+
+          <h1 class="col-2 mx-3 text-center">{{ person.username }}</h1>
+
           <!-- 팔로우 버튼 / 회원정보 수정 버튼 -->
           <div class="col-6">
             {% if request.user.is_authenticated %}

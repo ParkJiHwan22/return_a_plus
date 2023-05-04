@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block style %}
+
   <style>
     * {
       margin: 0;
@@ -23,11 +24,18 @@
       margin: 0 auto;
     }
 
+  footer {
+    padding: 2rem;
+    background-color: rgb(65, 55, 48);
+    font-size: 15px;
+  }
+
     .button {
       flex-shrink: 0;
       margin-left: 10px;
     }
   </style>
+
 {% endblock style %}
 
 {% block title %}onClickTravel{% endblock title %}

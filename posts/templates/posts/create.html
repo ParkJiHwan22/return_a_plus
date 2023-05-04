@@ -10,7 +10,7 @@ Create
 <form action="{% url 'posts:create' %}" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
-  <input type="submit" value="게시글 작성">
+  <input type="submit" class="btn btn-primary" value="게시글 작성">
 </form>
 
 {% endblock content %}

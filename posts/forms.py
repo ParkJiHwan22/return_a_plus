@@ -1,6 +1,16 @@
 from django import forms
 from .models import Post, Review
 
+POST_ADDRESS_CHOICES = (
+        ("서울", "서울"),("경기", "경기"),("대구", "대구"),
+        ("부산", "부산"),("광주", "광주"),("대전", "대전"),
+        ("인천", "인천"),("경기", "경기"),("충북", "충북"),
+        ("충남", "충남"),("전북", "전북"),("전남", "전남"),
+        ("경북", "경북"),("경남", "경남"),("제주", "제주"),
+)
+
+
+
 class PostForm(forms.ModelForm):
     name = forms.CharField(
         label='관광지 이름',
@@ -28,6 +38,20 @@ class PostForm(forms.ModelForm):
             }
         )
     )
+
+    category = forms.CharField(
+        label="카테고리",
+        widget=forms.Select(choices=POST_ADDRESS_CHOICES)
+    )
+    
+    price = forms.CharField(
+        label='가격(성인 기준)',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
     
     description = forms.CharField(
         label= '관광지 설명',
@@ -45,16 +69,58 @@ class PostForm(forms.ModelForm):
         required=False,
     )
 
+
+    checkbox1 = forms.BooleanField(required=False, label='문화 및 역사 유적지')
+    checkbox2 = forms.BooleanField(required=False, label='자연 경관')
+    checkbox3 = forms.BooleanField(required=False, label='테마파크')
+    checkbox4 = forms.BooleanField(required=False, label='어드벤처 및 스포츠')
+    checkbox5 = forms.BooleanField(required=False, label ='축제 및 이벤트')
+    checkbox6 = forms.BooleanField(required=False, label='먹거리')
+    checkbox7 = forms.BooleanField(required=False, label='쇼핑')
+    checkbox8 = forms.BooleanField(required=False, label='가족 나들이')
+    checkbox9 = forms.BooleanField(required=False, label='데이트 코스')
+    checkbox10 = forms.BooleanField(required=False, label = '셀카 명소')
+    
+    
+    
     class Meta:
         model = Post
         fields = (
             "post_image",
             "name",
             "city",
-            "address", 
-            "description",  
-        )
+            "address",
 
+            "category", 
+
+            "price", 
+            "description",
+            "checkbox1",
+            "checkbox2",
+            "checkbox3",
+            "checkbox4",
+            "checkbox5",
+            "checkbox6",
+            "checkbox7",
+            "checkbox8",
+            "checkbox9",
+            "checkbox10",
+        )
+        
+        widgets = {
+            'checkbox1': forms.CheckboxInput(),
+            'checkbox2': forms.CheckboxInput(),
+            'checkbox3': forms.CheckboxInput(),
+            'checkbox4': forms.CheckboxInput(),
+            'checkbox5': forms.CheckboxInput(),
+            'checkbox6': forms.CheckboxInput(),
+            'checkbox7': forms.CheckboxInput(),
+            'checkbox8': forms.CheckboxInput(),
+            'checkbox9': forms.CheckboxInput(),
+            'checkbox10': forms.CheckboxInput(),
+        }
+
+    
 
 REVIEW_POINT_CHOICES = (
         ("★☆☆☆☆ (1/5)", "★☆☆☆☆ (1/5)"),
