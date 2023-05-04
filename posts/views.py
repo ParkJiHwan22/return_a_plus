@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Post, Review
+from accounts.models import User
 from .forms import PostForm, ReviewForm
 from django.db.models import Count
 import googlemaps
+from django.contrib.auth import get_user_model
 
 colors = [
     'rgba(255, 99, 132, 0.7)',
@@ -34,6 +36,7 @@ colors = [
 color_dict = {}
 color_index = 0
 
+
 # Create your views here.
 def index(request):
     global color_index
@@ -62,6 +65,7 @@ def index(request):
     }
     return render(request, 'posts/index.html', context)
 
+
 @login_required
 def create(request):
     if request.method == "POST":
@@ -74,7 +78,7 @@ def create(request):
     else:
         form = PostForm()
     context = {
-        'form':form
+        'form':form,
     }
     return render(request, 'posts/create.html', context)
 
@@ -82,6 +86,8 @@ def create(request):
 def detail(request, posts_pk):
     post = Post.objects.get(pk=posts_pk)
     reviews = post.review_set.all()
+    users = get_user_model()
+    person = User.objects.get(username=request.user)
     review_form = ReviewForm(request.POST, request.FILES)
     my_key = "AIzaSyAd9M3rcxiyzS9IxbErxaMv45mw94kQFxY"
     maps = googlemaps.Client(key=my_key)
@@ -94,9 +100,11 @@ def detail(request, posts_pk):
         'post': post,
         'review_form': review_form,
         'reviews': reviews,
-        'location':location
+        'location':location,
+        'person':person,
     }
     return render(request, 'posts/detail.html', context,)
+
 
 @login_required
 def delete(request, posts_pk):
@@ -104,6 +112,7 @@ def delete(request, posts_pk):
     if post.user == request.user:
         post.delete()
     return redirect('posts:index')
+
 
 @login_required
 def update(request, posts_pk):
@@ -122,6 +131,7 @@ def update(request, posts_pk):
         return render(request, 'posts/update.html', context)
     else:
         return redirect('posts:detail', post.pk)
+
 
 @login_required
 def review_create(request, posts_pk):
@@ -156,5 +166,7 @@ def like(request, post_pk):
         post.like_users.add(request.user)
     return redirect('posts:index')
 
-def about_us(request):
-    return render(request, 'posts/about_us.html')
+
+def Our_Service(request):
+    return render(request, 'posts/Our_Service.html')
+

@@ -119,7 +119,7 @@ class CustomUserChangeForm(UserChangeForm):
             }
         ),
     )
-    status_message = forms.ImageField(
+    status_message = forms.CharField(
         label='상태 메세지',
         widget=forms.TextInput(
             attrs={
@@ -128,6 +128,9 @@ class CustomUserChangeForm(UserChangeForm):
             }
         ),
     )
+
+    password = None
+
     class Meta:
         model = get_user_model()
         fields = (

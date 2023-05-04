@@ -1,6 +1,6 @@
 $(function(){ 
 
-  $("button").click(function(){
+  $(".test").click(function(){
     $(".modal").fadeIn();
   });
 
