@@ -1,6 +1,16 @@
 from django import forms
 from .models import Post, Review
 
+POST_ADDRESS_CHOICES = (
+        ("서울", "서울"),("경기", "경기"),("대구", "대구"),
+        ("부산", "부산"),("광주", "광주"),("대전", "대전"),
+        ("인천", "인천"),("경기", "경기"),("충북", "충북"),
+        ("충남", "충남"),("전북", "전북"),("전남", "전남"),
+        ("경북", "경북"),("경남", "경남"),("제주", "제주"),
+)
+
+
+
 class PostForm(forms.ModelForm):
     name = forms.CharField(
         label='관광지 이름',
@@ -27,6 +37,11 @@ class PostForm(forms.ModelForm):
                 'class': 'form-control'
             }
         )
+    )
+
+    category = forms.CharField(
+        label="카테고리",
+        widget=forms.Select(choices=POST_ADDRESS_CHOICES)
     )
     
     price = forms.CharField(
@@ -75,6 +90,9 @@ class PostForm(forms.ModelForm):
             "name",
             "city",
             "address",
+
+            "category", 
+
             "price", 
             "description",
             "checkbox1",
