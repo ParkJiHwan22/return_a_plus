@@ -119,8 +119,8 @@
     </div>
 
     <div class="row justify-content-start">
-      {% if review.profile_image %}
-        <img src="{{ review.profile_image.url }}" alt="post_image" class="col-4 rounded-circle profile-img w-50">
+      {% if person.profile_image %}
+        <img src="{{ person.profile_image.url }}" alt="post_image" class="col-4 rounded-circle profile-img w-50">
       {% else %}
         <img src="https://i.pinimg.com/564x/dc/93/f7/dc93f70b6620fc090ef6d1249f01f55a.jpg" alt="no_image" class="col-4 rounded-circle profile-img">
       {% endif %}

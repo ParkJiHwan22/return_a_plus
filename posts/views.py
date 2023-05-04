@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Post, Review
+from accounts.models import User
 from .forms import PostForm, ReviewForm
 from django.db.models import Count
 import googlemaps
@@ -80,6 +81,8 @@ def create(request):
 def detail(request, posts_pk):
     post = Post.objects.get(pk=posts_pk)
     reviews = post.review_set.all()
+    users = get_user_model()
+    person = User.objects.get(username=request.user)
     review_form = ReviewForm(request.POST, request.FILES)
     my_key = "AIzaSyAd9M3rcxiyzS9IxbErxaMv45mw94kQFxY"
     maps = googlemaps.Client(key=my_key)
@@ -92,7 +95,8 @@ def detail(request, posts_pk):
         'post': post,
         'review_form': review_form,
         'reviews': reviews,
-        'location':location
+        'location':location,
+        'person':person,
     }
     return render(request, 'posts/detail.html', context,)
 
