@@ -5,7 +5,10 @@
     .profile-title {
       display: flex;
       flex-flow: row;
-      align-items: center;
+    }
+
+    .info {
+      padding-bottom: 10px;
     }
 
     .post-block {
@@ -15,32 +18,47 @@
       justify-content: center;
     }
 
+    .bg-img {
+      position: absolute;
+      background-size: cover;
+      opacity: 0.33;
+      /*width: 200%;*/
+      height: 100%;
+      z-index: -3;
+    }
+
     .profile-img {
-      width: 30vh;
+      border: 0.5rem red;
+      width: 25%;
       margin-right: 3rem;
     }
   </style>
 {% endblock style%}
+{% block title %}
+  mypage
+{% endblock title %}
 {% block content %}
+  <div class="bg-img">
+    <img src="{% static '/img/profile_bg.jpg' %}" alt="profil_background_image">
+  </div>
   <div class="container">
-
     <!-- 사용자 프로필 정보 -->
-    <div class="align-items-center profile-title">
+    <div class="align-items-start profile-title ">
       <!-- 프로필 이미지 -->
 
       {% if person.profile_image %}
         <img src="{{ person.profile_image.url }}" alt="post_image" class="col-4 rounded-circle profile-img">
       {% else %}
-        <img src="https://i.pinimg.com/564x/dc/93/f7/dc93f70b6620fc090ef6d1249f01f55a.jpg" alt="no_image" class="col-4 rounded-circle profile-img">
+        <img src="https://i.pinimg.com/564x/d2/98/4e/d2984ec4b65a8568eab3dc2b640fc58e.jpg" alt="no_image" class="col-4 rounded-circle profile-img">
       {% endif %}
 
       <div class="col-8">
 
-        <div class="row align-items-center">
+        <div class="row justify-content-start align-items-center my-1">
           <!-- 사용자 이름 -->
-          <h1 class="col-2 mx-3 text-center">{{ user.username }}</h1>
+          <h1 class="col-4 px-3">{{ user.username }}</h1>
           <!-- 팔로우 버튼 / 회원정보 수정 버튼 -->
-          <div class="col-8">
+          <div class="col-6">
             {% if request.user.is_authenticated %}
               {% if user.username != person.username %}
                 {% if request.user in person.followers.all %}
@@ -61,53 +79,54 @@
         </div>
 
         <!-- 팔로잉 / 팔로워 / 맞팔 목록 -->
-        <div class="col-8">
-          <div class="row justify-content-end mt-3 ms-1">
-            <div class="col">
-              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-                팔로잉
-                {{ person.followings.all|length }}
-                명
-              </button>
-            </div>
-            <div class="col">
-              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                팔로워
-                <span id="followers-count">{{ person.followers.all|length }}</span>
-                명
-              </button>
-            </div>
-            <div class="col">
-              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal3">
-                맞팔 목록
-              </button>
-            </div>
+        <div class="row row-cols-auto align-items-center my-1">
+          <div class="col-4">
+            <div></div>
+          </div>
+
+          <div class="col">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+              팔로잉
+              {{ person.followings.all|length }}
+              명
+            </button>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+              팔로워
+              <span id="followers-count">{{ person.followers.all|length }}</span>
+              명
+            </button>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+              맞팔 목록
+            </button>
           </div>
         </div>
 
         <!-- 사용자 정보 -->
-        <div class="col p-3">
-          <div class="col">
-            <h4>
-              닉네임:
+        <div class="mt-3">
+          <div class="col info">
+            <h3>
               {{ person.nickname }}
-            </h4>
+            </h3>
           </div>
-          <div class="col">
+          <div class="col info">
             <h4>
-              이메일:
               {{ person.email }}
             </h4>
           </div>
-          <div class="col">
-            <h4>
-              상태 메세지:
-            </h4>
-            {{ person.status_message }}
+          <div class="col info">
+            <h5>
+              {% if person.status_message %}
+                {{ person.status_message }}
+              {% else %}
+                <p>상태메세지를 입력해주세요 :)</p>
+              {% endif %}
+            </h5>
           </div>
-          <div class="row justify-content-end mt-3 ms-1"></div>
         </div>
-
       </div>
     </div>
 
@@ -116,10 +135,9 @@
     <div class="m-1 col">
       <!-- 사용자가 작성한 게시글 -->
       <div class="col">
-        <h1 class="m-3">게시글</h1>
-        <hr>
+        <h1 class="mt-3 px-5 py-3">게시글</h1>
         {% for post in person.post_set.all %}
-          <div class="card mb-3 mx-5" style="max-width: 90%;">
+          <div class="card m-4" style="max-width: 90%;">
             <div class="row g-0">
               <div class="col-2">
                 {% if post.post_image %}
@@ -135,11 +153,12 @@
                       {{ post.name }}
                     </a>
                   </h2>
-                  <p class="card-text">{{ post.description }}</p>
-                  <p class="card-text">
-                    <small class="text-body-secondary">no.
-                      {{ post.pk }}</small>
-                  </p>
+                  <p class="card-text">{{ post.address }}</p>
+                  <p class="card-text">{{ post.description | truncatewords:40 }}</p>
+                  <div class="align-self-start">
+                    💚
+                    {{ post.like_users.count }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -149,13 +168,13 @@
       </div>
       <hr>
 
-      <!-- 사용자가 좋아요 한 시설 -->
-      <div class="row-3">
-        <div class="row">
-          <h2>좋아요</h2>
+      <div class="m-1 col">
+        <!-- 사용자가 좋아요 한 시설 -->
+        <div class="col">
+          <h1 class="mt-3 px-5 py-3">좋아요</h1>
           {% for post in person.like_posts.all %}
             <a href="{% url 'posts:detail' post.pk %}" style="text-decoration: none;">
-              <div class="card mb-3 mx-5" style="max-width: 90%;">
+              <div class="card m-4" style="max-width: 90%;">
                 <div class="row g-0">
                   <div class="col-2">
                     {% if post.post_image %}
@@ -169,8 +188,9 @@
                       <h2 class="card-title">
                         {{ post.name }}
                       </h2>
-                      <p class="card-text">{{ post.description }}</p>
-                      <div class="text-center align-self-start">
+                      <p class="card-text">{{ post.address }}</p>
+                      <p class="card-text">{{ post.description | truncatewords:40 }}</p>
+                      <div class="align-self-start">
                         💚
                         {{ post.like_users.count }}
                       </div>
@@ -186,9 +206,9 @@
 
       <!-- 사용자가 작성한 리뷰 -->
       <div class="row-3">
-        <h2>리뷰</h2>
+        <h1 class="mt-3 px-5 py-3">리뷰</h1>
         {% for revieww in reviews_set.all %}
-          <div class="card mb-3 mx-5" style="max-width: 90%;">
+          <div class="card m-4" style="max-width: 90%;">
             <div class="row g-0">
               <div class="col-2">
                 {% if revieww.post_image %}
@@ -204,11 +224,12 @@
                       {{ revieww.review }}
                     </a>
                   </h2>
-                  <p class="card-text">{{ revieww.description }}</p>
-                  <p class="card-text">
-                    <small class="text-body-secondary">no.
-                      {{ revieww.pk }}</small>
-                  </p>
+                  <p class="card-text">{{ post.address }}</p>
+                  <p class="card-text">{{ post.description | truncatewords:40 }}</p>
+                  <div class="align-self-start">
+                    💚
+                    {{ post.like_users.count }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -216,10 +237,21 @@
         {% endfor %}
       </div>
     </div>
-    <hr>
-    <!-- 비밀번호 변경 -->
-    <a class="change-passwosrd btn btn-success" style="width:100%; padding:10px; font-size: 22px;" on-click='func()' href="{% url 'accounts:change_password' %}">비밀번호 변경</a>
-    <!-- 회원 탈퇴-->
+    <div class="col p-3">
+      <!-- 비밀번호 변경 -->
+      <div class="row py-2">
+        <a class="col change-passwosrd btn btn-success" style="width:100%; padding:10px; font-size: 22px;" on-click='func()' href="{% url 'accounts:change_password' %}">
+          비밀번호 변경
+        </a>
+      </div>
+
+      <!-- 회원 탈퇴-->
+      <div class="row">
+        <a class="col change-passwosrd btn btn-success" style="width:100%; padding:10px; font-size: 22px;" on-click='func()' href="{% url 'accounts:change_password' %}">
+          회원 탈퇴
+        </a>
+      </div>
+    </div>
 
     <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -280,52 +312,53 @@
       </div>
     </div>
   </div>
+</div>
 
 {% endblock content %}
 
 {% block script %}
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script>
-    const form = document.querySelector('#follow-form')
-    const csrftoken = document
-      .querySelector('[name=csrfmiddlewaretoken]')
-      .value
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const form = document.querySelector('#follow-form')
+  const csrftoken = document
+    .querySelector('[name=csrfmiddlewaretoken]')
+    .value
 
-      form
-      .addEventListener('submit', function (event) {
-        event.preventDefault()
+    form
+    .addEventListener('submit', function (event) {
+      event.preventDefault()
 
-        const userId = event
-          .target
-          .dataset
-          .userId
+      const userId = event
+        .target
+        .dataset
+        .userId
 
-          axios({
-            method: 'post',
-            url: `/accounts/${userId}/follow/`,
-            headers: {
-              'X-CSRFToken': csrftoken
-            }
-          })
-          .then((response) => {
-            // console.log(response.data)
-            const isFollowed = response.data.is_followed
-            const followBtn = document.querySelector('#follow-form > input[type=submit]')
-            if (isFollowed === true) {
-              followBtn.value = '언팔로우'
-            } else {
-              followBtn.value = '팔로우'
-            }
+        axios({
+          method: 'post',
+          url: `/accounts/${userId}/follow/`,
+          headers: {
+            'X-CSRFToken': csrftoken
+          }
+        })
+        .then((response) => {
+          // console.log(response.data)
+          const isFollowed = response.data.is_followed
+          const followBtn = document.querySelector('#follow-form > input[type=submit]')
+          if (isFollowed === true) {
+            followBtn.value = '언팔로우'
+          } else {
+            followBtn.value = '팔로우'
+          }
 
-            const followingCountTag = document.querySelector('#followings-count')
-            const followerCountTag = document.querySelector('#followers-count')
+          const followingCountTag = document.querySelector('#followings-count')
+          const followerCountTag = document.querySelector('#followers-count')
 
-            const followingsCountData = response.data.followings_count
-            const followersCountData = response.data.followers_count
+          const followingsCountData = response.data.followings_count
+          const followersCountData = response.data.followers_count
 
-            followingCountTag.textContent = followingsCountData
-            followerCountTag.textContent = followersCountData
-          })
-      })
-  </script>
+          followingCountTag.textContent = followingsCountData
+          followerCountTag.textContent = followersCountData
+        })
+    })
+</script>
 {% endblock script %}

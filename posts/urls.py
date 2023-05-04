@@ -15,5 +15,5 @@ urlpatterns = [
         name='review_delete',
     ),
     path('<int:post_pk>/like/', views.like, name='like'),
-    path('about_us/', views.about_us, name='about_us'),
+    path('Our_Service/', views.Our_Service, name='Our_Service'),
 ]
