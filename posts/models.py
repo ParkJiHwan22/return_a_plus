@@ -13,6 +13,17 @@ class Post(models.Model):
     address = models.CharField(max_length=80)
     post_image = models.ImageField(blank=True, upload_to='post_images/')
 
+    checkbox1 = models.BooleanField(default=False)
+    checkbox2 = models.BooleanField(default=False)
+    checkbox3 = models.BooleanField(default=False)
+    checkbox4 = models.BooleanField(default=False)
+    checkbox5 = models.BooleanField(default=False)
+    checkbox6 = models.BooleanField(default=False)
+    checkbox7 = models.BooleanField(default=False)
+    checkbox8 = models.BooleanField(default=False)
+    checkbox9 = models.BooleanField(default=False)
+    checkbox10 = models.BooleanField(default=False)
+
 
 class Review(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

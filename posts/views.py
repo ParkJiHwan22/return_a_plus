@@ -36,6 +36,7 @@ colors = [
 color_dict = {}
 color_index = 0
 
+
 # Create your views here.
 def index(request):
     global color_index
@@ -61,6 +62,7 @@ def index(request):
     }
     return render(request, 'posts/index.html', context)
 
+
 @login_required
 def create(request):
     if request.method == "POST":
@@ -73,7 +75,7 @@ def create(request):
     else:
         form = PostForm()
     context = {
-        'form':form
+        'form':form,
     }
     return render(request, 'posts/create.html', context)
 
@@ -100,12 +102,14 @@ def detail(request, posts_pk):
     }
     return render(request, 'posts/detail.html', context,)
 
+
 @login_required
 def delete(request, posts_pk):
     post = Post.objects.get(pk=posts_pk)
     if post.user == request.user:
         post.delete()
     return redirect('posts:index')
+
 
 @login_required
 def update(request, posts_pk):
@@ -124,6 +128,7 @@ def update(request, posts_pk):
         return render(request, 'posts/update.html', context)
     else:
         return redirect('posts:detail', post.pk)
+
 
 @login_required
 def review_create(request, posts_pk):
@@ -157,6 +162,7 @@ def like(request, post_pk):
     else:
         post.like_users.add(request.user)
     return redirect('posts:index')
+
 
 def about_us(request):
     return render(request, 'posts/about_us.html')
