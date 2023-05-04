@@ -1,44 +1,50 @@
 {% extends "base.html" %}
 {% load static %}
 {% block style %}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-section {
-  height : 120vh
-}
+  @font-face {
+    font-family: 'establishRetrosansOTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
 
-p > a {
-  text-decoration: none;
-  color: inherit;
-}
+  section {
+    height : 120vh
+  }
 
+  p > a {
+    text-decoration: none;
+    color: inherit;
+  }
 
-.button-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-  margin: 0 auto;
-}
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+  }
 
-.button {
-  flex-shrink: 0;
-  margin-left: 10px;
-}
+  .button {
+    flex-shrink: 0;
+    margin-left: 10px;
+  }
 
-footer {
-  padding: 2rem;
-  background-color: rgb(65, 55, 48);
-  font-size: 15px;
-}
-
+  footer {
+    padding: 2rem;
+    background-color: rgb(65, 55, 48);
+    font-size: 15px;
+  }
 {% endblock style %}
 
 {% block title %}onClickTravel{% endblock title %}
+
 {% block content %}
   <div class="row ms-5 mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:90%;">
     <div class="col-11"></div>
@@ -71,23 +77,25 @@ footer {
               {% csrf_token %}
               {% if request.user in post.like_users.all %}
                   <div class="mt-2 d-flex justify-content-between">
-                      <input class="d-flex justify-content-center btn btn-outline-success" type="submit" value="Cancel">
-                      <div class="text-center align-self-center">
-                          💚 {{ post.like_users.count }}
-                      </div>
+                    <input class="d-flex justify-content-center btn btn-outline-success" type="submit" value="Cancel">
+                    <div class="text-center align-self-center">
+                      💚
+                      {{ post.like_users.count }}
+                    </div>
                   </div>
-              {% else %}
+                {% else %}
                   <div class="mt-2 d-flex justify-content-between">
-                      <input class="d-flex justify-content-center btn btn-success" type="submit" value="Like">
-                      <div class="text-center align-self-center">
-                          💚 {{ post.like_users.count }}
-                      </div>
+                    <input class="d-flex justify-content-center btn btn-success" type="submit" value="Like">
+                    <div class="text-center align-self-center">
+                      💚
+                      {{ post.like_users.count }}
+                    </div>
                   </div>
-              {% endif %}
-          </form>     
+                {% endif %}
+              </form>
+            </div>
           </div>
         </div>
-      </div>
       {% endfor %}
     </div>
   </div>
@@ -99,33 +107,36 @@ footer {
       </div>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="{% static 'js/base.js' %}"></script>
-  <script>
-    const ratios = {{ratios|safe}};
-    const colorDict = {{color_dict|safe}};  // 수정된 부분
-    const labels = Array.from(new Set([{% for post in posts %}'{{ post.address }}',{% endfor %}]));
-    const colorList = labels.map(label => colorDict[label]);  // 수정된 부분
-    const canvas = document.getElementById('myChart');
-    const ctx = canvas.getContext('2d');
-    const chart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-        labels: labels,
-        datasets: [{
-            data: ratios,
-            backgroundColor: colorList,
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-            display: true,
-            position: 'bottom'
-        }
-    }
-    });
-  </script>  
 {% endblock content %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/base.js' %}"></script>
+<script>
+  const ratios = {{ratios|safe}};
+  const colorDict = {{color_dict|safe}};  // 수정된 부분
+  const labels = Array.from(new Set([{% for post in posts %}'{{ post.address }}',{% endfor %}]));
+  const colorList = labels.map(label => colorDict[label]);  // 수정된 부분
+  const canvas = document.getElementById('myChart');
+  const ctx = canvas.getContext('2d');
+  const chart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: labels,
+          datasets: [{
+              data: ratios,
+              backgroundColor: colorList,
+              borderWidth: 1
+          }]
+      },
+      options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+              display: true,
+              position: 'bottom'
+          }
+      }
+  });
+</script>
+{% endblock script %}
