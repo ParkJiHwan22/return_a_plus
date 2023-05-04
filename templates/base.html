@@ -20,77 +20,80 @@
         font-weight: normal;
         font-style: normal;
       }
-      {% block style %}
-      {% endblock style%}
+      
     </style>
+    {% block style %}
+    {% endblock style%}
   </head>
   <body>
-    <header>
-      <nav class="sticky-top bg-white text-success-emphasis mb-4 border-success-subtle">
-        <div class="container h p-0">
-          <div class="row d-flex justify-content-between p-1">
-            <div class="h p-0 col-2 d-flex align-items-center justify-content-start">
-              <a class="h ms-3 mt-3 text-success-emphasis d-flex justify-content-start" href="{% url 'posts:index' %}" style="color:#198754;text-decoration-line:none;font-size:large;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#198754" class="bi bi-cursor" viewBox="0 0 16 16">
-                  <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103zM2.25 8.184l3.897 1.67a.5.5 0 0 1 .262.263l1.67 3.897L12.743 3.52 2.25 8.184z"/>
-                </svg>
-                <div class="mt-2 ms-2" style="font-family: 'establishRetrosansOTF'; color:#198754;">
-                  onClickTravel
-                </div>
+    <nav class="sticky-top bg-white text-success-emphasis mb-4 border-success-subtle">
+      <div class="container h p-0">
+        <div class="row d-flex justify-content-between p-1">
+          <div class="h p-0 col-2 d-flex align-items-center justify-content-start">
+            <a class="h ms-3 mt-3 text-success-emphasis d-flex justify-content-start" href="{% url 'posts:index' %}" style="color:#198754;text-decoration-line:none;font-size:large;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#198754" class="bi bi-cursor" viewBox="0 0 16 16">
+                <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103zM2.25 8.184l3.897 1.67a.5.5 0 0 1 .262.263l1.67 3.897L12.743 3.52 2.25 8.184z"/>
+              </svg>
+              <div class="mt-2 ms-2" style="font-family: 'establishRetrosansOTF'; color:#198754;">
+                onClickTravel
+              </div>
+            </a>
+          </div>
+          <div class="h p-0 col-10 d-flex justify-content-end">
+            {% if user.is_authenticated %}
+            <div class="h mt-4 pt-2 m-0 me-3 pe-1 hidden justify-content-center text-center align-items-center">
+              <a class="h link-success link-underline-light m-1 text-center align-items-center" style="text-decoration-line:none;" href="{% url 'accounts:profile' user %}">
+                {{ user }}
               </a>
             </div>
-            <div class="h p-0 col-10 d-flex justify-content-end">
-              {% if user.is_authenticated %}
-              <div class="h mt-4 pt-2 m-0 me-3 pe-1 hidden justify-content-center text-center align-items-center">
-                <a class="h link-success link-underline-light m-1 text-center align-items-center" style="text-decoration-line:none;" href="{% url 'accounts:profile' user %}">
-                  {{ user }}
-                </a>
-              </div>
-              <form class="text-white" action="{% url 'accounts:logout' %}" method="POST">
-                {% csrf_token %}
-                <a href="{% url 'accounts:update' %}"  class="button btn btn-outline-success me-1 mt-4 ">회원정보 수정</a>
-                <input class="button btn btn-outline-success mt-4" type="submit" value="로그아웃">
-              </form>
-              {% else %}
-              <div class="h p-0 col-6 d-flex align-items-center justify-content-end">
-                <a href="{% url 'accounts:login' %}" class="button btn btn-outline-success ms-3 me-2 mt-4">로그인</a>
-                <a href="{% url 'accounts:signup' %}" class="button btn btn-outline-success me-2 mt-4">회원가입</a> 
-              </div>
-
-              {% endif %}
-            </div>           
-          </div>
+            <form class="text-white" action="{% url 'accounts:logout' %}" method="POST">
+              {% csrf_token %}
+              <a href="{% url 'accounts:update' %}"  class="button btn btn-outline-success me-1 mt-4 ">회원정보 수정</a>
+              <input class="button btn btn-outline-success mt-4" type="submit" value="로그아웃">
+            </form>
+            {% else %}
+            <div class="h p-0 col-6 d-flex align-items-center justify-content-end">
+              <a href="{% url 'accounts:login' %}" class="button btn btn-outline-success ms-3 me-2 mt-4">로그인</a>
+              <a href="{% url 'accounts:signup' %}" class="button btn btn-outline-success me-2 mt-4">회원가입</a> 
+            </div>
+            {% endif %}
+          </div>           
         </div>
-      </nav>
-    </header>
-      <section>
-        {% block content %}
-        {% endblock content %}
-    </section>
+      </div>
+    </nav>
+    {% block content %}
+    {% endblock content %}
     <!-- Footer -->
-    <footer>
+    <footer style="position: sticky; background-color: rgb(65, 55, 48); margin-top: 150px; padding: 20px;
+        font-size: 15px;">
       <div class="container">
-        <p class="m-0 text-center text-white">
+        <p class="m-0 text-center text-white" style="text-decoration: none;
+        color: inherit;">
           Copyright &copy; 2023 return A+;
         </p>
         <p class="m-0 text-center text-white">
           Created by
-          <a target="_blank" href="https://github.com/komanduk">
+          <a target="_blank" href="https://github.com/komanduk" style="text-decoration: none;
+        color: inherit;">
             고영진
           </a>
-          <a target="_blank" href="https://github.com/doll2gom">
+          <a target="_blank" href="https://github.com/doll2gom" style="text-decoration: none;
+        color: inherit;">
             김신혜
           </a>
-          <a target="_blank" href="https://github.com/ParkJiHwan22">
+          <a target="_blank" href="https://github.com/ParkJiHwan22" style="text-decoration: none;
+        color: inherit;">
             박지환
           </a>
-          <a target="_blank" href="https://github.com/alotofmilk">
+          <a target="_blank" href="https://github.com/alotofmilk" style="text-decoration: none;
+        color: inherit;">
             장혜연
           </a>
         </p>
       </div>
-
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    {% block script %}
+    {% endblock script %}
   </body>
 </html>
