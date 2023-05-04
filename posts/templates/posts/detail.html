@@ -120,7 +120,7 @@
 
     <div class="row justify-content-start">
       {% if review.profile_image %}
-        <img src="{{ person.profile_image.url }}" alt="post_image" class="col-4 rounded-circle profile-img w-50">
+        <img src="{{ review.profile_image.url }}" alt="post_image" class="col-4 rounded-circle profile-img w-50">
       {% else %}
         <img src="https://i.pinimg.com/564x/dc/93/f7/dc93f70b6620fc090ef6d1249f01f55a.jpg" alt="no_image" class="col-4 rounded-circle profile-img">
       {% endif %}
@@ -137,13 +137,11 @@
       </div>
       <p>{{ review.review }}</p>
     </div>
-
-    {% if review.review_image %}
-      <img src="{{ review.review_image.url }}" alt="review_image">
-    {% endif %}
-
     {% if request.user == review.user %}
-      <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
+    <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="댓글삭제" class="btn btn-primary ms-1 me-1 mt-3 modal_form">
+    </from>
     {% endif %}
   {% endfor %}
   <!-- 후기 -->
@@ -162,7 +160,6 @@
         </form>
       </div>
     </div>
-    
     {% else %}
     <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
     {% endif %}
@@ -189,6 +186,7 @@
     });
   }
   </script>
+  <script src="{% static '/js/base.js' %}"></script>
 {% comment %}
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAd9M3rcxiyzS9IxbErxaMv45mw94kQFxY&callback=initMap">
 </script>
