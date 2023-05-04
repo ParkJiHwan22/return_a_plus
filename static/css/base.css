@@ -1,26 +1,10 @@
 /* base.html */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 @font-face {
   font-family: 'establishRetrosansOTF';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
-
-section {
-  height : 120vh
-}
-
-p > a {
-  text-decoration: none;
-  color: inherit;
-}
-
 
 .button-container {
   display: flex;
@@ -33,10 +17,4 @@ p > a {
 .button {
   flex-shrink: 0;
   margin-left: 10px;
-}
-
-footer {
-  padding: 2rem;
-  background-color: rgb(65, 55, 48);
-  font-size: 15px;
 }

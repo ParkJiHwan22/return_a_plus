@@ -1,49 +1,45 @@
 {% extends "base.html" %}
 {% load static %}
 {% block style %}
-  {% comment %} * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
 
-  @font-face {
-    font-family: 'establishRetrosansOTF';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  section {
-    height : 120vh
-  }
+    @font-face {
+      font-family: 'establishRetrosansOTF';
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff") format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
 
-  p > a {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .button-container {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-    margin: 0 auto;
-  }
-
-  .button {
-    flex-shrink: 0;
-    margin-left: 10px;
-  }
+    .button-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      width: 100%;
+      margin: 0 auto;
+    }
 
   footer {
     padding: 2rem;
     background-color: rgb(65, 55, 48);
     font-size: 15px;
-  } {% endcomment %}
+  }
+
+    .button {
+      flex-shrink: 0;
+      margin-left: 10px;
+    }
+  </style>
+
 {% endblock style %}
 
 {% block title %}onClickTravel{% endblock title %}
+
 {% block content %}
   <div class="row ms-5 mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:90%;">
     <div class="col-11"></div>
@@ -56,43 +52,45 @@
   <div class="container-fluid d-flex justify-content-center">
     <div class="row d-flex justify-content-center align-items-center" style="width:90%;">
       {% for post in posts %}
-      <div class='col-6 col-sm-6 col-md-4 col-lg-4 col-xxl-2 d-flex justify-content-center'>
-        <div class="card m-2" style="width:15rem;">
-          <a class="d-flex justify-content-center" href="{% url 'posts:detail' post.pk %}">
-            {% if post.post_image %}
-              <img style="width: 140px; height: 150px;" class='mt-2 d-flex justify-content-center' src=" {{post.post_image.url}} " alt="movie_img">
-            {% else %}
-              <img style="width: 140px; height: 150px;" class='mt-2 d-flex justify-content-center' src="{% static 'no_image.jpg' %}" alt="no_img">
-            {% endif %}
-          </a>
-          <div class="card-body">
-            <h5 class="card-title text">
-              <a style="color:#198754; text-decoration-line: none;" href="{% url 'posts:detail' post.pk %}">{{ post.city }}</a>
-            </h5>
-            <p class="card-text m-0 text" style="font-size:medium">{{ post.address }}</p>
-            <p class="card-text m-0 text" style="font-size:small">{{ post.user.username }}님의 후기</p>
-            <p class="card-text m-0 text" style="font-size:small">{{ post.user.title }}</p>
-            <form action="{% url 'posts:like' post_pk=post.pk %}" method="POST">
-              {% csrf_token %}
-              {% if request.user in post.like_users.all %}
-                  <div class="mt-2 d-flex justify-content-between">
-                      <input class="d-flex justify-content-center btn btn-outline-success" type="submit" value="Cancel">
-                      <div class="text-center align-self-center">
-                          💚 {{ post.like_users.count }}
-                      </div>
-                  </div>
+        <div class='col-6 col-sm-6 col-md-4 col-lg-4 col-xxl-2 d-flex justify-content-center'>
+          <div class="card m-2" style="width:15rem;">
+            <a class="d-flex justify-content-center" href="{% url 'posts:detail' post.pk %}">
+              {% if post.post_image %}
+                <img style="width: 140px; height: 150px;" class='mt-2 d-flex justify-content-center' src=" {{post.post_image.url}} " alt="movie_img">
               {% else %}
-                  <div class="mt-2 d-flex justify-content-between">
-                      <input class="d-flex justify-content-center btn btn-success" type="submit" value="Like">
-                      <div class="text-center align-self-center">
-                          💚 {{ post.like_users.count }}
-                      </div>
-                  </div>
+                <img style="width: 140px; height: 150px;" class='mt-2 d-flex justify-content-center' src="{% static 'no_image.jpg' %}" alt="no_img">
               {% endif %}
-          </form>     
+            </a>
+            <div class="card-body">
+              <h5 class="card-title text">
+                <a style="color:#198754; text-decoration-line: none;" href="{% url 'posts:detail' post.pk %}">{{ post.city }}</a>
+              </h5>
+              <p class="card-text m-0 text" style="font-size:medium">{{ post.address }}</p>
+              <p class="card-text m-0 text" style="font-size:small">{{ post.user.username }}님의 후기</p>
+              <p class="card-text m-0 text" style="font-size:small">{{ post.user.title }}</p>
+              <form action="{% url 'posts:like' post_pk=post.pk %}" method="POST">
+                {% csrf_token %}
+                {% if request.user in post.like_users.all %}
+                  <div class="mt-2 d-flex justify-content-between">
+                    <input class="d-flex justify-content-center btn btn-outline-success" type="submit" value="Cancel">
+                    <div class="text-center align-self-center">
+                      💚
+                      {{ post.like_users.count }}
+                    </div>
+                  </div>
+                {% else %}
+                  <div class="mt-2 d-flex justify-content-between">
+                    <input class="d-flex justify-content-center btn btn-success" type="submit" value="Like">
+                    <div class="text-center align-self-center">
+                      💚
+                      {{ post.like_users.count }}
+                    </div>
+                  </div>
+                {% endif %}
+              </form>
+            </div>
           </div>
         </div>
-      </div>
       {% endfor %}
     </div>
   </div>
@@ -104,33 +102,49 @@
       </div>
     </div>
   </div>
+{% endblock content %}
+{% block script %}
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="{% static 'js/base.js' %}"></script>
   <script>
-    const ratios = {{ratios|safe}};
-    const colorDict = {{color_dict|safe}};  // 수정된 부분
-    const labels = Array.from(new Set([{% for post in posts %}'{{ post.address }}',{% endfor %}]));
-    const colorList = labels.map(label => colorDict[label]);  // 수정된 부분
-    const canvas = document.getElementById('myChart');
+    const ratios = {
+      {
+        ratios | safe
+      }
+    };
+    const colorDict = {
+      {
+        color_dict | safe
+      }
+    }; // 수정된 부분
+    const labels = Array.from(new Set([
+      {
+      % for post in posts %}'{{ post.address }}', { % endfor %
+      }
+    ]));
+    const colorList = labels.map(label => colorDict[label]); // 수정된 부분
+        const canvas = document.getElementById('myChart');
     const ctx = canvas.getContext('2d');
     const chart = new Chart(ctx, {
-    type: 'pie',
-    data: {
+      type: 'pie',
+      data: {
         labels: labels,
-        datasets: [{
+        datasets: [
+          {
             data: ratios,
             backgroundColor: colorList,
             borderWidth: 1
-        }]
-    },
-    options: {
+          }
+        ]
+      },
+      options: {
         responsive: true,
         maintainAspectRatio: false,
         legend: {
-            display: true,
-            position: 'bottom'
+          display: true,
+          position: 'bottom'
         }
-    }
+      }
     });
-  </script>  
-{% endblock content %}
+  </script>
+{% endblock script %}
