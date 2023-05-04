@@ -7,7 +7,7 @@
 
 {% block style %}
   <style>
-    .modal{
+    .modal {
       position:absolute;
       width:100%; 
       height:100%; 
@@ -16,7 +16,8 @@
       left:O; 
       display:none;
     }
-    .button{
+
+    .button {
       flex-shrink: 0;
       margin-left: 10px;
       {% comment %} position:absolute; 
@@ -29,7 +30,7 @@
       cursor:pointer; {% endcomment %}
     }
     
-    .modal_content{
+    .modal_content {
       width:600px; 
       height:600px;
       background:#fff; 
@@ -43,6 +44,12 @@
       line-height:23px; 
       cursor:pointer;
     }
+
+    .icon {
+      width:80px; 
+      height:80px;
+    }
+
   </style>
 {% endblock style %}
   
@@ -72,22 +79,71 @@
   <hr>
   <!-- 이름 -->
 
-  <!-- 설명 -->
-  <h2>관광 명소 설명</h2>
-  <p>{{ post.description }}</p>
+
+  <h2 class='my-4'>관광 명소 설명</h2> <br>
+  <h4>{{ post.description }}</h4>
   <hr>
-  <!-- 설명 -->
-
-  <!-- 시설 -->
-  <h2>관광 명소 종류</h2>
-  <p> 입장료 :
+  <h2 class='my-4'>관광 명소 종류</h2>
+  <h3>
     {% if post.price == 0 %}
-      없음
+    <img src="{% static 'icon_image/000.png' %}" class='icon' alt="Money Icon">
+      입장료 없음 <br><br>
     {% else %}
-      {{ post.price }}
+    <img src="{% static 'icon_image/000.png' %}" class='icon' alt="Money Icon">
+      입장료 있음 (성인 기준 약 {{ post.price }}원) <br><br>
     {% endif %}
-  </p>
 
+    {% if post.checkbox1 %}
+      <img src="{% static 'icon_image/001.png' %}" class='icon' alt="Cultural and Historical Sites Icon">
+      문화 및 역사 유적지 <br><br>
+    {% endif %}
+    
+    {% if post.checkbox2 %}
+      <img src="{% static 'icon_image/002.png' %}" class='icon' alt="Natural Scenery Icon">
+      자연 경관 <br><br>
+    {% endif %}
+    
+    {% if post.checkbox3 %}
+      <img src="{% static 'icon_image/003.png' %}" class='icon' alt="Theme Park Icon">
+      테마파크 <br><br>
+    {% endif %}
+
+    {% if post.checkbox4 %}
+      <img src="{% static 'icon_image/004.png' %}" class='icon' alt="Adventure and Sports Icon">
+      어드벤쳐 및 스포츠 <br><br>
+    {% endif %}
+
+    {% if post.checkbox5 %}
+      <img src="{% static 'icon_image/005.png' %}" class='icon' alt="Festivals and Events Icon">
+      축제 및 이벤트 <br><br>
+    {% endif %}
+
+    {% if post.checkbox6 %}
+      <img src="{% static 'icon_image/006.png' %}" class='icon' alt="Food Icon">
+      먹거리 <br><br>
+    {% endif %}
+    
+    {% if post.checkbox7 %}
+      <img src="{% static 'icon_image/007.png' %}" class='icon' alt="Shopping Icon">
+      쇼핑 <br><br>
+    {% endif %}
+    
+    {% if post.checkbox8 %}
+      <img src="{% static 'icon_image/008.png' %}" class='icon' alt="Family Outing Icon">
+      가족 나들이 <br><br>
+    {% endif %}
+
+    {% if post.checkbox9 %}
+      <img src="{% static 'icon_image/009.png' %}" class='icon' alt="Dating Course Icon">
+      데이트 코스 <br><br>
+    {% endif %}
+
+    {% if post.checkbox10 %}
+      <img src="{% static 'icon_image/010.png' %}" class='icon' alt="Dating Course Icon">
+      셀카 명소 <br><br>
+    {% endif %}
+  </h3>
+  {% comment %} 저작권 표기 - eyJjb2xJZCI6eyJJRCI6MSwibmFtZSI6Ilx1YjBiNCBcdWM1NDRcdWM3NzRcdWNmNTggXHVjZWVjXHViODA5XHVjMTU4IiwiYm9va21hcmtfaWQiOjMxMjAyMDI5LCJjcmVhdGVkIjoxNjgzMTgwNDE4LCJ1cGRhdGVkIjoxNjgzMTgwNjUyLCJhY3RpdmUiOjEsInNvdXJjZSI6InJlbW90ZSIsIm9yZGVyIjowLCJjb2xvciI6IjAwMDAwMCIsInN0YXR1cyI6MX0sImNvbEJvb2ttYXJrSWQiOlt7ImlkIjozMTI3MzQ4LCJuYW1lIjoiaWNvbi0zMTI3MzQ4IiwiY29sb3IiOiIjMDAwMDAwIiwicHJlbWl1bSI6IjAiLCJzb3J0IjoxfSx7ImlkIjo0MDk5MDYyLCJuYW1lIjoiaWNvbi00MDk5MDYyIiwiY29sb3IiOiIjMDAwMDAwIiwicHJlbWl1bSI6IjAiLCJzb3J0IjoyfSx7ImlkIjo0Mzc1MjIsIm5hbWUiOiJpY29uLTQzNzUyMiIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6M30seyJpZCI6NjYzMzMxOCwibmFtZSI6Imljb24tNjYzMzMxOCIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6NH0seyJpZCI6MjkxOTU5LCJuYW1lIjoiLSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6NX0seyJpZCI6MjYyMjU4NywibmFtZSI6Imljb24tMjYyMjU4NyIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6Nn0seyJpZCI6MTI1OTcxOCwibmFtZSI6Imljb24tMTI1OTcxOCIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6N30seyJpZCI6ODcwNzgzOSwibmFtZSI6Imljb24tODcwNzgzOSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6OH0seyJpZCI6NTAzNTk1OSwibmFtZSI6Imljb24tNTAzNTk1OSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6OX0seyJpZCI6NzIyNDAxMSwibmFtZSI6Imljb24tNzIyNDAxMSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6MTB9LHsiaWQiOjQ5MjMwOTAsIm5hbWUiOiIiLCJjb2xvciI6IiMwMDAwMDAiLCJwcmVtaXVtIjowLCJzb3J0IjoxMX1dfQ=={% endcomment %}
   <hr>
   <!-- 시설 -->
 
