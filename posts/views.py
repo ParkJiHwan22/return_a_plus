@@ -164,5 +164,6 @@ def like(request, post_pk):
     return redirect('posts:index')
 
 
-def about_us(request):
-    return render(request, 'posts/about_us.html')
+def Our_Service(request):
+    return render(request, 'posts/Our_Service.html')
+
