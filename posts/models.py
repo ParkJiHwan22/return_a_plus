@@ -6,12 +6,14 @@ class Post(models.Model):
     name = models.CharField(max_length=140)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')
-    category = models.CharField(max_length=100, null=True)
     description = models.TextField()
     city = models.CharField(max_length=80)
     price = models.IntegerField(null=True)
     address = models.CharField(max_length=80)
     post_image = models.ImageField(blank=True, upload_to='post_images/')
+    views = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
 
     checkbox1 = models.BooleanField(default=False)
     checkbox2 = models.BooleanField(default=False)

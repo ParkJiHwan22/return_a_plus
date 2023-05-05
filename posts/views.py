@@ -89,6 +89,8 @@ def detail(request, posts_pk):
     users = get_user_model()
     person = User.objects.get(username=request.user)
     review_form = ReviewForm(request.POST, request.FILES)
+    post.views += 1
+    post.save()
     my_key = "AIzaSyAd9M3rcxiyzS9IxbErxaMv45mw94kQFxY"
     maps = googlemaps.Client(key=my_key)
     places = [post.address]
@@ -169,4 +171,3 @@ def like(request, post_pk):
 
 def Our_Service(request):
     return render(request, 'posts/Our_Service.html')
-

@@ -1,12 +1,17 @@
 from django import forms
 from .models import Post, Review
 
+
 POST_ADDRESS_CHOICES = (
-        ("서울", "서울"),("경기", "경기"),("대구", "대구"),
-        ("부산", "부산"),("광주", "광주"),("대전", "대전"),
-        ("인천", "인천"),("경기", "경기"),("충북", "충북"),
-        ("충남", "충남"),("전북", "전북"),("전남", "전남"),
-        ("경북", "경북"),("경남", "경남"),("제주", "제주"),
+    ("", "도시를 선택해주세요"),
+    ("강릉", "강릉"),("강원", "강원"),("광주", "광주"),
+    ("경기", "경기"),("경남", "경남"),("경북", "경북"),
+    ("경주", "경주"),("대구", "대구"),("대전", "대전"),
+    ("부산", "부산"),("서울", "서울"),("속초", "속초"),
+    ("여수", "여수"),("인천", "인천"),("전남", "전남"),
+    ("전북", "전북"),("전주", "전주"),("제주", "제주"),
+    ("충남", "충남"),("충북", "충북"),
+    # ('직접 입력', '직접 입력'),
 )
 
 
@@ -23,12 +28,16 @@ class PostForm(forms.ModelForm):
 
     city = forms.CharField(
         label='도시',
-        widget=forms.TextInput(
+        widget=forms.Select(
+            choices = POST_ADDRESS_CHOICES,
             attrs={
-                'class': 'form-control'
+                'class' : "form-select",
+                'id' : "floatingSelect",
+                'aria-label': "Floating label select example",
             }
         )
     )
+    
     
     address = forms.CharField(
         label='관광지 주소',
@@ -38,11 +47,7 @@ class PostForm(forms.ModelForm):
             }
         )
     )
-
-    category = forms.CharField(
-        label="카테고리",
-        widget=forms.Select(choices=POST_ADDRESS_CHOICES)
-    )
+    
     
     price = forms.CharField(
         label='가격(성인 기준)',
@@ -79,7 +84,7 @@ class PostForm(forms.ModelForm):
     checkbox7 = forms.BooleanField(required=False, label='쇼핑')
     checkbox8 = forms.BooleanField(required=False, label='가족 나들이')
     checkbox9 = forms.BooleanField(required=False, label='데이트 코스')
-    checkbox10 = forms.BooleanField(required=False, label = '셀카 명소')
+    checkbox10 = forms.BooleanField(required=False, label = '인생샷 명소')
     
     
     
@@ -90,9 +95,7 @@ class PostForm(forms.ModelForm):
             "name",
             "city",
             "address",
-
-            "category", 
-
+            
             "price", 
             "description",
             "checkbox1",
