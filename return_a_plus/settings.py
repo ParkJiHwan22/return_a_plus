@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'posts',
     'accounts',
     'chartjs',
+    'mathfilters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
