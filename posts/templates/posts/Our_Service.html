@@ -11,13 +11,6 @@
 
 {% block style %}
   <style>
-    @font-face {
-      font-family: 'establishRetrosansOTF';
-      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff") format('woff');
-      font-weight: normal;
-      font-style: normal;
-    }
-
     .box1 {
       border: 0.5rem outset pink;
     }
@@ -29,22 +22,30 @@
     dt:after {
       content: ": ";
     }
+
+    @font-face {
+      font-family: 'establishRetrosansOTF';
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff") format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
   </style>
 
 {% endblock style %}
 
 {% block content %}
   <img src="{% static '/img/profile_bg.jpg' %}" alt="profil_background_image" style="position: absolute; opacity: 0.33; z-index: -3;" height="1000">
-  <div class="container text-success-emphasis">
-    <h1 class="text-center my-3 font-family: 'establishRetrosansOTF'; color:#198754;">Our Service</h1>
+  <div class="container">
+    <div class="mt-2" style="font-family: 'establishRetrosansOTF';">
+      <h1 class="text-center my-3">Our Service</h1>
+    </div>
     <hr>
     <div class="row">
       <div class="col-2">
         <div></div>
       </div>
       <div class="col-8 text-center" style="margin: 30px 10px;">
-        <h5 style="display: flex;">
-          OneClickTravel은 사용자에게 번거로움 없는 여행 계획 경험을 제공하도록 설계된 종합 웹사이트입니다. 웹사이트의 주요 초점은 위치, 정보 및 리뷰의 세 가지 키워드에 있으며 사용자가 여행을 계획할 때 정보에 입각한 결정을 내리는 데 도움이 되는 다양한 도구와 리소스를 제공합니다.</h5>
+        <h5 style="display: flex;">OneClickTravel은 사용자에게 번거로움 없는 여행 계획 경험을 제공하도록 설계된 종합 웹사이트입니다. 웹사이트의 주요 초점은 위치, 정보 및 리뷰의 세 가지 키워드에 있으며 사용자가 여행을 계획할 때 정보에 입각한 결정을 내리는 데 도움이 되는 다양한 도구와 리소스를 제공합니다.</h5>
       </div>
     </div>
     <div class="col-2">
@@ -70,18 +71,7 @@
         <dd>OneClickTravel의 리뷰 섹션은 여행 계획에 대해 정보에 입각한 결정을 내리려는 사용자에게 필수적인 리소스입니다. 다른 사용자가 작성한 호텔, 레스토랑 및 기타 여행 관련 비즈니스에 대한 리뷰를 제공합니다. 이러한 리뷰는 정확성과 신뢰성을 보장하기 위해 조정되며 특정 비즈니스에서 기대할 수 있는 사항에 대한 귀중한 통찰력을 사용자에게 제공합니다.</dd>
       </div>
     </div>
-    <div class="row">
-      <div class="col-2">
-        <div></div>
-      </div>
-      <div class="col-8 text-center" style="margin: 30px 10px;">
-        <h5 style="display: flex;">
-          OneClickTravel은 완벽한 여행을 계획하려는 모든 사람을 위한 올인원 웹사이트입니다. 위치, 정보 및 리뷰에 중점을 두어 사용자에게 여행 계획에 대해 정보에 입각한 결정을 내리는 데 필요한 도구를 제공하고 사용자 친화적인 인터페이스를 통해 초보자와 숙련된 여행자 모두 쉽게 사용할 수 있습니다.</h5>
-      </div>
-    </div>
-    <div class="col-2">
-      <div></div>
-    </div>
+    <p class="w-50 text-center">OneClickTravel은 완벽한 여행을 계획하려는 모든 사람을 위한 올인원 웹사이트입니다. 위치, 정보 및 리뷰에 중점을 두어 사용자에게 여행 계획에 대해 정보에 입각한 결정을 내리는 데 필요한 도구를 제공하고 사용자 친화적인 인터페이스를 통해 초보자와 숙련된 여행자 모두 쉽게 사용할 수 있습니다.</p>
     <div class="d-flex justify-content-center align-items-center">
       <img src="{% static '/img/our_service.gif' %}" alt="Our_Service">
     </div>
