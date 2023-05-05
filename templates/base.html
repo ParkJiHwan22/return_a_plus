@@ -19,54 +19,63 @@
         font-weight: normal;
         font-style: normal;
       }
+
       @media (max-width: 560px) {
         .user_hidden {
           display: none;
         }
       }
-      {% block style %}
-      {% endblock style%}
+
+      {
+        % block style %
+      }
+
+      {
+        % endblock style%
+      }
     </style>
   </head>
 
   <body>
-    <nav class="sticky-top bg-white text-success-emphasis mb-4 border-success-subtle">
-      <div class="container h p-0">
-        <div class="row d-flex justify-content-between p-1">
-          <div class="h p-0 col-2 d-flex align-items-center justify-content-start">
-            <a class="h ms-3 mt-3 text-success-emphasis d-flex justify-content-start" href="{% url 'posts:index' %}" style="color:#198754;text-decoration-line:none;font-size:large;">
+    <nav class="sticky-top bg-white text-success-emphasis border-success-subtle">
+      <div class="container">
+        <div class="row d-flex justify-content-between">
+          <div class="my-3 py-1 col-2 d-flex align-items-center justify-content-start">
+            <a class="text-success-emphasis d-flex justify-content-start" href="{% url 'posts:index' %}" style="color:#198754;text-decoration-line:none;font-size:large;">
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#198754" class="bi bi-cursor" viewbox="0 0 16 16">
                 <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103zM2.25 8.184l3.897 1.67a.5.5 0 0 1 .262.263l1.67 3.897L12.743 3.52 2.25 8.184z"/>
               </svg>
-              <div class="mt-2 ms-2" style="font-family: 'establishRetrosansOTF'; color:#198754;">
+              <div class="mt-2" style="font-family: 'establishRetrosansOTF'; color:#198754;">
                 onClickTravel
               </div>
             </a>
           </div>
-            <div class="h p-0 col-10 d-flex justify-content-end">
-              {% if user.is_authenticated %}
-              <div class="user_hidden h mt-4 pt-2 m-0 me-3 pe-1 hidden justify-content-center text-center align-items-center">
-                <a class="h link-success link-underline-light m-1 text-center align-items-center" style="text-decoration-line:none;" href="{% url 'accounts:profile' user %}">
-                  {{ user }}
-                </a>
-              </div>
-              <form class="text-white" action="{% url 'accounts:logout' %}" method="POST">
+          <div class="col-10 d-flex justify-content-end text-center align-items-center">
+            {% if user.is_authenticated %}
+              <form class="mx-2 text-white" action="{% url 'accounts:logout' %}" method="POST">
                 {% csrf_token %}
-                <a href="{% url 'accounts:update' %}"  class="button btn btn-outline-success me-1 mt-4 ">회원정보 수정</a>
-                <input class="button btn btn-outline-success mt-4" type="submit" value="로그아웃">
+                <a href="{% url 'posts:Our_Service' %}" class="button btn btn-outline-success">Our Service</a>
+                <input class="button btn btn-outline-success" type="submit" value="로그아웃">
               </form>
-              {% else %}
-              <div class="h p-0 col-6 d-flex align-items-center justify-content-end">
+              <a class="px-3 link-success link-underline-light text-center align-items-center" style="text-decoration-line:none;" href="{% url 'accounts:profile' user %}">
+                {% if user.profile_image %}
+                  <img src="{{ user.profile_image.url }}" alt="post_image" class="rounded-circle" height="40">
+                {% else %}
+                  <img src="https://i.pinimg.com/564x/d2/98/4e/d2984ec4b65a8568eab3dc2b640fc58e.jpg" alt="no_image" class="rounded-circle" height="40">
+                {% endif %}
+                {{ user }}
+              </a>
+            {% else %}
+              <div class="col-6 d-flex align-items-center justify-content-end">
                 <a href="{% url 'accounts:login' %}" class="button btn btn-outline-success ms-3 me-2 mt-4">로그인</a>
-                <a href="{% url 'accounts:signup' %}" class="button btn btn-outline-success me-2 mt-4">회원가입</a> 
+                <a href="{% url 'accounts:signup' %}" class="button btn btn-outline-success me-2 mt-4">회원가입</a>
               </div>
-              {% endif %}
-            </div>           
+            {% endif %}
           </div>
         </div>
-      </nav>
-    {% block content %}
-    {% endblock content %}
+      </div>
+    </nav>
+    {% block content %}{% endblock content %}
     <!-- Footer -->
     <footer style="position: sticky; background-color: rgb(65, 55, 48); margin-top: 150px; padding: 20px;
         font-size: 15px;">
