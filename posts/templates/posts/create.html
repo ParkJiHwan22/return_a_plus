@@ -20,12 +20,4 @@ Create
     </form>
   </div>
 </div>
-
-
-  <form action="{% url 'posts:create' %}" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="게시글 작성">
-  </form>
-</div>
 {% endblock content %}
