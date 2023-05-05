@@ -30,7 +30,7 @@
   </head>
 
   <body>
-    <nav class="sticky-top bg-white text-success-emphasis mb-4 border-success-subtle">
+    <nav class="sticky-top bg-white text-success-emphasis mb-4 pb-3 border-success-subtle">
       <div class="container h p-0">
         <div class="row d-flex justify-content-between p-1">
           <div class="h p-0 col-2 d-flex align-items-center justify-content-start">
@@ -52,7 +52,7 @@
               </div>
               <form class="text-white" action="{% url 'accounts:logout' %}" method="POST">
                 {% csrf_token %}
-                <a href="{% url 'accounts:update' %}"  class="button btn btn-outline-success me-1 mt-4 ">회원정보 수정</a>
+                <a href="{% url 'posts:Our_Service' %}"  class="button btn btn-outline-success me-1 mt-4 ">About Us</a>
                 <input class="button btn btn-outline-success mt-4" type="submit" value="로그아웃">
               </form>
               {% else %}
@@ -68,7 +68,7 @@
     {% block content %}
     {% endblock content %}
     <!-- Footer -->
-    <footer style="position: sticky; background-color: rgb(65, 55, 48); margin-top: 150px; padding: 20px;
+    <footer style="position: sticky; background-color: rgb(2, 48, 32); margin-top: 150px; padding: 20px;
         font-size: 15px;">
       <div class="container">
         <p class="m-0 text-center text-white" style="text-decoration: none;
