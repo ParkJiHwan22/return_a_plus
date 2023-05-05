@@ -12,6 +12,7 @@ django-appconf==1.0.5
 django-chartjs==2.3.0
 django-extensions==3.2.1
 django-imagekit==4.1.0
+django-mathfilters==1.0.0
 djangorestframework==3.14.0
 googlemaps==4.10.0
 idna==3.4
