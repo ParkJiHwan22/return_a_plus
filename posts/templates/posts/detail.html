@@ -141,14 +141,14 @@
     <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
       {% csrf_token %}
       <input type="submit" value="댓글삭제" class="btn btn-primary ms-1 me-1 mt-3 modal_form">
-    </from>
+    </form>
     {% endif %}
   {% endfor %}
   <!-- 후기 -->
 
 
   {% if user.is_authenticated %}
-    <button class="btn btn-primary ms-1 me-1 mt-3">
+    <button class="btn btn-primary ms-1 me-1 mt-3 test">
       리뷰남기기
     </button>
     <div class="modal">

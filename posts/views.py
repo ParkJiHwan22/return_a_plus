@@ -81,7 +81,6 @@ def create(request):
 def detail(request, posts_pk):
     post = Post.objects.get(pk=posts_pk)
     reviews = post.review_set.all()
-    users = get_user_model()
     person = User.objects.get(username=request.user)
     review_form = ReviewForm(request.POST, request.FILES)
     my_key = "AIzaSyAd9M3rcxiyzS9IxbErxaMv45mw94kQFxY"
