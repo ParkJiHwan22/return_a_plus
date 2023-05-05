@@ -3,14 +3,21 @@
 Create
 {% endblock title %}
 {% block content %}
-<h1>Create</h1>
 
-<a href="{% url 'posts:index' %}">뒤로가기</a>
-
-<form action="{% url 'posts:create' %}" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" class="btn btn-primary" value="게시글 작성">
-</form>
-
+{% comment %} <a href="{% url 'posts:index' %}">뒤로가기</a> {% endcomment %}
+<div class="container">
+  <h1 class="text-center">회원정보 수정</h1>
+  <hr>
+  <div class="d-flex justify-content-center px-5">
+    <form action="{% url 'posts:create' %}" method="POST" enctype="multipart/form-data">
+      <div class="mt-5">
+        {% csrf_token %}
+        <div class="mb-2">
+          {{ form.as_p }}
+        </div>
+        <input type="submit" class="btn btn-primary" value="게시글 작성">
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock content %}
