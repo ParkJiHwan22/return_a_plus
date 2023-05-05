@@ -36,7 +36,6 @@ colors = [
 color_dict = {}
 color_index = 0
 
-
 # Create your views here.
 def index(request):
     global color_index
@@ -49,12 +48,12 @@ def index(request):
     if total_likes > 0:
         ratios = [like_count / total_likes for like_count in post_likes]
     for post in posts:
-        if post.address not in color_dict:
-            color_dict[post.address] = colors[color_index]
+        if post.city not in color_dict:
+            color_dict[post.city] = colors[color_index % len(colors)]
             color_index += 1
 
-    color_list = [color_dict[post.address] for post in posts]
-    
+    color_list = [color_dict[post.city] for post in posts]
+
     context = {
         'posts': posts,
         'post_likes': post_likes,
