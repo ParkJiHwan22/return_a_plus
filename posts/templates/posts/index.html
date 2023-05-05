@@ -15,6 +15,20 @@
     font-style: normal;
   }
 
+  @font-face {
+    font-family: 'HANAMDAUM';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/HANAMDAUM.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 50;
+    font-style: normal;
+  }
+
   section {
     height : 120vh
   }
@@ -70,17 +84,55 @@
     max-width: 25ch;
   }
 
+  .blur {
+    position: relative;
+  }
+  
+  .blurry-image {
+    filter: blur(5px);
+  }
+  
+  .overlay-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    margin-top: 5%;
+    backdrop-filter: blur(10px);
+  }
+
+  .overlay-bottom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5%;
+    margin-top: 66.6%;
+    backdrop-filter: blur(10px);
+  }
 {% endblock style %}
 
 {% block title %}onClickTravel{% endblock title %}
 
 {% block content %}
-  <div class="row ms-5 mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:90%;">
-    <div class="col-11"></div>
-    <div class="col-1 d-flex justify-content-center align-items-center">
-      <div class="mt-5 button btn btn-success">
+  <div class="mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:90%;">
+    <div class="overlay-top"></div>
+    <img class="d-flex justify-content-center" src="{% static '/img/profile_bg.jpg' %}" alt="profil_background_image">
+    <div class="overlay-bottom"></div>
+  </div>
+  <div class="row ms-5 mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:100%;">
+    <div class="col-9"></div>
+    <div class="col-3 d-flex justify-content-center align-items-center">
+      <div class="ms-5 mt-5 button btn btn-success">
         <a style="color:white; text-decoration-line: none;" href="{% url 'posts:create' %}">Create</a>
       </div>
+    </div>
+    <div class="position-absolute text-center text-white" style="top: 80%; left: 50%; transform: translate(-50%, -50%);">
+      <h1 style="font-family: 'establishRetrosansOTF'; font-size:500%;">여행을 나답게,</h1>
+      <h1 style="font-family: 'establishRetrosansOTF'; font-size:500%;">꿈꾸는 대로 펼치다.</h1>
+      <p style="font-family: 'TheJamsil5Bold'; font-size:150%;">onClickTravel과 함께 국내 여행지 후기를 한눈에 비교해보세요!</p>
+      <p style="font-family: 'TheJamsil5Bold'; font-size:110%;">가족, 연인, 아이와 함께 가기 좋은 여행지 후기부터, 힐링, 먹거리, 자연 경관, 레포츠, 축제 및 이벤트 정보까지 제공하는 맞춤형 서비스</p>
     </div>
   </div>
   <div class="container-fluid d-flex justify-content-center">
@@ -133,7 +185,7 @@
   <div class="mt-5 mb-5 container-fluid d-flex justify-content-evenly" style="max-width: 100%;max-height: 100%;">
     {% if posts_with_images %}
     <div class="card d-flex justify-content-center" style="width: 24rem; height:34rem; max-width: 100%;max-height: 100%;">
-      <p class="mt-5 mb-3 card-text d-flex justify-content-center">현재 HOT한 관광지 분포</p>
+      <p class="mt-5 mb-3 card-text d-flex justify-content-center">현재 HOT한 관광도시 분포</p>
       <div class="ms-4 mt-3 mb-5 d-flex justify-content-center align-items-center" style="width:20rem; height:20rem; max-width: 100%;max-height: 100%;">
         <canvas id="myChart"></canvas>
       </div>
