@@ -28,7 +28,6 @@
     }
 
     .profile-img {
-      border: 0.5rem red;
       width: 25%;
       margin-right: 3rem;
     }
@@ -45,7 +44,6 @@
     <!-- 사용자 프로필 정보 -->
     <div class="row align-items-start profile-title">
       <!-- 프로필 이미지 -->
-
       {% if person.profile_image %}
         <img src="{{ person.profile_image.url }}" alt="post_image" class="col-4 rounded-circle profile-img">
       {% else %}
@@ -53,10 +51,9 @@
       {% endif %}
 
       <div class="col-8">
-
         <div class="row justify-content-start align-items-center my-1">
-          <!-- 사용자 이름 -->
 
+          <!-- 사용자 이름 -->
           <h1 class="col-4">{{ person.username }}</h1>
 
           <!-- 팔로우 버튼 / 회원정보 수정 버튼 -->
