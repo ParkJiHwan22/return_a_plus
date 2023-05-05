@@ -124,8 +124,8 @@
   <div class="row ms-5 mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:100%;">
     <div class="col-9"></div>
     <div class="col-3 d-flex justify-content-center align-items-center">
-      <div class="ms-5 mt-5 button btn btn-success">
-        <a style="color:white; text-decoration-line: none;" href="{% url 'posts:create' %}">Create</a>
+      <div class="ms-5 mt-3 button btn btn-success">
+        <a style="color:white; text-decoration-line: none; font-family: 'TheJamsil5Bold';" href="{% url 'posts:create' %}">Create</a>
       </div>
     </div>
     <div class="position-absolute text-center text-white" style="top: 80%; left: 50%; transform: translate(-50%, -50%);">
@@ -147,7 +147,7 @@
               <img style="width: 14rem; height: 11rem; max-width: 100%;max-height: 100%;" class='mt-3 mb-3 d-flex justify-content-center' src="{% static 'no_image.jpg' %}" alt="no_img">
             {% endif %}
           </a>
-          <div class="card-body">
+          <div class="card-body" style="font-family: 'TheJamsil5Bold';">
             <h5 class="card-title text overflow">
               <a style="color:#198754; text-decoration-line: none;" href="{% url 'posts:detail' post.pk %}">{{ post.name }} ({{ post.city }})</a>
             </h5>
@@ -182,10 +182,10 @@
       {% endfor %}
     </div>
   </div>
-  <div class="mt-5 mb-5 container-fluid d-flex justify-content-evenly" style="max-width: 100%;max-height: 100%;">
+  <div class="mt-5 mb-5 container-fluid d-flex justify-content-evenly" style="width:100%; max-width: 100%;max-height: 100%; font-family: 'TheJamsil5Bold';">
     {% if posts_with_images %}
     <div class="card d-flex justify-content-center" style="width: 24rem; height:34rem; max-width: 100%;max-height: 100%;">
-      <p class="mt-5 mb-3 card-text d-flex justify-content-center">현재 HOT한 관광도시 분포</p>
+      <p class="mt-5 mb-3 card-text d-flex justify-content-center" style="color:#198754; font-size:130%">현재 HOT한 관광도시 분포</p>
       <div class="ms-4 mt-3 mb-5 d-flex justify-content-center align-items-center" style="width:20rem; height:20rem; max-width: 100%;max-height: 100%;">
         <canvas id="myChart"></canvas>
       </div>
