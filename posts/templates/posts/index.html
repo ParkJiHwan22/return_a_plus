@@ -1,28 +1,41 @@
 {% extends "base.html" %}
 {% load static %}
 {% block style %}
-
-  <style>
-    * {
+<style>
+  * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }
+  }
 
-    @font-face {
-      font-family: 'establishRetrosansOTF';
-      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff") format('woff');
-      font-weight: normal;
-      font-style: normal;
-    }
+  @font-face {
+    font-family: 'establishRetrosansOTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
 
-    .button-container {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      width: 100%;
-      margin: 0 auto;
-    }
+  section {
+    height : 120vh
+  }
+
+  p > a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .button {
+    flex-shrink: 0;
+    margin-left: 10px;
+  }
 
   footer {
     padding: 2rem;
@@ -30,11 +43,32 @@
     font-size: 15px;
   }
 
-    .button {
-      flex-shrink: 0;
-      margin-left: 10px;
+  .container-fluid {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .container-fluid {
+      flex-direction: column;
     }
-  </style>
+  }
+  
+  @media screen and (min-width: 601px) {
+    .container-fluid {
+      flex-direction: row;
+    }
+  }
+
+  .overflow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 25ch;
+  }
 
 {% endblock style %}
 
@@ -52,99 +86,110 @@
   <div class="container-fluid d-flex justify-content-center">
     <div class="row d-flex justify-content-center align-items-center" style="width:90%;">
       {% for post in posts %}
-        <div class='col-6 col-sm-6 col-md-4 col-lg-4 col-xxl-2 d-flex justify-content-center'>
-          <div class="card m-2" style="width:15rem;">
-            <a class="d-flex justify-content-center" href="{% url 'posts:detail' post.pk %}">
-              {% if post.post_image %}
-                <img style="width: 140px; height: 150px;" class='mt-2 d-flex justify-content-center' src=" {{post.post_image.url}} " alt="movie_img">
-              {% else %}
-                <img style="width: 140px; height: 150px;" class='mt-2 d-flex justify-content-center' src="{% static 'no_image.jpg' %}" alt="no_img">
-              {% endif %}
-            </a>
-            <div class="card-body">
-              <h5 class="card-title text">
-                <a style="color:#198754; text-decoration-line: none;" href="{% url 'posts:detail' post.pk %}">{{ post.city }}</a>
-              </h5>
-              <p class="card-text m-0 text" style="font-size:medium">{{ post.address }}</p>
-              <p class="card-text m-0 text" style="font-size:small">{{ post.user.username }}님의 후기</p>
-              <p class="card-text m-0 text" style="font-size:small">{{ post.user.title }}</p>
+      <div class='col-6 col-sm-6 col-md-4 col-lg-4 col-xxl-2 d-flex justify-content-center'>
+        <div class="card m-2" style="width:15rem; height:23rem">
+          <a class="d-flex justify-content-center" href="{% url 'posts:detail' post.pk %}">
+            {% if post.post_image %}
+              <img style="width: 14rem; height: 11rem; max-width: 100%;max-height: 100%;"class='mt-3 mb-3 d-flex justify-content-center' src=" {{post.post_image.url}} " alt="movie_img">
+            {% else %}
+              <img style="width: 14rem; height: 11rem; max-width: 100%;max-height: 100%;" class='mt-3 mb-3 d-flex justify-content-center' src="{% static 'no_image.jpg' %}" alt="no_img">
+            {% endif %}
+          </a>
+          <div class="card-body">
+            <h5 class="card-title text overflow">
+              <a style="color:#198754; text-decoration-line: none;" href="{% url 'posts:detail' post.pk %}">{{ post.name }} ({{ post.city }})</a>
+            </h5>
+            <p class="card-text m-0 text overflow" style="font-size:medium">{{ post.address }}</p>
+            <p class="card-text m-0 text" style="font-size:small">{{ post.user.username }}님의 후기</p>
+            <p class="card-text m-0 text" style="font-size:small">{{ post.user.title }}</p>
+            <div class="mb-2">
               <form action="{% url 'posts:like' post_pk=post.pk %}" method="POST">
                 {% csrf_token %}
                 {% if request.user in post.like_users.all %}
-                  <div class="mt-2 d-flex justify-content-between">
-                    <input class="d-flex justify-content-center btn btn-outline-success" type="submit" value="Cancel">
-                    <div class="text-center align-self-center">
-                      💚
-                      {{ post.like_users.count }}
+                    <div class="mt-2 d-flex justify-content-between">
+                      <input class="d-flex justify-content-center btn btn-outline-success" type="submit" value="Cancel">
+                      <div class="text-center align-self-center">
+                        💚
+                        {{ post.like_users.count }}
+                      </div>
                     </div>
-                  </div>
-                {% else %}
-                  <div class="mt-2 d-flex justify-content-between">
-                    <input class="d-flex justify-content-center btn btn-success" type="submit" value="Like">
-                    <div class="text-center align-self-center">
-                      💚
-                      {{ post.like_users.count }}
+                  {% else %}
+                    <div class="mt-2 d-flex justify-content-between">
+                      <input class="d-flex justify-content-center btn btn-success" type="submit" value="Like">
+                      <div class="text-center align-self-center">
+                        💚
+                        {{ post.like_users.count }}
+                      </div>
                     </div>
-                  </div>
-                {% endif %}
+                  {% endif %}
               </form>
             </div>
+          </div>
           </div>
         </div>
       {% endfor %}
     </div>
   </div>
-  <div class="mt-5 mb-5 container-fluid d-flex justify-content-center">
-    <div class="card d-flex justify-content-center" style="width: 24rem;">
+  <div class="mt-5 mb-5 container-fluid d-flex justify-content-evenly" style="max-width: 100%;max-height: 100%;">
+    {% if posts_with_images %}
+    <div class="card d-flex justify-content-center" style="width: 24rem; height:34rem; max-width: 100%;max-height: 100%;">
       <p class="mt-5 mb-3 card-text d-flex justify-content-center">현재 HOT한 관광지 분포</p>
-      <div class="ms-4 mt-3 mb-5 ps-4 pe-1 d-flex justify-content-center align-items-center" style="width:300px; height:300px;">
+      <div class="ms-4 mt-3 mb-5 d-flex justify-content-center align-items-center" style="width:20rem; height:20rem; max-width: 100%;max-height: 100%;">
         <canvas id="myChart"></canvas>
       </div>
     </div>
+    {% endif %}
+    <div id="carouselExampleIndicators" class="ms-4 carousel slide d-flex justify-content-center" data-ride="carousel" data-interval="5000" style="width: 54rem; height:34rem;">
+      {% comment %} <ol class="carousel-indicators">
+        {% for post in posts_with_images %}
+          <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %} class="active"{% endif %}></li>
+        {% endfor %}
+      </ol> {% endcomment %}
+      <div class="carousel-inner">
+        {% for post in posts_with_images %}
+          <div class="carousel-item {% if forloop.first %} active {% endif %}">
+            <img style="width: 34rem; height: 34rem;" src="{{ post.post_image.url }}" class="d-block w-100 d-flex justify-content-center" alt="...">
+          </div>
+        {% endfor %}
+      </div>
+      <a style="color:#198754; text-decoration-line: none;" class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span style="color:#198754" class="text-success carousel-control-prev-icon" aria-hidden="true"></span>
+      </a>
+      <a style="color:#198754; text-decoration-line: none;" class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span style="color:#198754" class="text-success carousel-control-next-icon" aria-hidden="true"></span>
+      </a>
+    </div>
   </div>
 {% endblock content %}
+
 {% block script %}
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="{% static 'js/base.js' %}"></script>
-  <script>
-    const ratios = {
-      {
-        ratios | safe
-      }
-    };
-    const colorDict = {
-      {
-        color_dict | safe
-      }
-    }; // 수정된 부분
-    const labels = Array.from(new Set([
-      {
-      % for post in posts %}'{{ post.address }}', { % endfor %
-      }
-    ]));
-    const colorList = labels.map(label => colorDict[label]); // 수정된 부분
-        const canvas = document.getElementById('myChart');
-    const ctx = canvas.getContext('2d');
-    const chart = new Chart(ctx, {
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/base.js' %}"></script>
+<script>
+  const ratios = {{ratios|safe}};
+  const colorDict = {{color_dict|safe}};  // 수정된 부분
+  const labels = Array.from(new Set([{% for post in posts %}'{{ post.city }}',{% endfor %}]));
+  const colorList = labels.map(label => colorDict[label]);  // 수정된 부분
+  const canvas = document.getElementById('myChart');
+  const ctx = canvas.getContext('2d');
+  const chart = new Chart(ctx, {
       type: 'pie',
       data: {
-        labels: labels,
-        datasets: [
-          {
-            data: ratios,
-            backgroundColor: colorList,
-            borderWidth: 1
-          }
-        ]
+          labels: labels,
+          datasets: [{
+              data: ratios,
+              backgroundColor: colorList,
+              borderWidth: 1
+          }]
       },
       options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          display: true,
-          position: 'bottom'
-        }
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+              display: true,
+              position: 'bottom'
+          }
       }
-    });
-  </script>
+  });
+</script>
 {% endblock script %}
