@@ -61,9 +61,10 @@
 
 <div class="container">  
   <hr>
-  <p>작성자:<a href="{% url 'accounts:profile' post.user.username %}">{{ post.user }}</a></p> 
-  {% comment %} profile로 이동하는 링크 걸어야 함 {% endcomment %}
-  <br>
+  <p style="display:flex; justify-content: space-between">
+    <span>작성자 <a href="{% url 'accounts:profile' post.user.username %}">{{ post.user }}</a></span>
+    <span>{{ post.created_at|date:'Y.m.d. H:i' }}&nbsp;&nbsp; 조회수: {{ post.views }}</span>
+  </p>
   <!-- 이미지 -->
   <div class="row border rounded w-50">
     <div class="col-sm-3">
@@ -139,8 +140,8 @@
     {% endif %}
 
     {% if post.checkbox10 %}
-      <img src="{% static 'icon_image/010.png' %}" class='icon' alt="Dating Course Icon">
-      셀카 명소 <br><br>
+      <img src="{% static 'icon_image/010.png' %}" class='icon' alt="Photo Icon">
+      인생샷 명소 <br><br>
     {% endif %}
   </h3>
   {% comment %} 저작권 표기 - eyJjb2xJZCI6eyJJRCI6MSwibmFtZSI6Ilx1YjBiNCBcdWM1NDRcdWM3NzRcdWNmNTggXHVjZWVjXHViODA5XHVjMTU4IiwiYm9va21hcmtfaWQiOjMxMjAyMDI5LCJjcmVhdGVkIjoxNjgzMTgwNDE4LCJ1cGRhdGVkIjoxNjgzMTgwNjUyLCJhY3RpdmUiOjEsInNvdXJjZSI6InJlbW90ZSIsIm9yZGVyIjowLCJjb2xvciI6IjAwMDAwMCIsInN0YXR1cyI6MX0sImNvbEJvb2ttYXJrSWQiOlt7ImlkIjozMTI3MzQ4LCJuYW1lIjoiaWNvbi0zMTI3MzQ4IiwiY29sb3IiOiIjMDAwMDAwIiwicHJlbWl1bSI6IjAiLCJzb3J0IjoxfSx7ImlkIjo0MDk5MDYyLCJuYW1lIjoiaWNvbi00MDk5MDYyIiwiY29sb3IiOiIjMDAwMDAwIiwicHJlbWl1bSI6IjAiLCJzb3J0IjoyfSx7ImlkIjo0Mzc1MjIsIm5hbWUiOiJpY29uLTQzNzUyMiIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6M30seyJpZCI6NjYzMzMxOCwibmFtZSI6Imljb24tNjYzMzMxOCIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6NH0seyJpZCI6MjkxOTU5LCJuYW1lIjoiLSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6NX0seyJpZCI6MjYyMjU4NywibmFtZSI6Imljb24tMjYyMjU4NyIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6Nn0seyJpZCI6MTI1OTcxOCwibmFtZSI6Imljb24tMTI1OTcxOCIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6N30seyJpZCI6ODcwNzgzOSwibmFtZSI6Imljb24tODcwNzgzOSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6OH0seyJpZCI6NTAzNTk1OSwibmFtZSI6Imljb24tNTAzNTk1OSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6OX0seyJpZCI6NzIyNDAxMSwibmFtZSI6Imljb24tNzIyNDAxMSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6MTB9LHsiaWQiOjQ5MjMwOTAsIm5hbWUiOiIiLCJjb2xvciI6IiMwMDAwMDAiLCJwcmVtaXVtIjowLCJzb3J0IjoxMX1dfQ=={% endcomment %}

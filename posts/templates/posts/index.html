@@ -62,6 +62,14 @@
       flex-direction: row;
     }
   }
+
+  .overflow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 25ch;
+  }
+
 {% endblock style %}
 
 {% block title %}onClickTravel{% endblock title %}
@@ -88,10 +96,10 @@
             {% endif %}
           </a>
           <div class="card-body">
-            <h5 class="card-title text">
-              <a style="color:#198754; text-decoration-line: none;" href="{% url 'posts:detail' post.pk %}">{{ post.city }}</a>
+            <h5 class="card-title text overflow">
+              <a style="color:#198754; text-decoration-line: none;" href="{% url 'posts:detail' post.pk %}">{{ post.name }} ({{ post.city }})</a>
             </h5>
-            <p class="card-text m-0 text" style="font-size:medium">{{ post.address }}</p>
+            <p class="card-text m-0 text overflow" style="font-size:medium">{{ post.address }}</p>
             <p class="card-text m-0 text" style="font-size:small">{{ post.user.username }}님의 후기</p>
             <p class="card-text m-0 text" style="font-size:small">{{ post.user.title }}</p>
             <div class="mb-2">
