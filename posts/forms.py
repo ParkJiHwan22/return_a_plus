@@ -126,22 +126,21 @@ class PostForm(forms.ModelForm):
     
 
 REVIEW_POINT_CHOICES = (
-        ("★☆☆☆☆ (1/5)", "★☆☆☆☆ (1/5)"),
-        ("★★☆☆☆ (2/5)", "★★☆☆☆ (2/5)"),
-        ("★★★☆☆ (3/5)", "★★★☆☆ (3/5)"),
-        ("★★★★☆ (4/5)", "★★★★☆ (4/5)"),
-        ("★★★★★ (5/5)", "★★★★★ (5/5)"),
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5),
 )
 
 
 class ReviewForm(forms.ModelForm):
-    satisfaction = forms.CharField(
-        label='만족도',
-        widget= forms.Select(choices=REVIEW_POINT_CHOICES)
-    )
-
     accessibility = forms.CharField(
         label='접근성',
+        widget=forms.Select(choices=REVIEW_POINT_CHOICES)
+    )
+    cost = forms.CharField(
+        label='비용',
         widget=forms.Select(choices=REVIEW_POINT_CHOICES)
     )
 
@@ -154,11 +153,14 @@ class ReviewForm(forms.ModelForm):
         label='편의시설',
         widget=forms.Select(choices=REVIEW_POINT_CHOICES)
     )
-
-    cost = forms.CharField(
-        label='비용',
-        widget=forms.Select(choices=REVIEW_POINT_CHOICES)
+    
+    satisfaction = forms.CharField(
+        label='만족도',
+        widget= forms.Select(choices=REVIEW_POINT_CHOICES)
     )
+    
+
+
 
 
     class Meta:
