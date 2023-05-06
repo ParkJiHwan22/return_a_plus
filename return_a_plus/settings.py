@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'accounts',
     'chartjs',
     'mathfilters',
+    'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # allauth 소셜로그인 기능
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -52,10 +54,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google', 
 ]
 
-AUTHENTICATION_BACKENDS = [
+AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',    
     'allauth.account.auth_backends.AuthenticationBackend',
-]
+)
 SOCIALACCOUNT_PROVIDERS = {
     'naver': {'APP': {
                         'client_id': 'alfDQd2wRrqed3VChg5_',

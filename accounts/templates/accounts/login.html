@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block title %}
+  Login
+{% endblock title %}
 
 {% block content %}
   <div class="container">
@@ -6,11 +9,11 @@
     <hr>
     <form action="{% url 'accounts:login' %}" method="POST">
       {% csrf_token %}
-      <div class="row d-flex justify-content-center p-5">
+      <div class="d-flex justify-content-center p-5">
         <div class="col"></div>
         <div class="col-4">
           {{ form.as_p }}
-          <input type="submit" value="로그인" class="btn btn-success fw-bold d-flex justify-content-center" style="width:100%; font-size:22px;">
+          <input type="submit" value="로그인" class="btn btn-success fw-bold my-3d-flex justify-content-center" style="width:100%; font-size: 22px;">
           {% load socialaccount %}
           <a href="{% provider_login_url 'naver'%}" class="col-12 btn btn-outline-success me-1 mt-4">NAVER로 로그인</a>
           <a href="{% provider_login_url 'google'%}" class="col-12 btn btn-outline-success me-3 mt-2">Google로 로그인</a>
@@ -20,18 +23,3 @@
     </form>
   </div>
 {% endblock content %}
-<div class="d-flex justify-content-center px-5">
-  <form action="{% url 'accounts:update' %}" method="POST" enctype="multipart/form-data">
-    <div class="mt-5">
-      {% csrf_token %}
-      <div class="mb-2">
-        {{ form.as_p }}
-      </div>
-      <input type="submit" value='회원정보 수정' class="btn btn-success mb-2" style="width:100%; padding:10px; font-size: 21px;">
-    </div>
-  </form>
-</div>
-<div>
-  <label for="{{ form.password_id_for_label }}">비밀번호</label>
-  {{ form.password }}
-</div>
