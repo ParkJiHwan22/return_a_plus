@@ -126,13 +126,13 @@
 {% block title %}onClickTravel{% endblock title %}
 
 {% block content %}
-  <div class="mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:90%;">
+  <div class="mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:100%;">
     <div class="overlay-top"></div>
-    <img class="d-flex justify-content-center" src="{% static '/img/profile_bg.jpg' %}" alt="profil_background_image">
+    <img class="d-flex justify-content-center" style="max-width: 100%;" src="{% static '/img/profile_bg.jpg' %}" alt="profil_background_image">
   </div>
   <div class="row ms-5 mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:100%;">
-    <div class="col-9"></div>
-    <div class="col-3 d-flex justify-content-center align-items-center">
+    <div class="col-8" style="max-width: 100%;"></div>
+    <div class="col-1 d-flex justify-content-center align-items-center" style="max-width: 100%;">
       <div class="ms-5 mt-3 button btn btn-success">
         <a style="color:white; text-decoration-line: none; font-family: 'TheJamsil5Bold';" href="{% url 'posts:create' %}">Create</a>
       </div>
