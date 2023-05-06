@@ -111,6 +111,22 @@
     margin-top: 66.6%;
     backdrop-filter: blur(10px);
   }
+
+  .animated-text {
+    animation: fadeIn 1s ease-in-out;
+    animation-fill-mode: forwards;
+    opacity: 0;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
 {% endblock style %}
 
 {% block title %}onClickTravel{% endblock title %}
@@ -131,8 +147,8 @@
     <div class="position-absolute text-center text-white" style="top: 80%; left: 50%; transform: translate(-50%, -50%);">
       <h1 style="font-family: 'establishRetrosansOTF'; font-size:500%;">여행을 나답게,</h1>
       <h1 style="font-family: 'establishRetrosansOTF'; font-size:500%;">꿈꾸는 대로 펼치다.</h1>
-      <p style="font-family: 'TheJamsil5Bold'; font-size:150%;">onClickTravel과 함께 국내 여행지 후기를 한눈에 비교해보세요!</p>
-      <p style="font-family: 'TheJamsil5Bold'; font-size:110%;">가족, 연인, 아이와 함께 가기 좋은 여행지 후기부터, 힐링, 먹거리, 자연 경관, 레포츠, 축제 및 이벤트 정보까지 제공하는 맞춤형 서비스</p>
+      <p class="animated-text" style="font-family: 'TheJamsil5Bold'; font-size:150%;">onClickTravel과 함께 국내 여행지 후기를 한눈에 비교해보세요!</p>
+      <p class="animated-text" style="font-family: 'TheJamsil5Bold'; font-size:110%;">가족, 연인, 아이와 함께 가기 좋은 여행지 후기부터, 힐링, 먹거리, 자연 경관, 레포츠, 축제 및 이벤트 정보까지 제공하는 맞춤형 서비스</p>
     </div>
   </div>
   <div class="container-fluid d-flex justify-content-center">
@@ -181,6 +197,16 @@
         </div>
       {% endfor %}
     </div>
+  </div>
+  <div class="mt-5" style="height:50px;"><div class="mt-5"><div></div></div></div>
+  <div class="mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:100%;">
+    <img class="d-flex justify-content-center" style="width:100%; height:auto;" src="{% static '/img/index_bg.jpeg' %}" alt="index_background_image">
+  </div>
+  <div class="position-absolute text-center text-white" style="top: 330%; left: 50%; transform: translate(-50%, -50%);">
+    <h1 style="font-family: 'establishRetrosansOTF'; font-size:500%;">여행을 꿈꾸다.</h1>
+    <h1 style="font-family: 'establishRetrosansOTF'; font-size:500%;">여행을 디자인하다.</h1>
+    <p style="font-family: 'TheJamsil5Bold'; font-size:150%;">자유롭고 편리하게 계획하고, 기록해보세요!</p>
+    <p style="font-family: 'TheJamsil5Bold'; font-size:110%;">관광 명소 정보와 후기를 남겨주세요. 더 나은 서비스 구축에 도움이 됩니다.</p>
   </div>
   <div class="mt-5 mb-5 container-fluid d-flex justify-content-evenly" style="width:100%; max-width: 100%;max-height: 100%; font-family: 'TheJamsil5Bold';">
     {% if posts_with_images %}
