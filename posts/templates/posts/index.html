@@ -103,7 +103,7 @@
             <p class="card-text m-0 text" style="font-size:small">{{ post.user.username }}님의 후기</p>
             <p class="card-text m-0 text" style="font-size:small">{{ post.user.title }}</p>
             <div class="mb-2">
-              <form action="{% url 'posts:like' post_pk=post.pk %}" method="POST">
+              <form id= "likeform" data-post-id="{{ post.pk }}>
                 {% csrf_token %}
                 {% if request.user in post.like_users.all %}
                     <div class="mt-2 d-flex justify-content-between">
@@ -160,11 +160,12 @@
       </a>
     </div>
   </div>
-{% endblock content %}
-
-{% block script %}
+  {% endblock content %}
+  
+  {% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'js/index.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="{% static 'js/base.js' %}"></script>
 <script>
   const ratios = {{ratios|safe}};
   const colorDict = {{color_dict|safe}};  // 수정된 부분
