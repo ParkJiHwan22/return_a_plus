@@ -38,11 +38,11 @@
   </head>
 
   <body>
-    <nav id="navbar" class="sticky-top text-success-emphasis border-success-subtle" style="width:110%">
-      <div class="container h p-0">
+    <nav id="navbar" class="sticky-top text-success-emphasis border-success-subtle" style="width:100%">
+      <div class="container h p-0" style="width:100%">
         <div class="row d-flex justify-content-between p-1">
           <div class="h p-0 col-2 d-flex align-items-center justify-content-start">
-            <a class="h pb-2 ms-3 mt-3 text-success-emphasis d-flex justify-content-start" href="{% url 'posts:index' %}" style="color:#198754;text-decoration-line:none;font-size:large;">
+            <a class="h pb-2 mt-3 text-success-emphasis d-flex justify-content-start" href="{% url 'posts:index' %}" style="color:#198754;text-decoration-line:none;font-size:large;">
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#198754" class="pb-2 bi bi-cursor" viewbox="0 0 16 16">
                 <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103zM2.25 8.184l3.897 1.67a.5.5 0 0 1 .262.263l1.67 3.897L12.743 3.52 2.25 8.184z"/>
               </svg>
@@ -78,7 +78,7 @@
     </nav>
     {% block content %}{% endblock content %}
     <!-- Footer -->
-    <footer style="font-family: 'TheJamsil5Bold'; position: sticky; background-color: rgb(2, 48, 32); margin-top: 150px; padding: 20px;
+    <footer style="font-family: 'TheJamsil5Bold'; position: sticky; background-color: rgb(2, 48, 32);margin-top: 150px; padding: 20px;
         font-size: 15px;">
       <p class="m-0 text-center text-white" style="text-decoration: none;
         color: inherit;">
