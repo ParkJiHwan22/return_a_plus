@@ -1,0 +1,94 @@
+[
+{
+    "model": "accounts.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$rwPjTPTlW5VGD95yDaDU51$+ALrLMhrAiiqN0K0JMV9ZnuBFCu5EeJt+1MSWs88/0U=",
+        "last_login": "2023-05-07T07:21:44.946Z",
+        "is_superuser": false,
+        "username": "bat522",
+        "first_name": "지환",
+        "last_name": "박",
+        "email": "bat522@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-07T07:21:39.649Z",
+        "nickname": "지환",
+        "gender": "",
+        "profile_image": "profile_image/2023/05/07/메타몽.jpg",
+        "status_message": null,
+        "groups": [],
+        "user_permissions": [],
+        "followings": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$U4IpOebsccxV6XWBvcJJT7$7lnmwD82m9+K9CGUdSNJ+QKQ4B5ViXDNMDbNtKKaeuo=",
+        "last_login": "2023-05-07T08:41:08.046Z",
+        "is_superuser": true,
+        "username": "adminjh",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-05-07T08:40:11.001Z",
+        "nickname": "",
+        "gender": "",
+        "profile_image": "",
+        "status_message": null,
+        "groups": [],
+        "user_permissions": [],
+        "followings": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$09K5w5J3Sku6eIDHNxDhUd$3ww4bHgfJdV9tbrBK7p66TVaWpejVrGMEmBhu/aVMnc=",
+        "last_login": null,
+        "is_superuser": true,
+        "username": "adminhy",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-05-07T08:40:27.672Z",
+        "nickname": "",
+        "gender": "",
+        "profile_image": "",
+        "status_message": null,
+        "groups": [],
+        "user_permissions": [],
+        "followings": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$VBCe36ATeUNiQzTjISVziq$jPQbcGVbslr4MGe7Ai8d0pQQToVyB+BAXbxlAxR2WXU=",
+        "last_login": "2023-05-07T08:51:38.149Z",
+        "is_superuser": true,
+        "username": "adminyj",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-05-07T08:40:52.031Z",
+        "nickname": "",
+        "gender": "",
+        "profile_image": "",
+        "status_message": null,
+        "groups": [],
+        "user_permissions": [],
+        "followings": []
+    }
+}
+]

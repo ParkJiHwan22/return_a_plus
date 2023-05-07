@@ -1,0 +1,66 @@
+[
+{
+    "model": "posts.review",
+    "pk": 1,
+    "fields": {
+        "post": 1,
+        "user": 1,
+        "review": "경포대가 해수욕장 이름인 줄 알고 있었어요...",
+        "accessibility": "5",
+        "cost": "5",
+        "service": "5",
+        "convenience_facilities": "5",
+        "satisfaction": "3",
+        "review_image": "",
+        "created_at": "2023-05-07T07:27:34.057Z"
+    }
+},
+{
+    "model": "posts.review",
+    "pk": 2,
+    "fields": {
+        "post": 2,
+        "user": 2,
+        "review": "재밌게 놀다왔어요 ㅎㅎ",
+        "accessibility": "4",
+        "cost": "4",
+        "service": "5",
+        "convenience_facilities": "4",
+        "satisfaction": "5",
+        "review_image": "",
+        "created_at": "2023-05-07T08:41:45.836Z"
+    }
+},
+{
+    "model": "posts.review",
+    "pk": 3,
+    "fields": {
+        "post": 4,
+        "user": 4,
+        "review": "노을이 너무 이뻤어요 ㅠㅠ",
+        "accessibility": "5",
+        "cost": "3",
+        "service": "5",
+        "convenience_facilities": "4",
+        "satisfaction": "5",
+        "review_image": "",
+        "created_at": "2023-05-07T08:56:27.934Z"
+    }
+},
+{
+    "model": "posts.review",
+    "pk": 4,
+    "fields": {
+        "post": 2,
+        "user": 4,
+        "review": "광안대교가 너무 이뻐요",
+        "accessibility": "5",
+        "cost": "5",
+        "service": "5",
+        "convenience_facilities": "4",
+        "satisfaction": "5",
+        "review_image": "",
+        "created_at": "2023-05-07T10:08:34.979Z"
+    }
+}
+]

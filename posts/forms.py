@@ -75,16 +75,16 @@ class PostForm(forms.ModelForm):
     # )
 
 
-    checkbox1 = forms.BooleanField(required=False, label='문화 및 역사 유적지')
-    checkbox2 = forms.BooleanField(required=False, label='자연 경관')
-    checkbox3 = forms.BooleanField(required=False, label='테마파크')
-    checkbox4 = forms.BooleanField(required=False, label='어드벤처 및 스포츠')
-    checkbox5 = forms.BooleanField(required=False, label ='축제 및 이벤트')
-    checkbox6 = forms.BooleanField(required=False, label='먹거리')
-    checkbox7 = forms.BooleanField(required=False, label='쇼핑')
-    checkbox8 = forms.BooleanField(required=False, label='가족 나들이')
-    checkbox9 = forms.BooleanField(required=False, label='데이트 코스')
-    checkbox10 = forms.BooleanField(required=False, label = '인생샷 명소')
+    checkbox1 = forms.BooleanField(required=False, label='문화 및 역사 유적지', widget=forms.CheckboxInput(attrs={'style': 'transform: scale(1.3); cursor: pointer;'}))
+    checkbox2 = forms.BooleanField(required=False, label='자연 경관', widget=forms.CheckboxInput(attrs={'style': 'transform: scale(1.3); cursor: pointer;'}))
+    checkbox3 = forms.BooleanField(required=False, label='테마파크', widget=forms.CheckboxInput(attrs={'style': 'transform: scale(1.3); cursor: pointer;'}))
+    checkbox4 = forms.BooleanField(required=False, label='어드벤처 및 스포츠', widget=forms.CheckboxInput(attrs={'style': 'transform: scale(1.3); cursor: pointer;'}))
+    checkbox5 = forms.BooleanField(required=False, label ='축제 및 이벤트', widget=forms.CheckboxInput(attrs={'style': 'transform: scale(1.3); cursor: pointer;'}))
+    checkbox6 = forms.BooleanField(required=False, label='먹거리', widget=forms.CheckboxInput(attrs={'style': 'transform: scale(1.3); cursor: pointer;'}))
+    checkbox7 = forms.BooleanField(required=False, label='쇼핑', widget=forms.CheckboxInput(attrs={'style': 'transform: scale(1.3); cursor: pointer;'}))
+    checkbox8 = forms.BooleanField(required=False, label='가족 나들이', widget=forms.CheckboxInput(attrs={'style': 'transform: scale(1.3); cursor: pointer;'}))
+    checkbox9 = forms.BooleanField(required=False, label='데이트 코스', widget=forms.CheckboxInput(attrs={'style': 'transform: scale(1.3); cursor: pointer;'}))
+    checkbox10 = forms.BooleanField(required=False, label = '인생샷 명소', widget=forms.CheckboxInput(attrs={'style': 'transform: scale(1.3); cursor: pointer;'}))
     
     
     

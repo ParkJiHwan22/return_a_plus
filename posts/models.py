@@ -41,7 +41,7 @@ class PostImage(models.Model):
         upload_to='posts/images',
         processors=[ResizeToFill(900, 900)],
         format='JPEG',
-        options={'quality': 90},
+        options={'quality': 95},
         default=default_image,
     )
     
@@ -70,7 +70,7 @@ class ReviewImage(models.Model):
         upload_to='reviews/images',
         processors=[ResizeToFill(600, 600)],
         format='JPEG',
-        options={'quality': 90},
+        options={'quality': 95},
         default=default_image,
         blank=True,
         null=True,
