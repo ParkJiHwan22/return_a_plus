@@ -16,4 +16,5 @@ urlpatterns = [
     ),
     path('<int:post_pk>/like/', views.like, name='like'),
     path('Our_Service/', views.Our_Service, name='Our_Service'),
+    path('<str:city>/filter/', views.filter, name='filter'),
 ]
