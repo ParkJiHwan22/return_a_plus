@@ -8,47 +8,14 @@
 
 {% block style %}
   <style>
-    .modal {
-      position:absolute;
-      width:100%; 
-      height:100%; 
-      background: rgba(0,0,0,0.8);
-      top:0; 
-      left:O; 
-      display:none;
+    .col-6{
+      width : 200px;
+      height: 150px;
     }
 
-    .button {
-      flex-shrink: 0;
-      margin-left: 10px;
-      {% comment %} position:absolute; 
-      top:50%; left:50%;
-      width:120px; 
-      height:30px; 
-      margin-top:-15px; 
-      margin-left:-60px;
-      line-height:15px; 
-      cursor:pointer; {% endcomment %}
-    }
-    
-    .modal_content {
-      width:600px; 
-      height:600px;
-      background:#fff; 
-      border-radius:10px;
-      position:relative; 
-      top:50%; left:50%;
-      transform: translate(-50%, -50%);
-      text-align:center;
-      box-sizing:border-box; 
-      padding:74px 0;
-      line-height:23px; 
-      cursor:pointer;
-    }
-
-    .icon {
-      width:80px; 
-      height:80px;
+    .col-6 .icon {
+      width:50px; 
+      height:auto
     }
 
     .profile-img-wrapper {
@@ -71,16 +38,16 @@
 <div class="container">  
   <hr>
   <p style="display:flex; justify-content: space-between">
-    <span>작성자 <a href="{% url 'accounts:profile' post.user.username %}">{{ post.user }}</a></span>
-    <span>{{ post.created_at|date:'Y년 M j일 H:i' }}&nbsp;&nbsp; 조회수: {{ post.views }}</span>
+    <span style = 'font-size: 1.5rem;'>작성자 <a href="{% url 'accounts:profile' post.user.username %}">{{ post.user }}</a></span>
+    <span style = 'font-size: 1rem;'>{{ post.created_at|date:'Y년 M j일 H:i' }}&nbsp;&nbsp; 조회수: {{ post.views }}</span>
   </p>
-  <!-- 이미지 -->
-  <div class="row border rounded w-50">
-    <div class="col-sm-3">
-      {% if post.post_image %}
-      <img src="{{ post.post_image.url }}" alt="post_image">
-      {% endif %}
+
+  <div class="d-flex flex-row">
+    {% for post_image in post_images %}
+    <div class="headimg" style="margin: 5px;">
+      <img class="card-img-top" src="{{ post_image.image.url }}" alt="대체이미지">
     </div>
+    {% endfor %}
   </div>
   <!-- 이미지 -->
 
@@ -94,64 +61,91 @@
   <h4>{{ post.description }}</h4>
   <hr>
   <h2 class='my-4'>관광 명소 종류</h2>
+  <br>
   <h3>
-    {% if post.price == 0 %}
-    <img src="{% static 'icon_image/000.png' %}" class='icon' alt="Money Icon">
-      입장료 없음 <br><br>
-    {% else %}
-    <img src="{% static 'icon_image/000.png' %}" class='icon' alt="Money Icon">
-      입장료 있음 (성인 기준 약 {{ post.price }}원) <br><br>
-    {% endif %}
+    <div class='row d-flex'>
+      <div class='col-6'>
+        {% if post.price == 0 %}
+        <img src="{% static 'icon_image/000.png' %}" class='icon' alt="Money Icon">
+          입장료 없음 <br><br>
+        {% else %}
+        <img src="{% static 'icon_image/000.png' %}" class='icon' alt="Money Icon">
+          입장료 있음 (성인 기준 약 {{ post.price }}원) <br><br>
+        {% endif %}
+      </div>
 
-    {% if post.checkbox1 %}
-      <img src="{% static 'icon_image/001.png' %}" class='icon' alt="Cultural and Historical Sites Icon">
-      문화 및 역사 유적지 <br><br>
-    {% endif %}
     
-    {% if post.checkbox2 %}
-      <img src="{% static 'icon_image/002.png' %}" class='icon' alt="Natural Scenery Icon">
-      자연 경관 <br><br>
-    {% endif %}
+      {% if post.checkbox1 %}
+        <div class='col-6'>
+          <img src="{% static 'icon_image/001.png' %}" class='icon' alt="Cultural and Historical Sites Icon">
+          문화 및 역사 유적지 <br><br>
+        </div>
+      {% endif %}
+      
+
+      {% if post.checkbox2 %}
+        <div class='col-6'>
+          <img src="{% static 'icon_image/002.png' %}" class='icon' alt="Natural Scenery Icon">
+          자연 경관 <br><br>
+        </div>
+      {% endif %}
+
     
     {% if post.checkbox3 %}
-      <img src="{% static 'icon_image/003.png' %}" class='icon' alt="Theme Park Icon">
-      테마파크 <br><br>
+      <div class='col-6'>
+        <img src="{% static 'icon_image/003.png' %}" class='icon' alt="Theme Park Icon">
+        테마파크 <br><br>
+      </div>
     {% endif %}
 
     {% if post.checkbox4 %}
-      <img src="{% static 'icon_image/004.png' %}" class='icon' alt="Adventure and Sports Icon">
-      어드벤쳐 및 스포츠 <br><br>
+      <div class='col-6'>
+        <img src="{% static 'icon_image/004.png' %}" class='icon' alt="Adventure and Sports Icon">
+        어드벤쳐 및 스포츠 <br><br>
     {% endif %}
 
     {% if post.checkbox5 %}
-      <img src="{% static 'icon_image/005.png' %}" class='icon' alt="Festivals and Events Icon">
-      축제 및 이벤트 <br><br>
+      <div class='col-6'>
+        <img src="{% static 'icon_image/005.png' %}" class='icon' alt="Festivals and Events Icon">
+        축제 및 이벤트 <br><br>
+      </div>
     {% endif %}
 
     {% if post.checkbox6 %}
-      <img src="{% static 'icon_image/006.png' %}" class='icon' alt="Food Icon">
-      먹거리 <br><br>
+      <div class='col-6'>
+        <img src="{% static 'icon_image/006.png' %}" class='icon' alt="Food Icon">
+        먹거리 <br><br>
+      </div>
     {% endif %}
     
     {% if post.checkbox7 %}
-      <img src="{% static 'icon_image/007.png' %}" class='icon' alt="Shopping Icon">
-      쇼핑 <br><br>
+      <div class='col-6'>
+        <img src="{% static 'icon_image/007.png' %}" class='icon' alt="Shopping Icon">
+        쇼핑 <br><br>
+      </div>
     {% endif %}
     
     {% if post.checkbox8 %}
-      <img src="{% static 'icon_image/008.png' %}" class='icon' alt="Family Outing Icon">
-      가족 나들이 <br><br>
+      <div class='col-6'>
+        <img src="{% static 'icon_image/008.png' %}" class='icon' alt="Family Outing Icon">
+        가족 나들이 <br><br>
+      </div>
     {% endif %}
 
     {% if post.checkbox9 %}
-      <img src="{% static 'icon_image/009.png' %}" class='icon' alt="Dating Course Icon">
-      데이트 코스 <br><br>
+      <div class='col-6'>
+        <img src="{% static 'icon_image/009.png' %}" class='icon' alt="Dating Course Icon">
+        데이트 코스 <br><br>
+      </div>
     {% endif %}
 
     {% if post.checkbox10 %}
-      <img src="{% static 'icon_image/010.png' %}" class='icon' alt="Photo Icon">
-      인생샷 명소 <br><br>
+      <div class='col-6'>
+        <img src="{% static 'icon_image/010.png' %}" class='icon' alt="Photo Icon">
+        인생샷 명소 <br><br>
+      </div>
     {% endif %}
+  </div>
   </h3>
   {% comment %} 저작권 표기 - eyJjb2xJZCI6eyJJRCI6MSwibmFtZSI6Ilx1YjBiNCBcdWM1NDRcdWM3NzRcdWNmNTggXHVjZWVjXHViODA5XHVjMTU4IiwiYm9va21hcmtfaWQiOjMxMjAyMDI5LCJjcmVhdGVkIjoxNjgzMTgwNDE4LCJ1cGRhdGVkIjoxNjgzMTgwNjUyLCJhY3RpdmUiOjEsInNvdXJjZSI6InJlbW90ZSIsIm9yZGVyIjowLCJjb2xvciI6IjAwMDAwMCIsInN0YXR1cyI6MX0sImNvbEJvb2ttYXJrSWQiOlt7ImlkIjozMTI3MzQ4LCJuYW1lIjoiaWNvbi0zMTI3MzQ4IiwiY29sb3IiOiIjMDAwMDAwIiwicHJlbWl1bSI6IjAiLCJzb3J0IjoxfSx7ImlkIjo0MDk5MDYyLCJuYW1lIjoiaWNvbi00MDk5MDYyIiwiY29sb3IiOiIjMDAwMDAwIiwicHJlbWl1bSI6IjAiLCJzb3J0IjoyfSx7ImlkIjo0Mzc1MjIsIm5hbWUiOiJpY29uLTQzNzUyMiIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6M30seyJpZCI6NjYzMzMxOCwibmFtZSI6Imljb24tNjYzMzMxOCIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6NH0seyJpZCI6MjkxOTU5LCJuYW1lIjoiLSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6NX0seyJpZCI6MjYyMjU4NywibmFtZSI6Imljb24tMjYyMjU4NyIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6Nn0seyJpZCI6MTI1OTcxOCwibmFtZSI6Imljb24tMTI1OTcxOCIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6N30seyJpZCI6ODcwNzgzOSwibmFtZSI6Imljb24tODcwNzgzOSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6OH0seyJpZCI6NTAzNTk1OSwibmFtZSI6Imljb24tNTAzNTk1OSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6OX0seyJpZCI6NzIyNDAxMSwibmFtZSI6Imljb24tNzIyNDAxMSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6MTB9LHsiaWQiOjQ5MjMwOTAsIm5hbWUiOiIiLCJjb2xvciI6IiMwMDAwMDAiLCJwcmVtaXVtIjowLCJzb3J0IjoxMX1dfQ=={% endcomment %}
   <hr>
@@ -165,103 +159,137 @@
     </form>
   {% endif %}
 
-  <hr>
   <!-- 후기 -->
   <h2>후기</h2>
-  <br>
-  {% for review in reviews %}
-    <div class="row justify-content-start">
-      {% if review.user.profile_image %}
-        <img src="{{ person.profile_image.url }}" alt="post_image" class="col-4 rounded-circle profile-img profile-img-wrapper">
-      {% else %}
-        <img src="https://i.pinimg.com/564x/dc/93/f7/dc93f70b6620fc090ef6d1249f01f55a.jpg" alt="no_image" class="col-4 rounded-circle profile-img profile-img-wrapper">
-      {% endif %}
-
-      <div class="col-6">
-        <h4><a href="{% url 'accounts:profile' review.user.username %}">{{ review.user }}</a></h4>
-        <p>{{ post.created_at|date:'Y년 M j일 H:i' }}</p>
-    </div>
-
-      <div>
-        {% if review.review_image %}
-        <img src="{{ review.review_image.url }}" alt="review_image">
+  <h5>총 {{ reviews|length }}개의 후기가 있어요. </h5>
+  <hr>
+  <div class="container mx-auto">
+    {% for review in reviews %}
+      <div class="row justify-content-start mb-3">
+        {% if review.user.profile_image %}
+          <img src="{{ review.user.profile_image.url }}" alt="post_image" class="col-4 rounded-circle profile-img profile-img-wrapper">
+        {% else %}
+          <img src="https://i.pinimg.com/564x/dc/93/f7/dc93f70b6620fc090ef6d1249f01f55a.jpg" alt="no_image" class="col-4 rounded-circle profile-img profile-img-wrapper">
         {% endif %}
-      </div>
-      <p>{{ review.review }}</p>
-    </div>
 
-    <div class="row">
-      <div class="col-5">
-        <p>접근성:
-          <div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar bg-success progress-bar-striped" style="width: {{ review.accessibility|mul:20 }}%"> {{ review.accessibility }}/5</div>
-          </div>
-        </p>
-        <p>비용:
-          <div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar bg-success progress-bar-striped" style="width: {{ review.cost|mul:20 }}%"> {{ review.cost }}/5</div>
-          </div>
-        </p>
-        <p>서비스:
-          <div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar bg-success progress-bar-striped" style="width: {{ review.service|mul:20 }}%"> {{ review.service }}/5</div>
-          </div>
-        </p>
+        <div class="col-5">
+          <h4><a href="{% url 'accounts:profile' review.user.username %}">{{ review.user }}</a></h4>
+          <p>{{ post.created_at|date:'Y년 M j일 H:i' }}</p>
+        <!-- Button collapse -->
+        </div>
+        <div class="col-5 ms-auto text-end">
+          <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{ review.id }}" aria-expanded="false" aria-controls="collapseExample">
+            자세한 평가 보기
+          </button>
+    
+        </div>
       </div>
-      <div class="col-1"></div>
-      <div class="col-5">
-        <p>편의시설:
-          <div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar bg-success progress-bar-striped" style="width: {{ review.convenience_facilities|mul:20 }}%"> {{ review.convenience_facilities }}/5</div>
+
+      <!-- collapse -->
+      <div class="collapse" id="collapseExample{{ review.id }}">
+        <div class="card card-body">
+          <div class="row">
+            <div class="col-5">
+              <p>접근성:
+                <div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar bg-success progress-bar" style="width: {{ review.accessibility|mul:20 }}%"> {{ review.accessibility }} / 5</div>
+                </div>
+              </p>
+              <p>비용:
+                <div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar bg-success progress-bar" style="width: {{ review.cost|mul:20 }}%"> {{ review.cost }} / 5</div>
+                </div>
+              </p>
+              <p>서비스:
+                <div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar bg-success progress-bar" style="width: {{ review.service|mul:20 }}%"> {{ review.service }} / 5</div>
+                </div>
+              </p>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-5">
+              <p>편의시설:
+                <div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar bg-success progress-bar" style="width: {{ review.convenience_facilities|mul:20 }}%"> {{ review.convenience_facilities }} / 5</div>
+                </div>
+              </p>
+              <p>만족도:
+                <div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar bg-success progress-bar" style="width: {{ review.satisfaction|mul:20 }}%"> {{ review.satisfaction }} / 5</div>
+                </div>
+              </p>
+              <p>평균:
+                <div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar bg-primary progress-bar" style="width: {{ review.accessibility|add:review.cost|add:review.service|add:review.convenience_facilities|add:review.satisfaction|mul:4 }}%"> {{ review.accessibility|add:review.cost|add:review.service|add:review.convenience_facilities|add:review.satisfaction|div:5 }} / 5</div>
+                </div>
+              </p>
+            </div>
           </div>
-        </p>
-        <p>만족도:
-          <div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar bg-success progress-bar-striped" style="width: {{ review.satisfaction|mul:20 }}%"> {{ review.satisfaction }}/5</div>
-          </div>
-        </p>
-        <p>평균:
-          <div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar bg-success progress-bar-striped" style="width: {{ review.accessibility|add:review.cost|add:review.service|add:review.convenience_facilities|add:review.satisfaction|mul:4 }}%"> {{ review.accessibility|add:review.cost|add:review.service|add:review.convenience_facilities|add:review.satisfaction|div:5 }}/5</div>
-          </div>
-        </p>
+        </div>
       </div>
-    </div>
+    
+
+        <div>
+          {% for review_image in review.review_images.all %}
+            {% if review_image %}
+              <img src="{{ review_image.image.url }}" alt="review_image">
+            {% endif %}
+          {% endfor %}
+        </div>
+          <p>{{ review.review }}</p>
 
 
     {% if request.user == review.user %}
     <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
       {% csrf_token %}
-      <input type="submit" value="댓글삭제" class="btn btn-primary ms-1 me-1 mt-3 modal_form">
+      <input type="submit" value="댓글삭제" class="btn btn-secondary ms-1 me-1 mt-3 modal_form">
     </form>
     {% endif %}
     <hr>
   {% endfor %}
+  
   <!-- 후기 -->
 
 
   {% if user.is_authenticated %}
-    <button class="btn btn-primary ms-1 me-1 mt-3 test">
-      리뷰남기기
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      새로운 글 작성하기
     </button>
-    <div class="modal">
-      <div class="modal_content" title="close">
-        <form action="{% url 'posts:review_create' post.pk %}" method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          {{ review_form.as_p }}
-          <input type="submit" value="댓글작성" class="btn btn-primary ms-1 me-1 mt-3 modal_form">
-        </form>
+
+   <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+                <h5 class="modal-title">리뷰 남기기</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="{% url 'posts:review_create' post.pk %}" method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{ review_form.as_p }}
+                    {{ imageForm }}
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <input type="submit" value="댓글작성" class="btn btn-primary modal_form">
+                  </div>
+                </form>
+              </div>
+          </div>
+        </div>
       </div>
     </div>
-    {% else %}
+
+  {% else %}
     <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
-    {% endif %}
-    
-    
+  {% endif %}
+
+  </div>
     <!-- 위치 -->
     <h4> 숙소 위치 </h4>
     <div id="map" style="height: 600px;"></div>
-  </div>
+  
 
   <script>
   const place = "{{ location }}".replace(/&#x27;/g, "\"");
@@ -280,6 +308,7 @@
   }
   </script>
   <script src="{% static '/js/base.js' %}"></script>
+
 {% comment %}
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAd9M3rcxiyzS9IxbErxaMv45mw94kQFxY&callback=initMap">
 </script>
