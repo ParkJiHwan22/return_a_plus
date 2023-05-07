@@ -6,6 +6,7 @@ from .forms import PostForm, ReviewForm, PostForm, PostImageForm, ReviewImageFor
 from django.db.models import Count
 import googlemaps
 from django.contrib.auth import get_user_model
+from django.http import JsonResponse
 
 colors = [
     'rgba(255, 99, 132, 0.7)',
@@ -43,8 +44,10 @@ def index(request):
     post_likes = [post.like_users.count() for post in posts]
     total_likes = sum(post_likes)
     ratios = []
+    hot_posts = Post.objects.annotate(num_views=Count('views')).order_by('-num_views')[:5]
+    hot_post_names = [post.name for post in hot_posts]
     likes_order_posts = Post.objects.annotate(like_count=Count('like_users')).order_by('-like_count')
-    posts_with_images = likes_order_posts.exclude(post_image__exact='')
+    posts_with_images = likes_order_posts.exclude(post_image='')
     if total_likes > 0:
         ratios = [like_count / total_likes for like_count in post_likes]
     for post in posts:
@@ -61,8 +64,10 @@ def index(request):
         'color_dict': color_dict, 
         'color_list': color_list,
         'posts_with_images': posts_with_images,
+        'hot_post_names': hot_post_names,
     }
     return render(request, 'posts/index.html', context)
+
 
 
 @login_required
@@ -187,8 +192,14 @@ def like(request, post_pk):
     post = Post.objects.get(pk=post_pk)
     if request.user in post.like_users.all():
         post.like_users.remove(request.user)
+        is_like_users = False
     else:
         post.like_users.add(request.user)
+        is_like_users = True
+        context = {
+            'is_like_users':is_like_users
+        }
+        return JsonResponse(context,)
     return redirect('posts:index')
 
 

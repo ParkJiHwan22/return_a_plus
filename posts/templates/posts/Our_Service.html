@@ -11,12 +11,16 @@
 
 {% block style %}
   <style>
-    .box1 {
-      border: 0.5rem outset pink;
+    .box_outside {
+      border: none;
+    }
+
+    .box_inside {
+      border: none;
     }
 
     .box2 {
-      border: 5px solid black;
+      border: 2px solid black;
     }
 
     dt:after {
@@ -29,51 +33,105 @@
       font-weight: normal;
       font-style: normal;
     }
-  </style>
 
+    @font-face {
+      font-family: 'HANAMDAUM';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/HANAMDAUM.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'S-CoreDream-3Light';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+  
+    @font-face {
+      font-family: 'TheJamsil5Bold';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+      font-weight: 50;
+      font-style: normal;
+    }
+
+  </style>
 {% endblock style %}
 
 {% block content %}
-  <img src="{% static '/img/profile_bg.jpg' %}" alt="profil_background_image" style="position: absolute; opacity: 0.33; z-index: -3;" height="1000">
-  <div class="container">
-    <div class="mt-2" style="font-family: 'establishRetrosansOTF';">
+  <div class="mt-5 container" style="height:100%;">
+    <div class="mt-5" style="font-family: 'establishRetrosansOTF';">
       <h1 class="text-center my-3">Our Service</h1>
     </div>
     <hr>
-    <div class="row">
-      <div class="col-2">
-        <div></div>
-      </div>
-      <div class="col-8 text-center" style="margin: 30px 10px;">
-        <h5 style="display: flex;">OneClickTravel은 사용자에게 번거로움 없는 여행 계획 경험을 제공하도록 설계된 종합 웹사이트입니다. 웹사이트의 주요 초점은 위치, 정보 및 리뷰의 세 가지 키워드에 있으며 사용자가 여행을 계획할 때 정보에 입각한 결정을 내리는 데 도움이 되는 다양한 도구와 리소스를 제공합니다.</h5>
-      </div>
-    </div>
-    <div class="col-2">
-      <div></div>
-    </div>
-    <div class="box1" style="display: flex; margin: 10px 30px">
-      <div class="box2" style="margin: 50px">
-        <dt style="font-family: 'Kaushan Script', cursive;font-size: 40px;">Location
-        </dt>
-        <dd>숙소 위치에 따른 지도 API기능</dd>
-        <dd>위치 측면에서 OneClickTravel은 사용자에게 호텔과 항공편을 찾고 예약할 수 있는 다양한 옵션을 제공합니다. 사용자는 특정 위치를 기반으로 호텔 및 항공편을 검색하거나 웹사이트의 고급 검색 기능을 사용하여 선호도에 따라 완벽한 목적지를 찾을 수 있습니다. OneClickTravel은 또한 사용자에게 인기 명소, 지역 풍습, 꼭 먹어봐야 할 음식 등 다양한 여행지에 대한 자세한 정보를 제공합니다.</dd>
-      </div>
-      <div class="box2" style="margin: 50px">
-        <dt style="font-family: 'Kaushan Script', cursive;font-size: 40px;">Information
-        </dt>
-        <dd>각 숙소마다의 환경 및 자세한 제공</dd>
-        <dd>웹사이트의 정보 섹션은 사용자가 보다 효율적으로 여행을 계획할 수 있도록 설계되었습니다. 여기에는 목적지 가이드, 여행 팁, 여행하는 동안 돈을 절약하는 방법에 대한 조언이 포함되어 있습니다. OneClickTravel의 여행 가이드는 문화, 역사, 요리 등 다양한 주제를 다룹니다. 경험 많은 여행가들이 작성했으며 사용자에게 완벽한 여행 계획을 세우는 데 도움이 되는 풍부한 정보를 제공합니다.</dd>
-      </div>
-      <div class="box2" style="margin: 50px">
-        <dt style="font-family: 'Kaushan Script', cursive;font-size: 40px;">Reviews
-        </dt>
-        <dd>각 숙소를 사용한 사람의 다양한 리뷰</dd>
-        <dd>OneClickTravel의 리뷰 섹션은 여행 계획에 대해 정보에 입각한 결정을 내리려는 사용자에게 필수적인 리소스입니다. 다른 사용자가 작성한 호텔, 레스토랑 및 기타 여행 관련 비즈니스에 대한 리뷰를 제공합니다. 이러한 리뷰는 정확성과 신뢰성을 보장하기 위해 조정되며 특정 비즈니스에서 기대할 수 있는 사항에 대한 귀중한 통찰력을 사용자에게 제공합니다.</dd>
+    <div class="row mt-2">
+      <div class="mt-5 text-center d-flex flex-column justify-content-center" style="margin-left:auto; margin-right:auto;">
+        <h5 style="margin-top:10%; font-family: 'S-CoreDream-3Light';">OnClickTravel은 사용자에게 번거로움 없는 여행 계획 경험을 제공하도록 설계된 종합 웹사이트입니다.</h5>
+        <h5 style="font-family: 'S-CoreDream-3Light';">웹사이트의 주요 초점은 위치, 정보 및 리뷰라는 세 가지 키워드에 있으며</h5>
+        <h5 style="font-family: 'S-CoreDream-3Light';">사용자가 여행을 계획할 때 정보에 입각한 결정을 내리는 데 도움이 되는 다양한 도구와 리소스를 제공합니다.</h5>
       </div>
     </div>
-    <p class="w-50 text-center">OneClickTravel은 완벽한 여행을 계획하려는 모든 사람을 위한 올인원 웹사이트입니다. 위치, 정보 및 리뷰에 중점을 두어 사용자에게 여행 계획에 대해 정보에 입각한 결정을 내리는 데 필요한 도구를 제공하고 사용자 친화적인 인터페이스를 통해 초보자와 숙련된 여행자 모두 쉽게 사용할 수 있습니다.</p>
-    <div class="d-flex justify-content-center align-items-center">
-      <img src="{% static '/img/our_service.gif' %}" alt="Our_Service">
+    <div class="row" style="margin-top:10%">
+      <div class="mt-5 text-center d-flex flex-column justify-content-center" style="margin-left:auto; margin-right:auto;">
+        <div class="box_outside d-flex justify-content-evenly" style="width:100%">
+          <div class="box_inside d-flex flex-column" style="height:25rem; display: flex; margin: 10px 30px">
+            <dt class="mb-4" style="font-family: 'Kaushan Script', cursive;font-size: 40px;">Location</dt>
+            <dd style="font-family: 'S-CoreDream-3Light';">숙소 위치에 따른 지도 API기능</dd>
+            <dd style="font-family: 'S-CoreDream-3Light';">위치 측면에서 OnClickTravel은 사용자에게 호텔과 항공편을 찾고</dd>
+            <dd style="font-family: 'S-CoreDream-3Light';">예약할 수 있는 다양한 옵션을 제공합니다.</dd>      
+            <dd style="font-family: 'S-CoreDream-3Light';">사용자는 특정 위치를 기반으로 호텔 및 항공편을 검색하거나</dd>
+            <dd style="font-family: 'S-CoreDream-3Light';">웹사이트의 고급 검색 기능을 사용하여 선호도에 따라</dd>
+            <dd style="font-family: 'S-CoreDream-3Light';">완벽한 목적지를 찾을 수 있습니다.</dd>
+            <dd style="font-family: 'S-CoreDream-3Light';">OnClickTravel은 또한 사용자에게 인기 명소, 지역 풍습,</dd>
+            <dd style="font-family: 'S-CoreDream-3Light';">꼭 먹어봐야 할 음식 등 다양한 여행지에 대한 자세한 정보를 제공합니다.</dd>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:5%; height:100%; background-image: url({% static '/img/profile_bg.jpg' %}); background-size: cover;">
+      <div class="mt-5 row">
+        <div class="mt-5 text-center d-flex flex-column justify-content-center" style="margin-left:auto; margin-right:auto;">
+          <div class="box_outside d-flex justify-content-evenly" style="width:100%">
+            <div class="box_inside d-flex flex-column" style="height:25rem; display: flex; margin: 10px 30px">
+              <dt class="mb-4" style="font-family: 'Kaushan Script', cursive;font-size: 40px;">Information</dt>
+              <dd style="font-family: 'S-CoreDream-3Light';">각 숙소마다의 환경 및 자세한 제공</dd>
+              <dd style="font-family: 'S-CoreDream-3Light';">웹사이트의 정보 섹션은 사용자가 보다 효율적으로</dd>
+              <dd style="font-family: 'S-CoreDream-3Light';">여행을 계획할 수 있도록 설계되었습니다. </dd>      
+              <dd style="font-family: 'S-CoreDream-3Light';">여기에는 목적지 가이드, 여행 팁, 그리고 여행하는 동안</dd>
+              <dd style="font-family: 'S-CoreDream-3Light';">돈을 절약하는 방법에 대한 조언이 포함되어 있습니다.</dd>
+              <dd style="font-family: 'S-CoreDream-3Light';">OnClickTravel의 여행 가이드는 문화, 역사, 요리 등 다양한 주제를 다룹니다.</dd>
+              <dd style="font-family: 'S-CoreDream-3Light';">경험 많은 여행가들이 작성했으며 사용자에게</dd>
+              <dd style="font-family: 'S-CoreDream-3Light';">완벽한 여행 계획을 세우는데 도움이 되는 풍부한 정보를 제공합니다.</dd>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-5 row" style="color:white;">
+        <div class="mt-5 text-center d-flex flex-column justify-content-center" style="margin-left:auto; margin-right:auto;">
+          <div class="box_outside d-flex justify-content-evenly" style="width:100%">
+            <div class="box_inside d-flex flex-column" style="height:25rem; display: flex; margin: 10px 30px">
+              <dt class="mb-4" style="font-family: 'Kaushan Script', cursive;font-size: 40px;">Reviews</dt>
+              <dd style="font-family: 'S-CoreDream-3Light';">각 숙소를 사용한 사람의 다양한 리뷰</dd>
+              <dd style="font-family: 'S-CoreDream-3Light';">OnClickTravel의 리뷰 섹션은 여행 계획에 대해</dd>
+              <dd style="font-family: 'S-CoreDream-3Light';">정보에 입각한 결정을 내리려는 사용자에게 필수적인 리소스입니다.</dd>      
+              <dd style="font-family: 'S-CoreDream-3Light';">다른 사용자가 작성한 호텔, 레스토랑 및</dd>
+              <dd style="font-family: 'S-CoreDream-3Light';">기타 여행 관련 비즈니스에 대한 리뷰를 제공합니다.</dd>
+              <dd style="font-family: 'S-CoreDream-3Light';">이러한 리뷰는 정확성과 신뢰성을 보장하기 위해 조정되며</dd>
+              <dd style="font-family: 'S-CoreDream-3Light';">특정 비즈니스에서 기대할 수 있는 사항에 대한</dd>
+              <dd style="font-family: 'S-CoreDream-3Light';">귀중한 통찰력을 사용자에게 제공합니다.</dd>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:5%">
+        <div class="mt-5 text-center d-flex flex-column justify-content-center" style="color:white; margin-left:auto; margin-right:auto;">
+          <h5 style="font-family: 'S-CoreDream-3Light';">OnClickTravel은 "완벽한 여행을 계획하려는 모든 사람을 위한 올인원 웹사이트" 입니다.</h5>
+          <h5 style="font-family: 'S-CoreDream-3Light';">위치, 정보 및 리뷰에 중점을 두어 사용자에게 여행 계획에 대해 정보에 입각한 결정을 내리는 데 필요한 도구를 제공하고</h5>
+          <h5 style="font-family: 'S-CoreDream-3Light';">사용자 친화적인 인터페이스를 통해 초보자와 숙련된 여행자 모두 쉽게 사용할 수 있습니다.</h5>
+        </div>
+      </div>
+      <div class="mt-2 row" style="height:130px">
+      </div>
     </div>
   </div>
 {% endblock content %}
