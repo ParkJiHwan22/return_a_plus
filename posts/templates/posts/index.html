@@ -197,7 +197,7 @@
   </div>
   <div class="mb-5" style="height:50px;"><div class="mb-5"><div></div></div></div>
   <div class="mt-5 mb-5 container-fluid d-flex justify-content-evenly" style="width:100%; height:34rem; max-width: 100%;max-height: 100%; font-family: 'TheJamsil5Bold';">
-    {% if posts_with_images %}
+
     <div class="card d-flex justify-content-center" style="width: 24rem; height:34rem; max-width: 100%;max-height: 100%;">
       <p class="mt-5 mb-3 card-text d-flex justify-content-center" style="color:#198754; font-size:130%">현재 HOT한 관광도시 분포</p>
       <div class="ms-4 mt-3 mb-5 d-flex justify-content-center align-items-center" style="width:20rem; height:20rem; max-width: 100%;max-height: 100%;">
@@ -214,15 +214,17 @@
         </ul>
       </div>
     </div>
-    {% endif %}
 
     <div class="card d-flex justify-content-center" style="max-width:50rem; min-width:50rem; height: 34rem;">
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="5000" style="height: 100%;">
-        <div class="carousel-inner" style="height: 100%;">
-          {% for post in posts_with_images %}
-          <div class="carousel-item {% if forloop.first %}active{% endif %}" style="height: 100%;">
-            <img src="{{ post.post_image.url }}" class="d-block w-100 h-100 object-fit-cover" alt="..." style="height: 100%;">
-
+        <div class="carousel-inner d-flex justify-content-center">
+          {% for post in posts %}
+          <div class="carousel-item {% if forloop.first %} active {% endif %}" style="object-fit: cover; width: auto; margin: auto;">
+            {% if post.postimage_set.exists %}
+              <img src="{{ post.postimage_set.first.image.url }}" style="object-fit: cover; max-height:33rem; min-height:33rem; width: auto; margin-left: auto; margin-right:auto;" class="d-block w-100" alt="...">
+            {% else %}
+              <img src="{% static 'no_image.jpg' %}" style="object-fit: cover; max-height:33rem; min-height:33rem; width: auto; margin-left: auto; margin-right:auto;" class="d-block w-100" alt="...">
+            {% endif %}
           </div>
           {% endfor %}
         </div>
