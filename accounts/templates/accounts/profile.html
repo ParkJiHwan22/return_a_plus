@@ -51,70 +51,58 @@
   MyPage
 {% endblock title %}
 {% block content %}
-  <img src="{% static '/img/profile_bg.jpg' %}" alt="profil_background_image" style="position: absolute; opacity: 0.33; z-index: -3;" height="3000">
   <div class="container">
     <!-- 사용자 프로필 정보 -->
     <div class="row align-items-start profile-title p-5">
-      <div class="">
-        <div></div>
-      </div>
       <!-- 프로필 이미지 -->
       {% if person.profile_image %}
         <img src="{{ person.profile_image.url }}" alt="post_image" class="col-3 rounded-circle">
       {% else %}
         <img src="https://i.pinimg.com/564x/d2/98/4e/d2984ec4b65a8568eab3dc2b640fc58e.jpg" alt="no_image" class="col-3 rounded-circle">
       {% endif %}
-
-      <div class="col-8 ms-5">
+      <div class="d-flex flex-column justify-content-center col-8 ms-5 ps-5 ">
         <div class="row justify-content-start align-items-center my-1">
-
-          <!-- 사용자 이름 -->
-          <h1 class="col-4" style="font-family: 'TheJamsil5Bold';">{{ person.username }}</h1>
-
-          <!-- 팔로우 버튼 / 회원정보 수정 버튼 -->
+          <h1 class="col-4 mt-3" style="font-family: 'TheJamsil5Bold';">{{ person.username }}</h1>
           <div class="col-8">
             {% if request.user.is_authenticated %}
               {% if user.username != person.username %}
                 {% if request.user in person.followers.all %}
-                  <input type="submit" value="언팔로우" class="btn btn-success">
+                  <input type="submit" value="언팔로우" class="btn btn-success" style="font-family: 'TheJamsil5Bold';">
                 {% else %}
-                  <input type="submit" value="팔로우" class="btn btn-success">
+                  <input type="submit" value="팔로우" class="btn btn-success" style="font-family: 'TheJamsil5Bold';">
                 {% endif %}
               {% else %}
-                <form id="follow-form" data-user-id="{{ person.pk }}">
+                <form class="mt-2" id="follow-form" data-user-id="{{ person.pk }}">
                   {% csrf_token %}
-                  <a href="{% url 'accounts:update' %}" class="button btn btn-success">회원정보 수정</a>
+                  <a href="{% url 'accounts:update' %}" style="font-family: 'TheJamsil5Bold';" class="button btn btn-outline-success">회원정보 수정</a>
                 </form>
               {% endif %}
             {% else %}
-              <input type="submit" value="팔로우" class="btn btn-secondary disabled">
+              <input type="submit" value="팔로우" style="font-family: 'TheJamsil5Bold';" class="btn btn-secondary disabled">
             {% endif %}
           </div>
         </div>
 
         <!-- 팔로잉 / 팔로워 / 맞팔 목록 -->
-        <div class="row row-cols-auto align-items-center my-1 p-1">
+        <div class="row row-cols-auto align-items-center my-1 p-1 ps-3">
           <div class="col-4">
             <div></div>
           </div>
-
+          <div class="col">
+            <button style="font-family: 'TheJamsil5Bold';" type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+              맞팔로우 목록
+            </button>
+          </div>
           <div class="col ms-2">
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+            <button type="button" style="font-family: 'TheJamsil5Bold';" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+              <span>{{ person.followings.all|length }}</span>
               팔로잉
-              {{ person.followings.all|length }}
-              명
             </button>
           </div>
           <div class="col">
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-              팔로워
+            <button type="button" style="font-family: 'TheJamsil5Bold';" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2">
               <span id="followers-count">{{ person.followers.all|length }}</span>
-              명
-            </button>
-          </div>
-          <div class="col">
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal3">
-              맞팔 목록
+              팔로워
             </button>
           </div>
         </div>
@@ -136,8 +124,7 @@
               {% if person.status_message %}
                 {{ person.status_message }}
               {% else %}
-                <a href="{% url 'accounts:update' %}" style="text-decoration: none;
-        color: inherit;">
+                <a href="{% url 'accounts:update' %}" style="text-decoration: none; color: inherit;">
                   <p>상태메세지를 입력해주세요 :)</p>
                 </a>
               {% endif %}
@@ -154,13 +141,13 @@
       <div class="col">
         <h1 class="mt-3 px-5 py-3" style="font-family: 'TheJamsil5Bold';">게시글</h1>
         {% for post in person.post_set.all %}
-          <div class="card m-4" style="font-family: 'S-CoreDream-3Light'; max-width: 90%;">
+          <div class="card m-4" style="font-family: 'S-CoreDream-3Light'; max-width: 100%; max-height:8%">
             <div class="row g-0">
               <div class="col-2">
                 {% if post.post_image %}
-                  <img src="{{ post.post_image.url }}" alt="post_image" class="card-img rounded-start">
+                  <img src="{{ post.post_image.url }}" alt="post_image" style="max-width: 100%; max-width:100%; min-width: 100%; min-height:100%" class="card-img rounded-start">
                 {% else %}
-                  <img src="{% static 'no_image.jpg' %}" alt="no_image" class="card-img rounded-start">
+                  <img src="{% static 'no_image.jpg' %}" alt="no_image" style="max-width: 100%; max-width:100% min-width: 100%; min-height:100%" class="card-img rounded-start">
                 {% endif %}
               </div>
               <div class="col-10">
