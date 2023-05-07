@@ -62,6 +62,11 @@ SOCIALACCOUNT_PROVIDERS = {
                         'secret': 'sXZHUow0OV',
                         'key': ''
                 }},
+    'google': {'APP': {
+                        'client_id': '217118003423-7b5078mka8a3kaq0pm6ot29t04p2dqqs.apps.googleusercontent.com',
+                        'secret': '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',
+                        'key': ''
+                }},
 }
 
 LOGIN_REDIRECT_URL = 'http://localhost:8000/'   # social login redirect

@@ -6,6 +6,7 @@ from .forms import PostForm, ReviewForm
 from django.db.models import Count
 import googlemaps
 from django.contrib.auth import get_user_model
+from django.http import JsonResponse
 
 colors = [
     'rgba(255, 99, 132, 0.7)',
@@ -166,8 +167,14 @@ def like(request, post_pk):
     post = Post.objects.get(pk=post_pk)
     if request.user in post.like_users.all():
         post.like_users.remove(request.user)
+        is_like_users = False
     else:
         post.like_users.add(request.user)
+        is_like_users = True
+        context = {
+            'is_like_users':is_like_users
+        }
+        return JsonResponse(context,)
     return redirect('posts:index')
 
 
