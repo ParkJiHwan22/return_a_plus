@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% block title %}
+  MyPage
+{% endblock title %}
 {% block style %}
   <style>
     .profile-title {
@@ -20,36 +24,33 @@
 
     @font-face {
       font-family: 'establishRetrosansOTF';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff') format('woff');
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff") format('woff');
       font-weight: normal;
       font-style: normal;
     }
-  
+
     @font-face {
       font-family: 'HANAMDAUM';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/HANAMDAUM.woff2') format('woff2');
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/HANAMDAUM.woff2") format('woff2');
       font-weight: 400;
       font-style: normal;
     }
-  
+
     @font-face {
       font-family: 'TheJamsil5Bold';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2") format('woff2');
       font-weight: 50;
       font-style: normal;
     }
 
     @font-face {
       font-family: 'S-CoreDream-3Light';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff") format('woff');
       font-weight: normal;
       font-style: normal;
     }
   </style>
 {% endblock style%}
-{% block title %}
-  MyPage
-{% endblock title %}
 {% block content %}
   <div class="container">
     <!-- 사용자 프로필 정보 -->
@@ -66,19 +67,17 @@
           <div class="col-8">
             {% if request.user.is_authenticated %}
               {% if user.username != person.username %}
-                {% if request.user in person.followers.all %}
-                  <input type="submit" value="언팔로우" class="btn btn-success" style="font-family: 'TheJamsil5Bold';">
-                {% else %}
-                  <input type="submit" value="팔로우" class="btn btn-success" style="font-family: 'TheJamsil5Bold';">
-                {% endif %}
-              {% else %}
                 <form class="mt-2" id="follow-form" data-user-id="{{ person.pk }}">
                   {% csrf_token %}
-                  <a href="{% url 'accounts:update' %}" style="font-family: 'TheJamsil5Bold';" class="button btn btn-outline-success">회원정보 수정</a>
+                  {% if request.user in person.followers.all %}
+                    <input type="submit" value="언팔로우" class="btn btn-success" style="font-family: 'TheJamsil5Bold';">
+                  {% else %}
+                    <input type="submit" value="팔로우" class="btn btn-success" style="font-family: 'TheJamsil5Bold';">
+                  {% endif %}
                 </form>
+              {% else %}
+                <a href="{% url 'accounts:update' %}" style="font-family: 'TheJamsil5Bold';" class="button btn btn-outline-success">회원정보 수정</a>
               {% endif %}
-            {% else %}
-              <input type="submit" value="팔로우" style="font-family: 'TheJamsil5Bold';" class="btn btn-secondary disabled">
             {% endif %}
           </div>
         </div>
@@ -100,9 +99,7 @@
               {% if person.status_message %}
                 {{ person.status_message }}
               {% else %}
-                <a href="{% url 'accounts:update' %}" style="text-decoration: none; color: inherit;">
-                  <p>상태메세지를 입력해주세요 :)</p>
-                </a>
+                <p>상태메세지를 입력해주세요 :)</p>
               {% endif %}
             </h5>
           </div>
@@ -116,7 +113,7 @@
           </div>
           <div class="col ms-2">
             <button type="button" style="font-family: 'TheJamsil5Bold';" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-              <span>{{ person.followings.all|length }}</span>
+              <span id="followings-count">{{ person.followings.all|length }}</span>
               팔로잉
             </button>
           </div>
@@ -129,7 +126,6 @@
         </div>
       </div>
     </div>
-
 
     <div class="m-1 col">
       <!-- 사용자가 작성한 게시글 -->
@@ -166,7 +162,6 @@
       </div>
     </div>
 
-
     <div class="m-1 mt-5 col">
       <!-- 사용자가 좋아요 한 시설 -->
       <div class="col">
@@ -201,7 +196,6 @@
         {% endfor %}
       </div>
     </div>
-
 
     <div class="mt-5 m-1 col">
       <!-- 사용자가 작성한 리뷰 -->
@@ -243,7 +237,7 @@
           비밀번호 변경
         </a>
       </div>
-  
+
       <!-- 회원 탈퇴-->
       <div class="mt-5 ms-4 ps-1 py-2 col-2" style="font-family: 'TheJamsil5Bold';">
         <a class="change-passwosrd btn btn-outline-secondary" style="width:100%; padding:10px; font-size: 22px;" on-click='func()' href="{% url 'accounts:delete' %}">
@@ -283,9 +277,11 @@
         </div>
         <div class="modal-body">
           {% for follower in person.followers.all %}
-            <p>
-              <a href="{% url 'accounts:profile' follower.username %}" style="font-family: 'S-CoreDream-3Light';text-decoration: none;">{{ follower.username }}</a>
-            </p>
+            <a href="{% url 'accounts:profile' follower.username %}" style="font-family: 'S-CoreDream-3Light';text-decoration: none;">
+              <p>
+                {{ follower.username }}
+              </p>
+            </a>
           {% endfor %}
         </div>
       </div>
@@ -319,56 +315,14 @@
 
 {% block script %}
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'js/profile.js' %}"></script>
 <script>
-const form = document.querySelector('#follow-form')
-const csrftoken = document
-  .querySelector('[name=csrfmiddlewaretoken]')
-  .value
-
-  form
-  .addEventListener('submit', function (event) {
-    event.preventDefault()
-
-    const userId = event
-      .target
-      .dataset
-      .userId
-
-      axios({
-        method: 'post',
-        url: `/accounts/${userId}/follow/`,
-        headers: {
-          'X-CSRFToken': csrftoken
-        }
-      })
-      .then((response) => {
-        // console.log(response.data)
-        const isFollowed = response.data.is_followed
-        const followBtn = document.querySelector('#follow-form > input[type=submit]')
-        if (isFollowed === true) {
-          followBtn.value = '언팔로우'
-        } else {
-          followBtn.value = '팔로우'
-        }
-
-        const followingCountTag = document.querySelector('#followings-count')
-        const followerCountTag = document.querySelector('#followers-count')
-
-        const followingsCountData = response.data.followings_count
-        const followersCountData = response.data.followers_count
-
-        followingCountTag.textContent = followingsCountData
-        followerCountTag.textContent = followersCountData
-      })
-  })
-</script>
-<script>
-  function resizeImage(img) {
-    const cardHeight = img.parentElement.parentElement.parentElement.offsetHeight;
-    const imageHeight = img.offsetHeight;
-    if (imageHeight > cardHeight) {
-      img.style.height = cardHeight + "px";
-    }
+function resizeImage(img) {
+  const cardHeight = img.parentElement.parentElement.parentElement.offsetHeight;
+  const imageHeight = img.offsetHeight;
+  if (imageHeight > cardHeight) {
+    img.style.height = cardHeight + "px";
   }
+}
 </script>
 {% endblock script %}

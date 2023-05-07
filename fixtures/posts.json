@@ -1,0 +1,110 @@
+[
+{
+    "model": "posts.post",
+    "pk": 1,
+    "fields": {
+        "name": "경포대",
+        "user": 1,
+        "description": "경포대(鏡浦臺)는 강원도 강릉시에서 동북쪽으로 7km 지점, 언덕 위의 누대(樓臺)로, 정면 5칸, 측면 5칸의 팔작지붕 건물이다. 관동팔경의 하나이다.\r\n1971년 12월 16일 강원도의 유형문화재 제6호로 지정되었으며, 2019년 12월 30일 대한민국의 보물 제2046호로 지정되었다.",
+        "city": "강릉",
+        "price": 0,
+        "address": "강원도 강릉시 경포로 365",
+        "post_image": "",
+        "views": 74,
+        "created_at": "2023-05-07T07:23:31.906Z",
+        "checkbox1": true,
+        "checkbox2": true,
+        "checkbox3": false,
+        "checkbox4": false,
+        "checkbox5": false,
+        "checkbox6": false,
+        "checkbox7": false,
+        "checkbox8": true,
+        "checkbox9": true,
+        "checkbox10": false,
+        "like_users": [
+            2
+        ]
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 2,
+    "fields": {
+        "name": "광안리해수욕장",
+        "user": 1,
+        "description": "광안리해수욕장(廣安里海水浴場, Gwangalli Beach)은 부산광역시 수영구 광안2동에 위치한 해수욕장이다. 모래사장의 총면적은 82,000m2, 길이는 1.4 km, 폭은 25m ~ 110m이다.[1] 이 곳에는 300여개의 고급 레스토랑, 카페, 횟집 등이 있고, 활어시장과 민락수변공원이 해수욕장 바로 옆(민락동 방면)에 있다.\r\n해수욕장 해안에는 광안대교가 건설되어 있어 밤에는 LED 조명이 형형색색으로 비취지는 곳이며, 부산세계불꽃축제가 개최되면 100만명 이상의 엄청난 인파가 몰리는 곳이기도 하다. 또한 스타크래프트 프로리그의 결승전이 일 년에 한 차례씩 열리는 까닭에 ‘E-스포츠의 성지’라는 별칭도 가지고 있다. 한편, 2008년 7월 1일부터는 금연구역으로 지정되어 백사장 전 구역에서 흡연을 할 수가 없다.",
+        "city": "부산",
+        "price": 0,
+        "address": "부산 수영구 광안해변로 219",
+        "post_image": "",
+        "views": 84,
+        "created_at": "2023-05-07T08:35:18.095Z",
+        "checkbox1": false,
+        "checkbox2": true,
+        "checkbox3": false,
+        "checkbox4": true,
+        "checkbox5": true,
+        "checkbox6": true,
+        "checkbox7": false,
+        "checkbox8": true,
+        "checkbox9": true,
+        "checkbox10": true,
+        "like_users": [
+            2
+        ]
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 4,
+    "fields": {
+        "name": "남산",
+        "user": 4,
+        "description": "남산(南山)은 서울특별시 중구와 용산구에 걸쳐 있는 산이다. 높이는 해발 270.85m로서 서울의 중심부에 위치하여 서울의 랜드마크가 되기도 한다. 정상에는 N서울타워가 있으며, 그 부근까지는 케이블카가 설치되어 있고 남산 1·2·3호 터널이 뚫려 있다.",
+        "city": "서울",
+        "price": 0,
+        "address": "서울 중구 회현동1가",
+        "post_image": "",
+        "views": 21,
+        "created_at": "2023-05-07T08:55:41.195Z",
+        "checkbox1": true,
+        "checkbox2": true,
+        "checkbox3": false,
+        "checkbox4": false,
+        "checkbox5": false,
+        "checkbox6": false,
+        "checkbox7": false,
+        "checkbox8": true,
+        "checkbox9": true,
+        "checkbox10": true,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 5,
+    "fields": {
+        "name": "롯데월드",
+        "user": 4,
+        "description": "롯데월드(영어: Lotte World)는 대한민국 서울특별시 송파구 올림픽로 240에 위치한 테마파크다. 롯데그룹의 계열사인 호텔롯데 월드 사업부에서 운영한다.\r\n\r\n놀이시설은 실내의 롯데월드 어드벤처(Lotte World Adventure)와 야외의 매직아일랜드가 운영되고 있으며, 민속박물관, 아이스링크, 백화점, 마트, 호텔 등이 포함된다.",
+        "city": "서울",
+        "price": 0,
+        "address": "서울 송파구 올림픽로 240",
+        "post_image": "",
+        "views": 1,
+        "created_at": "2023-05-07T10:22:17.703Z",
+        "checkbox1": false,
+        "checkbox2": false,
+        "checkbox3": true,
+        "checkbox4": true,
+        "checkbox5": true,
+        "checkbox6": true,
+        "checkbox7": false,
+        "checkbox8": true,
+        "checkbox9": true,
+        "checkbox10": true,
+        "like_users": []
+    }
+}
+]

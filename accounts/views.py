@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm, LogInForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import update_session_auth_hash, get_user_model
@@ -13,13 +13,13 @@ def login(request):
         return redirect('posts:index')
     
     if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
+        form = LogInForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user()) 
             return redirect('posts:index')
     
     else:
-        form = AuthenticationForm()
+        form = LogInForm()
     context = {
         'form': form,
     }
@@ -39,7 +39,8 @@ def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect('posts:index')
     else:
         form = CustomUserCreationForm()
@@ -113,6 +114,6 @@ def follow(request, user_pk):
             'followers_count': you.followers.count(),
         }
         return JsonResponse(context)
-    return redirect('posts:profile', you.username, context)
+    return redirect('posts:profile', you.username)
                 
             

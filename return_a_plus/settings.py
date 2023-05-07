@@ -20,7 +20,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-t&nu5_q$spw@#5+ip^z3!^(vi)p8en=dz@-yp88mdb@zyod8gk'
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,6 +39,7 @@ INSTALLED_APPS = [
     'accounts',
     'chartjs',
     'mathfilters',
+    'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # allauth 소셜로그인 기능
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -52,10 +58,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google', 
 ]
 
-AUTHENTICATION_BACKENDS = [
+AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',    
     'allauth.account.auth_backends.AuthenticationBackend',
-]
+)
 SOCIALACCOUNT_PROVIDERS = {
     'naver': {'APP': {
                         'client_id': 'alfDQd2wRrqed3VChg5_',

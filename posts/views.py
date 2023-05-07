@@ -92,6 +92,8 @@ def create(request):
     }
     return render(request, 'posts/create.html', context)
 
+
+@login_required
 def detail(request, posts_pk):
     post = Post.objects.get(pk=posts_pk)
     reviews = post.review_set.all()
@@ -204,3 +206,11 @@ def like(request, post_pk):
 
 def Our_Service(request):
     return render(request, 'posts/Our_Service.html')
+
+# 지환 05.07 22:35 추가
+def filter(request, city):
+    posts = Post.objects.filter(city=city).order_by('-created_at')
+    context = {
+        'posts': posts,
+    }
+    return render(request, 'posts/index.html', context)
