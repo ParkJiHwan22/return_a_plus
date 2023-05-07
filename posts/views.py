@@ -92,7 +92,6 @@ def create(request):
     }
     return render(request, 'posts/create.html', context)
 
-
 def detail(request, posts_pk):
     post = Post.objects.get(pk=posts_pk)
     reviews = post.review_set.all()
