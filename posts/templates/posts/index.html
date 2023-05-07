@@ -16,9 +16,23 @@
   }
 
   @font-face {
+    font-family: 'establishRetrosansOTF';
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff") format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
     font-family: 'HANAMDAUM';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/HANAMDAUM.woff2') format('woff2');
     font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
     font-style: normal;
   }
 
@@ -126,57 +140,56 @@
 {% block title %}onClickTravel{% endblock title %}
 
 {% block content %}
-  <div class="mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:100%;">
-    <div class="overlay-top"></div>
-    <img class="d-flex justify-content-center" style="max-width: 100%;" src="{% static '/img/profile_bg.jpg' %}" alt="profil_background_image">
+  <div class="mt-5 mb-5 d-flex justify-content-center align-items-center" style="max-width:100%; min-width: 100%">
+    <img class="d-flex justify-content-center" style="max-width: 100%; min-width:100%;" src="{% static '/img/index_page_bg.jpg' %}" alt="profil_background_image">
   </div>
   <div class="row ms-4 mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:100%;">
     <div class="col-8" style="max-width: 100%;"></div>
     <div class="col-1 d-flex justify-content-center align-items-center" style="max-width: 100%;">
       <div class="ms-5 mt-3 button btn btn-success">
-        <a style="color:white; text-decoration-line: none; font-family: 'TheJamsil5Bold';" href="{% url 'posts:create' %}">글 생성하기</a>
+        <a style="color:white; text-decoration-line: none; font-family: 'TheJamsil5Bold';" href="{% url 'posts:create' %}">글 작성하기</a>
       </div>
-      <div class="ms-5 mt-3 button btn btn-success">
-        <p class='m-0'>
-          <a style="color:white; text-decoration-line: none; font-family: 'TheJamsil5Bold'; "data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-            지역 선택하기
-          </a>
-        </p>
-      </div>
-    </div>
-    <div class="position-absolute text-center text-white" style="top: 80%; left: 50%; transform: translate(-50%, -50%);">
-      <h1 style="font-family: 'establishRetrosansOTF'; font-size:500%;">여행을 나답게,</h1>
-      <h1 style="font-family: 'establishRetrosansOTF'; font-size:500%;">꿈꾸는 대로 펼치다.</h1>
-      <p class="animated-text" style="font-family: 'TheJamsil5Bold'; font-size:150%;">onClickTravel과 함께 국내 여행지 후기를 한눈에 비교해보세요!</p>
-      <p class="animated-text" style="font-family: 'TheJamsil5Bold'; font-size:110%;">가족, 연인, 아이와 함께 가기 좋은 여행지 후기부터, 힐링, 먹거리, 자연 경관, 레포츠, 축제 및 이벤트 정보까지 제공하는 맞춤형 서비스</p>
+
     </div>
   </div>
   {% comment %} 05.07.22:49 지환 수정 {% endcomment %}
 
-  <div class="collapse" id="collapseExample">
-    <div class='d-flex justify-content-center mb-5'>
+  <div class="collapse d-flex flex-column justify-content-center" style="font-family: 'S-CoreDream-3Light'; margin-left:auto; margin-right:auto" id="collapseExample">
+    <div class='mb-5' style=" margin-left:auto; margin-right:auto">
+      <p style="color:black;"  font-size: 2rem;">
+        <div class="col">
+          <a class="button btn btn-outline-success" href="{% url 'posts:index' %}">전체</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '강릉'%}">강릉</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '강원'%}">강원</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '광주'%}">광주</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '경기'%}">경기</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '경남'%}">경남</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '경북'%}">경북</a>&nbsp;&nbsp;&nbsp;
+        </div>
+      </p>
+      <br>
       <p style="color:black; font-family: 'TheJamsil5Bold';  font-size: 2rem;">
-        <a href="{% url 'posts:index' %}">전체</a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '강릉'%}">강릉</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '강원'%}">강원</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '광주'%}">광주</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '경기'%}">경기</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '경남'%}">경남</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '경북'%}">경북</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '경주'%}">경주</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '대구'%}">대구</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '대전'%}">대전</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '부산'%}">부산</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '서울'%}">서울</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '속초'%}">속초</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '여수'%}">여수</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '인천'%}">인천</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '전남'%}">전남</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '전북'%}">전북</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '전주'%}">전주</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '제주'%}">제주</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '충남'%}">충남</a>&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'posts:filter' '충북'%}">충북</a>&nbsp;&nbsp;&nbsp;
+        <div class="col">
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '경주'%}">경주</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '대구'%}">대구</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '대전'%}">대전</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '부산'%}">부산</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '서울'%}">서울</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '속초'%}">속초</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '여수'%}">여수</a>&nbsp;&nbsp;&nbsp;
+        </div>
+      </p>
+      <br>
+      <p style="color:black; font-family: 'TheJamsil5Bold';  font-size: 2rem;">
+        <div class="col">
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '인천'%}">인천</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '전남'%}">전남</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '전북'%}">전북</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '전주'%}">전주</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '제주'%}">제주</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '충남'%}">충남</a>&nbsp;&nbsp;&nbsp;
+          <a class="button btn btn-outline-success" href="{% url 'posts:filter' '충북'%}">충북</a>&nbsp;&nbsp;&nbsp;
+        </div>
       </p>
     </div>
   </div>
@@ -238,7 +251,7 @@
   </div>
   <div class="mb-5" style="height:50px;"><div class="mb-5"><div></div></div></div>
   <div class="mt-5 mb-5 container-fluid d-flex justify-content-evenly" style="width:100%; height:34rem; max-width: 100%;max-height: 100%; font-family: 'TheJamsil5Bold';">
-    {% if posts_with_images %}
+
     <div class="card d-flex justify-content-center" style="width: 24rem; height:34rem; max-width: 100%;max-height: 100%;">
       <p class="mt-5 mb-3 card-text d-flex justify-content-center" style="color:#198754; font-size:130%">현재 HOT한 관광도시 분포</p>
       <div class="ms-4 mt-3 mb-5 d-flex justify-content-center align-items-center" style="width:20rem; height:20rem; max-width: 100%;max-height: 100%;">
@@ -255,15 +268,17 @@
         </ul>
       </div>
     </div>
-    {% endif %}
 
     <div class="card d-flex justify-content-center" style="max-width:50rem; min-width:50rem; height: 34rem;">
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="5000" style="height: 100%;">
-        <div class="carousel-inner" style="height: 100%;">
-          {% for post in posts_with_images %}
-          <div class="carousel-item {% if forloop.first %}active{% endif %}" style="height: 100%;">
-            <img src="{{ post.post_image.url }}" class="d-block w-100 h-100 object-fit-cover" alt="..." style="height: 100%;">
-
+        <div class="carousel-inner d-flex justify-content-center">
+          {% for post in posts %}
+          <div class="carousel-item {% if forloop.first %} active {% endif %}" style="object-fit: cover; width: auto; margin: auto;">
+            {% if post.post_images.exists %}
+              <img src="{{ post.post_images.first.image.url }}" style="object-fit: cover; max-height:34rem; min-height:34rem; width: auto; margin-left: auto; margin-right:auto;" class="d-block w-100" alt="...">
+            {% else %}
+              <img src="{% static 'no_image.jpg' %}" style="object-fit: cover; max-height:34rem; min-height:34rem; width: auto; margin-left: auto; margin-right:auto;" class="d-block w-100" alt="...">
+            {% endif %}
           </div>
           {% endfor %}
         </div>

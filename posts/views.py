@@ -92,6 +92,7 @@ def create(request):
     }
     return render(request, 'posts/create.html', context)
 
+
 @login_required
 def detail(request, posts_pk):
     post = Post.objects.get(pk=posts_pk)

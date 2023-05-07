@@ -26,6 +26,34 @@
       padding: 5px;
     }
 
+    @font-face {
+      font-family: 'establishRetrosansOTF';
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff") format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+  
+    @font-face {
+      font-family: 'HANAMDAUM';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/HANAMDAUM.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+    }
+  
+    @font-face {
+      font-family: 'S-CoreDream-3Light';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+  
+    @font-face {
+      font-family: 'TheJamsil5Bold';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+      font-weight: 50;
+      font-style: normal;
+    }
+
     .button-fixed {
       position: fixed;
       bottom: 80px;
@@ -51,7 +79,6 @@
       align-items: center;
       height: auto;
     }
-
   </style>
 {% endblock style %}
   
@@ -63,20 +90,11 @@
 
 <div class="container">  
   <hr>
-  <p class="m-0" style="display:flex; justify-content: space-between">
-    <span style = 'font-size: 1.5rem;'>작성자 <a href="{% url 'accounts:profile' post.user.username %}">{{ post.user }}</a></span>
+  <p class="mt-4" style="font-family: 'S-CoreDream-3Light'; display:flex; justify-content: space-between">
+    <span style = 'font-size: 1.5rem;'>작성자 - <a href="{% url 'accounts:profile' post.user.username %}" style="color:#198754;text-decoration-line:none;">{{ post.user }}</a></span>
     <span style = 'font-size: 1rem;'>{{ post.created_at|date:'Y년 M j일 H:i' }}&nbsp;&nbsp; 조회수: {{ post.views }}</span>
   </p>
-  {% if request.user == post.user %}
-    <div class="d-flex flex-row-reverse m-0">
-      <form action="{% url 'posts:delete' post.pk %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="게시글 삭제" class="btn btn-secondary ms-1 me-1">
-        <a href="{% url 'posts:update' post.pk %}" class="btn btn-success ms-1 me-1">수정하기</a>
-      </form>
-    </div>
-  {% endif %} 
-  
+
   <!-- 이미지 -->
   <div class="d-flex flex-row my-4">
     {% for post_image in post_images|slice:":2" %}
@@ -84,24 +102,13 @@
         <img class="card-img-top" src="{{ post_image.image.url }}" alt="대체이미지">
       </div>
     {% endfor %}
-  </div> 
-  
-  <img src="{{ post.image.url }}" alt="{{ post.title }}">
-  
-  <!-- 이미지 전체 출력 -->  
-  {% comment %} <div class="d-flex flex-row my-4">
-    {% for post_image in post_images %}
-    <div class="headimg" style="margin: 5px;">
-      <img class="card-img-top" src="{{ post_image.image.url }}" alt="대체이미지">
-    </div>
-    {% endfor %}
-  </div> {% endcomment %}
-  <!-- 이미지 -->
+  </div>
 
-  <!-- Button trigger modal multi-image-->
+  <img src="{{ post.image.url }}" alt="{{ post.title }}">
+
 
   <!-- Modal -->
-  <div class="modal fade" id="mainphotoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div style="font-family: 'S-CoreDream-3Light';" class="modal fade" id="mainphotoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-mainphotos">
       <div class="modal-content">
         <div class="modal-header">
@@ -120,35 +127,34 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- 이름 -->
-  <div class="dflex row">
+  <!-- 이름 -->
+
+  <div class="d-flex row">
     <div class="col-9">
-      <h1>{{post.name}} <span style="font-size: 2rem;">( {{ post.address }} )</span></h1>
+      <h1 class="mb-4 pb-2" style="margin-top:7%; font-family: 'S-CoreDream-3Light'">{{post.name}} ( {{ post.address }} )</h1>
     </div>
-    <div class="col-3 ms-auto text-end">
-      <button type="button" class="btn btn-secondary mb-4" data-bs-toggle="modal" data-bs-target="#mainphotoModal">
+    <div class="mt-5 pt-4 col-3 ms-auto text-end">
+      <button type="button" class="btn btn-outline-success mb-4" data-bs-toggle="modal" data-bs-target="#mainphotoModal">
         사진 모두 보기
       </button>
     </div>
   </div>
-  <hr>
-  <!-- 이름 -->
 
-
-  <h2 class='my-4'>관광 명소 설명</h2> <br>
-  <h4>{{ post.description }}</h4>
-  <hr>
-  <h2 class='my-4'>관광 명소 종류</h2>
+  <div class="mt-3"><div style="height:7px"></div></div>
+  <h3 style="font-family: 'S-CoreDream-3Light';" class='my-4'>관광지 소개</h3> <br>
+  <p style="font-family: 'S-CoreDream-3Light';">{{ post.description }}</p>
+  <h3 style="font-family: 'S-CoreDream-3Light';" class='mt-5 my-4'>관광 포인트 및 특징</h3>
   <br>
-  <h3>
-    <div class='row d-flex'>
-      <div class='col-6'>
+  <h4>
+    <div class='row d-flex' style="font-family: 'S-CoreDream-3Light';">
+      <div class='col-6' style="font-family: 'S-CoreDream-3Light';">
         {% if post.price == 0 %}
         <img src="{% static 'icon_image/000.png' %}" class='icon' alt="Money Icon">
           입장료 없음 <br><br>
@@ -160,95 +166,97 @@
 
     
       {% if post.checkbox1 %}
-        <div class='col-6'>
+        <div class='col-6' style="font-family: 'S-CoreDream-3Light';">
           <img src="{% static 'icon_image/001.png' %}" class='icon' alt="Cultural and Historical Sites Icon">
-          문화 및 역사 유적지 <br><br>
+            문화 및 역사 유적지 <br><br>
         </div>
       {% endif %}
       
 
       {% if post.checkbox2 %}
-        <div class='col-6'>
+        <div class='col-6' style="font-family: 'S-CoreDream-3Light';">
           <img src="{% static 'icon_image/002.png' %}" class='icon' alt="Natural Scenery Icon">
-          자연 경관 <br><br>
+            자연 경관 <br><br>
         </div>
       {% endif %}
 
     
     {% if post.checkbox3 %}
-      <div class='col-6'>
+      <div class='col-6' style="font-family: 'S-CoreDream-3Light';">
         <img src="{% static 'icon_image/003.png' %}" class='icon' alt="Theme Park Icon">
-        테마파크 <br><br>
+          테마파크 <br><br>
       </div>
     {% endif %}
 
     {% if post.checkbox4 %}
-      <div class='col-6'>
+      <div class='col-6' style="font-family: 'S-CoreDream-3Light';">
         <img src="{% static 'icon_image/004.png' %}" class='icon' alt="Adventure and Sports Icon">
-        어드벤쳐 및 스포츠 <br><br>
-      </div>
+          어드벤쳐 및 스포츠 <br><br>
     {% endif %}
 
     {% if post.checkbox5 %}
-      <div class='col-6'>
+      <div class='col-6' style="font-family: 'S-CoreDream-3Light';">
         <img src="{% static 'icon_image/005.png' %}" class='icon' alt="Festivals and Events Icon">
-        축제 및 이벤트 <br><br>
+          축제 및 이벤트 <br><br>
       </div>
     {% endif %}
 
     {% if post.checkbox6 %}
-      <div class='col-6'>
+      <div class='col-6' style="font-family: 'S-CoreDream-3Light';">
         <img src="{% static 'icon_image/006.png' %}" class='icon' alt="Food Icon">
-        먹거리 <br><br>
+          먹거리 <br><br>
       </div>
     {% endif %}
     
     {% if post.checkbox7 %}
-      <div class='col-6'>
+      <div class='col-6' style="font-family: 'S-CoreDream-3Light';">
         <img src="{% static 'icon_image/007.png' %}" class='icon' alt="Shopping Icon">
-        쇼핑 <br><br>
+          쇼핑 <br><br>
       </div>
     {% endif %}
     
     {% if post.checkbox8 %}
-      <div class='col-6'>
+      <div class='col-6' style="font-family: 'S-CoreDream-3Light';">
         <img src="{% static 'icon_image/008.png' %}" class='icon' alt="Family Outing Icon">
-        가족 나들이 <br><br>
+          가족 나들이 <br><br>
       </div>
     {% endif %}
 
     {% if post.checkbox9 %}
-      <div class='col-6'>
+      <div class='col-6' style="font-family: 'S-CoreDream-3Light';">
         <img src="{% static 'icon_image/009.png' %}" class='icon' alt="Dating Course Icon">
-        데이트 코스 <br><br>
+          데이트 코스 <br><br>
       </div>
     {% endif %}
 
     {% if post.checkbox10 %}
-      <div class='col-6'>
+      <div class='col-6' style="font-family: 'S-CoreDream-3Light';">
         <img src="{% static 'icon_image/010.png' %}" class='icon' alt="Photo Icon">
-        인생샷 명소 <br><br>
+          인생샷 명소 <br><br>
       </div>
     {% endif %}
   </div>
-  </h3>
+  </h4>
   {% comment %} 저작권 표기 - eyJjb2xJZCI6eyJJRCI6MSwibmFtZSI6Ilx1YjBiNCBcdWM1NDRcdWM3NzRcdWNmNTggXHVjZWVjXHViODA5XHVjMTU4IiwiYm9va21hcmtfaWQiOjMxMjAyMDI5LCJjcmVhdGVkIjoxNjgzMTgwNDE4LCJ1cGRhdGVkIjoxNjgzMTgwNjUyLCJhY3RpdmUiOjEsInNvdXJjZSI6InJlbW90ZSIsIm9yZGVyIjowLCJjb2xvciI6IjAwMDAwMCIsInN0YXR1cyI6MX0sImNvbEJvb2ttYXJrSWQiOlt7ImlkIjozMTI3MzQ4LCJuYW1lIjoiaWNvbi0zMTI3MzQ4IiwiY29sb3IiOiIjMDAwMDAwIiwicHJlbWl1bSI6IjAiLCJzb3J0IjoxfSx7ImlkIjo0MDk5MDYyLCJuYW1lIjoiaWNvbi00MDk5MDYyIiwiY29sb3IiOiIjMDAwMDAwIiwicHJlbWl1bSI6IjAiLCJzb3J0IjoyfSx7ImlkIjo0Mzc1MjIsIm5hbWUiOiJpY29uLTQzNzUyMiIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6M30seyJpZCI6NjYzMzMxOCwibmFtZSI6Imljb24tNjYzMzMxOCIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6NH0seyJpZCI6MjkxOTU5LCJuYW1lIjoiLSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6NX0seyJpZCI6MjYyMjU4NywibmFtZSI6Imljb24tMjYyMjU4NyIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6Nn0seyJpZCI6MTI1OTcxOCwibmFtZSI6Imljb24tMTI1OTcxOCIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6N30seyJpZCI6ODcwNzgzOSwibmFtZSI6Imljb24tODcwNzgzOSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6OH0seyJpZCI6NTAzNTk1OSwibmFtZSI6Imljb24tNTAzNTk1OSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6OX0seyJpZCI6NzIyNDAxMSwibmFtZSI6Imljb24tNzIyNDAxMSIsImNvbG9yIjoiIzAwMDAwMCIsInByZW1pdW0iOiIwIiwic29ydCI6MTB9LHsiaWQiOjQ5MjMwOTAsIm5hbWUiOiIiLCJjb2xvciI6IiMwMDAwMDAiLCJwcmVtaXVtIjowLCJzb3J0IjoxMX1dfQ=={% endcomment %}
-  <hr>
+
   <!-- 시설 -->
 
-  {% comment %} {% if request.user == post.user %}
+  {% if request.user == post.user %}
+  <div class="d-flex justify-content-end" style="margin-top:7%; font-family: 'S-CoreDream-3Light';">
     <form action="{% url 'posts:delete' post.pk %}" method="POST">
       {% csrf_token %}
-      <input type="submit" value="게시글 삭제" class="btn btn-secondary ms-1 me-1 mt-3">
+      <input type="submit" value="게시글 삭제" class="btn btn-outline-secondary ms-1 me-1 mt-3">
       <a href="{% url 'posts:update' post.pk %}" class="btn btn-success ms-1 me-1 mt-3">수정하기</a>
     </form>
-  {% endif %} {% endcomment %}
+  </div>
+  {% endif %}
 
+  <div class="mt-5" style="margin-top:7%"></div>
   <!-- 후기 -->
-  <h2>후기</h2>
-  <h5>총 {{ reviews|length }}개의 후기가 있어요. </h5>
+  <h2 style="font-family: 'S-CoreDream-3Light';">후기</h2>
+  <h5 style="font-family: 'S-CoreDream-3Light';">총 {{ reviews|length }}개의 후기가 있어요. </h5>
   <hr>
-  <div class="container mx-auto">
+  <div class="container mx-auto" style="font-family: 'S-CoreDream-3Light';">
     {% for review in reviews %}
       <div class="row justify-content-start mb-3">
         {% if review.user.profile_image %}
@@ -257,12 +265,12 @@
           <img src="https://i.pinimg.com/564x/dc/93/f7/dc93f70b6620fc090ef6d1249f01f55a.jpg" alt="no_image" class="col-4 rounded-circle profile-img profile-img-wrapper">
         {% endif %}
 
-        <div class="col-4">
-          <h4><a href="{% url 'accounts:profile' review.user.username %}">{{ review.user }}</a></h4>
+        <div class="col-5">
+          <h4><a href="{% url 'accounts:profile' review.user.username %}" style="color:#198754;text-decoration-line:none;">{{ review.user }}</a></h4>
           <p>{{ post.created_at|date:'Y년 M j일 H:i' }}</p>
         <!-- Button collapse -->
         </div>
-        <div class="col-6 ms-auto text-end">
+        <div class="col-5 pt-2 ms-auto text-end">
           <!-- Button trigger modal multi-image-->
           <button type="button" class="btn btn-secondary mb-2" data-bs-toggle="modal" data-bs-target="#reviewphotoModal{{ review.id }}">
             사진 모두 보기
@@ -270,11 +278,8 @@
           <button class="btn btn-success mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{ review.id }}" aria-expanded="false" aria-controls="collapseExample">
             자세한 평가 보기
           </button>
-    
         </div>
       </div>
-
-
 
       <!-- Review Photo Modal -->
       <div class="modal fade" id="reviewphotoModal{{ review.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -299,7 +304,6 @@
           </div>
         </div>
       </div>
-
 
       <!-- collapse -->
       <div class="collapse" id="collapseExample{{ review.id }}">
@@ -345,20 +349,20 @@
       </div>
     
 
-        <div class='mb-5'>
+        <div>
           {% for review_image in review.review_images.all|slice:":2" %}
             {% if review_image %}
-              <img src="{{ review_image.image.url }}" alt="review_image">
+              <img src="{{ review_image.image.url }}" alt="review_image" style="max-width: 300px; max-height: 300px;">
             {% endif %}
           {% endfor %}
         </div>
-          <h4>{{ review.review }}</h4>
+          <p class="mt-4" style="font-family: 'S-CoreDream-3Light';">{{ review.review }}</p>
 
 
     {% if request.user == review.user %}
     <form action="{% url 'posts:review_delete' post.pk review.pk %}" method="POST">
       {% csrf_token %}
-      <input type="submit" value="댓글삭제" class="btn btn-secondary ms-1 me-1 mt-3 modal_form">
+      <input type="submit" value="댓글삭제" class="btn btn-outline-secondary me-1 mt-3 modal_form">
     </form>
     {% endif %}
     <hr>
@@ -369,20 +373,18 @@
 
   {% if user.is_authenticated %}
     <!-- Button trigger modal -->
-    {% comment %} <button type="button" class="btn btn-primary button-fixed" data-bs-toggle="modal" data-bs-target="#exampleModal">
-     댓글 작성하기
-    </button> {% endcomment %}
 
     <a href="#" class="btn button-fixed" data-bs-toggle="modal" data-bs-target="#exampleModal">
       <img src="{% static 'img/detail_review.png' %}" alt="airplane" class="airplane-size">
       <p class='mt-3'>후기 작성</p>
     </a>
+
    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" style="font-family: 'S-CoreDream-3Light';" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-                <h5 class="modal-title">후기 남기기</h5>
+                <h5 class="modal-title">리뷰 남기기</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -392,7 +394,7 @@
                     {{ imageForm }}
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                    <input type="submit" value="댓글작성" class="btn btn-primary modal_form">
+                    <input type="submit" value="후기 작성" class="btn btn-success modal_form">
                   </div>
                 </form>
               </div>
@@ -402,13 +404,12 @@
     </div>
 
   {% else %}
-    <a class="btn btn-primary" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
+    <a class="btn btn-success d-flex justify-content-end" style="font-family: 'S-CoreDream-3Light';" href="{% url 'accounts:login' %}" role="button">로그인하고 리뷰 남기기</a>
   {% endif %}
-
     <!-- 위치 -->
-    <h2> 관광 명소 위치 </h2>
-    <div id="map" style="height: 600px;"></div>
-  
+    <h2 class="mt-5 mb-4" style="font-family: 'S-CoreDream-3Light';">위치</h2>
+    <div id="map" style="width:100%; height: 600px;"></div>
+  </div>
 
   <script>
   const place = "{{ location }}".replace(/&#x27;/g, "\"");
@@ -429,6 +430,5 @@
   <script src="{% static '/js/base.js' %}"></script>
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAd9M3rcxiyzS9IxbErxaMv45mw94kQFxY&callback=initMap">
 </script>
-</div>
 {% endblock content %}
 
