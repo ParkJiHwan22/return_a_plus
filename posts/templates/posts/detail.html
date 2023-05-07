@@ -106,15 +106,6 @@
 
   <img src="{{ post.image.url }}" alt="{{ post.title }}">
 
-  <!-- 이미지 전체 출력 -->  
-  <div class="d-flex flex-row my-4">
-    {% for post_image in post_images %}
-    <div class="headimg" style="margin: 5px;">
-      <img class="card-img-top" src="{{ post_image.image.url }}" alt="대체이미지">
-    </div>
-    {% endfor %}
-  </div>
-  <!-- 이미지 -->
 
   <!-- Modal -->
   <div style="font-family: 'S-CoreDream-3Light';" class="modal fade" id="mainphotoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
