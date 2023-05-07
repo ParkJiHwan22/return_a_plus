@@ -37,10 +37,18 @@ colors = [
 color_dict = {}
 color_index = 0
 
+from django.core.paginator import Paginator
+
 # Create your views here.
 def index(request):
     global color_index
-    posts = Post.objects.all()
+    posts = Post.objects.order_by('-pk')
+    page = request.GET.get('page', '1')
+    per_page = 12
+    paginator = Paginator(posts, per_page)
+    page_obj = paginator.get_page(page)
+
+    # posts = Post.objects.all()
     post_likes = [post.like_users.count() for post in posts]
     total_likes = sum(post_likes)
     ratios = []
@@ -58,7 +66,8 @@ def index(request):
     color_list = [color_dict[post.city] for post in posts]
 
     context = {
-        'posts': posts,
+        'posts': page_obj,
+        # 'posts': posts,
         'post_likes': post_likes,
         'ratios': ratios,
         'color_dict': color_dict, 
@@ -93,10 +102,14 @@ def create(request):
     return render(request, 'posts/create.html', context)
 
 
-@login_required
 def detail(request, posts_pk):
     post = Post.objects.get(pk=posts_pk)
     reviews = post.review_set.all()
+    # reviews = Review.objects.order_by('-pk')
+    page = request.GET.get('page', '1')
+    per_page = 5
+    paginator = Paginator(reviews, per_page)
+    page_obj = paginator.get_page(page)
     person = User.objects.get(username=request.user)
     review_form = ReviewForm(request.POST, request.FILES)
     imageForm = ReviewImageForm(request.POST, request.FILES) # 댓글 다중 이미지
@@ -116,7 +129,8 @@ def detail(request, posts_pk):
         "post_images": post_images,
         'imageForm': imageForm,
         'review_form': review_form,
-        'reviews': reviews,
+        # 'reviews': reviews,
+        'reviews': page_obj,
         'location':location,
         'person':person,
     }
@@ -148,6 +162,18 @@ def update(request, posts_pk):
         return render(request, 'posts/update.html', context)
     else:
         return redirect('posts:detail', post.pk)
+
+
+# def review(request):
+#     reviews = Review.objects.order_by('-pk')
+#     page = request.GET.get('page', '1')
+#     per_page = 5
+#     paginator = Paginator(reviews, per_page)
+#     page_obj = paginator.get_page(page)
+#     context = {
+#         'reviews': page_obj,
+#     }
+#     return render(request, 'posts/detail.html', context)
 
 
 @login_required
@@ -214,3 +240,4 @@ def filter(request, city):
         'posts': posts,
     }
     return render(request, 'posts/index.html', context)
+
