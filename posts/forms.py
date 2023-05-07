@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Review
+from .models import Post, Review, PostImage, ReviewImage
 
 
 POST_ADDRESS_CHOICES = (
@@ -69,10 +69,10 @@ class PostForm(forms.ModelForm):
         )
     )
 
-    post_image = forms.ImageField(
-        label='이미지 넣기',
-        required=False,
-    )
+    # post_image = forms.ImageField(
+    #     label='이미지 넣기',
+    #     required=False,
+    # )
 
 
     checkbox1 = forms.BooleanField(required=False, label='문화 및 역사 유적지')
@@ -91,7 +91,7 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = (
-            "post_image",
+            # "post_image",
             "name",
             "city",
             "address",
@@ -122,10 +122,23 @@ class PostForm(forms.ModelForm):
             'checkbox9': forms.CheckboxInput(),
             'checkbox10': forms.CheckboxInput(),
         }
+        
+    def save(self, commit=True):
+        instance = super().save(commit)
+        if self.cleaned_data.get('images'):
+            for image in self.cleaned_data.get('images'):
+                PostImage.objects.create(post=instance, image=image)
+        return instance
 
+class PostImageForm(forms.ModelForm):
+    class Meta:
+        model = PostImage
+        fields = ('image',)
+        widgets = {'image': forms.FileInput(attrs={'multiple': True})}
     
 
 REVIEW_POINT_CHOICES = (
+    ('', "점수를 선택해주세요"),
     (1, 1),
     (2, 2),
     (3, 3),
@@ -137,32 +150,71 @@ REVIEW_POINT_CHOICES = (
 class ReviewForm(forms.ModelForm):
     accessibility = forms.CharField(
         label='접근성',
-        widget=forms.Select(choices=REVIEW_POINT_CHOICES)
+        widget=forms.Select(choices = REVIEW_POINT_CHOICES,
+            attrs={
+                'class' : "form-select",
+            }
+        ),
+        required=False,
     )
+    
     cost = forms.CharField(
         label='비용',
-        widget=forms.Select(choices=REVIEW_POINT_CHOICES)
+        widget=forms.Select(choices = REVIEW_POINT_CHOICES,
+            attrs={
+                'class' : "form-select",
+            }
+        ),
+        required=False,
     )
+
 
     service = forms.CharField(
         label='서비스',
-        widget=forms.Select(choices=REVIEW_POINT_CHOICES)
+        widget=forms.Select(choices = REVIEW_POINT_CHOICES,
+            attrs={
+                'class' : "form-select",
+            }
+        ),
+        required=False,
     )
-
+    
+            
     convenience_facilities = forms.CharField(
         label='편의시설',
-        widget=forms.Select(choices=REVIEW_POINT_CHOICES)
+        widget=forms.Select(
+                   choices = REVIEW_POINT_CHOICES,
+            attrs={
+                'class' : "form-select",
+            }
+        ),
+        required=False,
     )
+    
     
     satisfaction = forms.CharField(
         label='만족도',
-        widget= forms.Select(choices=REVIEW_POINT_CHOICES)
+        widget= forms.Select(
+            choices = REVIEW_POINT_CHOICES,
+            attrs={
+                'class' : "form-select",
+            }
+        ),
+        required=False,
     )
+
+    review = forms.CharField(
+        label= '리뷰',
+        widget= forms.Textarea(
+            attrs={
+                'class': 'form-control',
+                'rows': 5,
+            }
+        ),
+        required=False,
+    )
+
     
-
-
-
-
     class Meta:
         model = Review
         fields = (
@@ -172,5 +224,22 @@ class ReviewForm(forms.ModelForm):
             "convenience_facilities", 
             "satisfaction",
             "review",
-            "review_image", 
         )
+        
+    def save(self, commit=True):
+        instance = super().save(commit)
+        if self.cleaned_data.get('images'):
+            for image in self.cleaned_data.get('images'):
+                ReviewImage.objects.create(post=instance, image=image)
+        return instance
+        
+class ReviewImageForm(forms.ModelForm):
+    class Meta:
+        model = ReviewImage
+        fields = ('image',)
+        widgets = {
+            'image': forms.FileInput(attrs={'multiple': True}),
+        }
+                  
+
+    

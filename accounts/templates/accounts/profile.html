@@ -17,10 +17,39 @@
       width: 100%;
       justify-content: center;
     }
+
+    @font-face {
+      font-family: 'establishRetrosansOTF';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+  
+    @font-face {
+      font-family: 'HANAMDAUM';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/HANAMDAUM.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+    }
+  
+    @font-face {
+      font-family: 'TheJamsil5Bold';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+      font-weight: 50;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'S-CoreDream-3Light';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
   </style>
 {% endblock style%}
 {% block title %}
-  my page
+  MyPage
+
 {% endblock title %}
 {% block content %}
   <img src="{% static '/img/profile_bg.jpg' %}" alt="profil_background_image" style="position: absolute; opacity: 0.33; z-index: -3;" height="3000">
@@ -41,7 +70,7 @@
         <div class="row justify-content-start align-items-center my-1">
 
           <!-- 사용자 이름 -->
-          <h1 class="col-4">{{ person.username }}</h1>
+          <h1 class="col-4" style="font-family: 'TheJamsil5Bold';">{{ person.username }}</h1>
 
           <!-- 팔로우 버튼 / 회원정보 수정 버튼 -->
           <div class="col-8">
@@ -94,16 +123,16 @@
         <!-- 사용자 정보 -->
         <div class="mt-3">
           <div class="col info">
-            <h3>
+            <h3 style="font-family: 'S-CoreDream-3Light';">
               {{ person.nickname }}
             </h3>
           </div>
-          <div class="col info">
+          <div class="col info" style="font-family: 'S-CoreDream-3Light';">
             <h4>
               {{ person.email }}
             </h4>
           </div>
-          <div class="col info">
+          <div class="col info" style="font-family: 'S-CoreDream-3Light';">
             <h5>
               {% if person.status_message %}
                 {{ person.status_message }}
@@ -124,13 +153,13 @@
     <div class="m-1 col">
       <!-- 사용자가 작성한 게시글 -->
       <div class="col">
-        <h1 class="mt-3 px-5 py-3">게시글</h1>
+        <h1 class="mt-3 px-5 py-3" style="font-family: 'TheJamsil5Bold';">게시글</h1>
         {% for post in person.post_set.all %}
-          <div class="card m-4" style="max-width: 90%;">
+          <div class="card m-4" style="font-family: 'S-CoreDream-3Light'; max-width: 90%;">
             <div class="row g-0">
               <div class="col-2">
                 {% if post.post_image %}
-                  <img src="{{ post.post_image.url }}" alt="post_image" class="card-img rounded-start">
+                  <img src="{{ post.post_images.first.image.url }}" alt="post_image" class="card-img rounded-start">
                 {% else %}
                   <img src="{% static 'no_image.jpg' %}" alt="no_image" class="card-img rounded-start">
                 {% endif %}
@@ -160,14 +189,14 @@
     <div class="m-1 col">
       <!-- 사용자가 좋아요 한 시설 -->
       <div class="col">
-        <h1 class="mt-3 px-5 py-3">좋아요</h1>
+        <h1 class="mt-3 px-5 py-3" style="font-family: 'TheJamsil5Bold';">좋아요</h1>
         {% for post in person.like_posts.all %}
           <a href="{% url 'posts:detail' post.pk %}" style="text-decoration: none;">
-            <div class="card m-4" style="max-width: 90%;">
+            <div class="card m-4" style="max-width: 90%; font-family: 'S-CoreDream-3Light'">
               <div class="row g-0">
                 <div class="col-2">
                   {% if post.post_image %}
-                    <img src="{{ post.post_image.url }}" alt="post_image" class="card-img rounded-start">
+                    <img src="{{ post.post_images.first.image.url }}" alt="post_image" class="card-img rounded-start">
                   {% else %}
                     <img src="{% static 'no_image.jpg' %}" alt="no_image" class="card-img rounded-start">
                   {% endif %}
@@ -196,9 +225,9 @@
     <div class="m-1 col">
       <!-- 사용자가 작성한 리뷰 -->
       <div class="col">
-        <h1 class="mt-3 px-5 py-3">리뷰</h1>
+        <h1 class="mt-3 px-5 py-3" style="font-family: 'TheJamsil5Bold';">리뷰</h1>
         {% for revieww in reviews_set.all %}
-          <div class="card m-4" style="max-width: 90%;">
+          <div class="card m-4" style="max-width: 90%; font-family: 'S-CoreDream-3Light'">
             <div class="row g-0">
               <div class="col-2">
                 {% if revieww.post_image %}
@@ -211,7 +240,7 @@
                 <div class="card-body p-3">
                   <h2 class="card-title">
                     <a href="{% url 'posts:detail' review.post.pk %}" style="text-decoration: none;">
-                      {{ revieww.review }}
+                      {{ review.review }}
                     </a>
                   </h2>
                   <p class="card-text">{{ post.address }}</p>

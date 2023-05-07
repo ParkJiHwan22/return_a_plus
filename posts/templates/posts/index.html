@@ -102,28 +102,37 @@
     backdrop-filter: blur(10px);
   }
 
-  .overlay-bottom {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5%;
-    margin-top: 66.6%;
-    backdrop-filter: blur(10px);
+  .animated-text {
+    animation: fadeIn 1s ease-in-out;
+    animation-fill-mode: forwards;
+    opacity: 0;
   }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .carousel-item {
+    object-fit: cover;
+  }
+
 {% endblock style %}
 
 {% block title %}onClickTravel{% endblock title %}
 
 {% block content %}
-  <div class="mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:90%;">
+  <div class="mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:100%;">
     <div class="overlay-top"></div>
-    <img class="d-flex justify-content-center" src="{% static '/img/profile_bg.jpg' %}" alt="profil_background_image">
-    <div class="overlay-bottom"></div>
+    <img class="d-flex justify-content-center" style="max-width: 100%;" src="{% static '/img/profile_bg.jpg' %}" alt="profil_background_image">
   </div>
   <div class="row ms-5 mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:100%;">
-    <div class="col-9"></div>
-    <div class="col-3 d-flex justify-content-center align-items-center">
+    <div class="col-8" style="max-width: 100%;"></div>
+    <div class="col-1 d-flex justify-content-center align-items-center" style="max-width: 100%;">
       <div class="ms-5 mt-3 button btn btn-success">
         <a style="color:white; text-decoration-line: none; font-family: 'TheJamsil5Bold';" href="{% url 'posts:create' %}">Create</a>
       </div>
@@ -131,8 +140,8 @@
     <div class="position-absolute text-center text-white" style="top: 80%; left: 50%; transform: translate(-50%, -50%);">
       <h1 style="font-family: 'establishRetrosansOTF'; font-size:500%;">여행을 나답게,</h1>
       <h1 style="font-family: 'establishRetrosansOTF'; font-size:500%;">꿈꾸는 대로 펼치다.</h1>
-      <p style="font-family: 'TheJamsil5Bold'; font-size:150%;">onClickTravel과 함께 국내 여행지 후기를 한눈에 비교해보세요!</p>
-      <p style="font-family: 'TheJamsil5Bold'; font-size:110%;">가족, 연인, 아이와 함께 가기 좋은 여행지 후기부터, 힐링, 먹거리, 자연 경관, 레포츠, 축제 및 이벤트 정보까지 제공하는 맞춤형 서비스</p>
+      <p class="animated-text" style="font-family: 'TheJamsil5Bold'; font-size:150%;">onClickTravel과 함께 국내 여행지 후기를 한눈에 비교해보세요!</p>
+      <p class="animated-text" style="font-family: 'TheJamsil5Bold'; font-size:110%;">가족, 연인, 아이와 함께 가기 좋은 여행지 후기부터, 힐링, 먹거리, 자연 경관, 레포츠, 축제 및 이벤트 정보까지 제공하는 맞춤형 서비스</p>
     </div>
   </div>
   <div class="container-fluid d-flex justify-content-center">
@@ -141,8 +150,8 @@
       <div class='col-6 col-sm-6 col-md-4 col-lg-4 col-xxl-2 d-flex justify-content-center'>
         <div class="card m-2" style="width:15rem; height:23rem">
           <a class="d-flex justify-content-center" href="{% url 'posts:detail' post.pk %}">
-            {% if post.post_image %}
-              <img style="width: 14rem; height: 11rem; max-width: 100%;max-height: 100%;"class='mt-3 mb-3 d-flex justify-content-center' src=" {{post.post_image.url}} " alt="movie_img">
+            {% if post.post_images.first.image.url %}
+              <img style="width: 14rem; height: 11rem; max-width: 100%;max-height: 100%;"class='mt-3 mb-3 d-flex justify-content-center' src=" {{ post.post_images.first.image.url }} " alt="movie_img">
             {% else %}
               <img style="width: 14rem; height: 11rem; max-width: 100%;max-height: 100%;" class='mt-3 mb-3 d-flex justify-content-center' src="{% static 'no_image.jpg' %}" alt="no_img">
             {% endif %}
@@ -155,11 +164,11 @@
             <p class="card-text m-0 text" style="font-size:small">{{ post.user.username }}님의 후기</p>
             <p class="card-text m-0 text" style="font-size:small">{{ post.user.title }}</p>
             <div class="mb-2">
-              <form action="{% url 'posts:like' post_pk=post.pk %}" method="POST">
+              <form id= "likeform" data-post-id="{{ post.pk }}">
                 {% csrf_token %}
                 {% if request.user in post.like_users.all %}
                     <div class="mt-2 d-flex justify-content-between">
-                      <input class="d-flex justify-content-center btn btn-outline-success" type="submit" value="Cancel">
+                      <input class="d-flex justify-content-center btn btn-outline-success" type="submit" value="Cancel" id="like-{{post.pk}}">
                       <div class="text-center align-self-center">
                         💚
                         {{ post.like_users.count }}
@@ -167,7 +176,7 @@
                     </div>
                   {% else %}
                     <div class="mt-2 d-flex justify-content-between">
-                      <input class="d-flex justify-content-center btn btn-success" type="submit" value="Like">
+                      <input class="d-flex justify-content-center btn btn-success" type="submit" value="Like" id="like-{{post.pk}}">
                       <div class="text-center align-self-center">
                         💚
                         {{ post.like_users.count }}
@@ -182,7 +191,12 @@
       {% endfor %}
     </div>
   </div>
-  <div class="mt-5 mb-5 container-fluid d-flex justify-content-evenly" style="width:100%; max-width: 100%;max-height: 100%; font-family: 'TheJamsil5Bold';">
+  <div class="mt-3" style="height:50px;"><div class="mt-3"><div></div></div></div>
+  <div class="mt-5 mb-5 d-flex justify-content-center align-items-center" style="width:100%;">
+    <img class="d-flex justify-content-center" style="width:100%; height:auto;" src="{% static '/img/index_bg2.jpg' %}" alt="index_background_image">
+  </div>
+  <div class="mb-5" style="height:50px;"><div class="mb-5"><div></div></div></div>
+  <div class="mt-5 mb-5 container-fluid d-flex justify-content-evenly" style="width:100%; height:34rem; max-width: 100%;max-height: 100%; font-family: 'TheJamsil5Bold';">
     {% if posts_with_images %}
     <div class="card d-flex justify-content-center" style="width: 24rem; height:34rem; max-width: 100%;max-height: 100%;">
       <p class="mt-5 mb-3 card-text d-flex justify-content-center" style="color:#198754; font-size:130%">현재 HOT한 관광도시 분포</p>
@@ -190,38 +204,48 @@
         <canvas id="myChart"></canvas>
       </div>
     </div>
-    {% endif %}
-    <div id="carouselExampleIndicators" class="ms-4 carousel slide d-flex justify-content-center" data-ride="carousel" data-interval="5000" style="width: 54rem; height:34rem;">
-      {% comment %} <ol class="carousel-indicators">
-        {% for post in posts_with_images %}
-          <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %} class="active"{% endif %}></li>
-        {% endfor %}
-      </ol> {% endcomment %}
-      <div class="carousel-inner">
-        {% for post in posts_with_images %}
-          <div class="carousel-item {% if forloop.first %} active {% endif %}">
-            <img style="width: 34rem; height: 34rem;" src="{{ post.post_image.url }}" class="d-block w-100 d-flex justify-content-center" alt="...">
-          </div>
-        {% endfor %}
+    <div class="card d-flex justify-content-center" style="width: 24rem; height:34rem; max-width: 100%;max-height: 100%;">
+      <p class="mt-5 mb-3 card-text d-flex justify-content-center" style="color:#198754; font-size:130%">HOT Place 한눈에 보기</p>
+      <div class="ms-4 mt-3 mb-5 d-flex justify-content-center align-items-center" style="width:20rem; height:20rem; max-width: 100%;max-height: 100%;">
+        <ul class="d-flex justify-content-center list-group list-group-flush">
+          {% for post_name in hot_post_names %}
+          <li class="list-group-item d-flex justify-content-center" style="padding-top:15%; height:70px;">- {{ post_name }}</li>
+          {% endfor %}
+        </ul>
       </div>
-      <a style="color:#198754; text-decoration-line: none;" class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span style="color:#198754" class="text-success carousel-control-prev-icon" aria-hidden="true"></span>
-      </a>
-      <a style="color:#198754; text-decoration-line: none;" class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span style="color:#198754" class="text-success carousel-control-next-icon" aria-hidden="true"></span>
-      </a>
     </div>
-  </div>
-{% endblock content %}
+    {% endif %}
 
-{% block script %}
+    <div class="card d-flex justify-content-center" style="max-width:50rem; min-width:50rem; height: 34rem;">
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="5000" style="height: 100%;">
+        <div class="carousel-inner" style="height: 100%;">
+          {% for post in posts_with_images %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}" style="height: 100%;">
+            <img src="{{ post.post_image.url }}" class="d-block w-100 h-100 object-fit-cover" alt="..." style="height: 100%;">
+
+          </div>
+          {% endfor %}
+        </div>
+        <a style="color:#198754; text-decoration-line: none;" class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span style="color:#198754" class="text-success carousel-control-prev-icon"></span>
+        </a>
+        <a style="color:#198754; text-decoration-line: none;" class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span style="color:#198754" class="text-success carousel-control-next-icon"></span>
+        </a>
+      </div>
+    </div>    
+  </div>
+  {% endblock content %}
+  
+  {% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'js/index.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="{% static 'js/base.js' %}"></script>
 <script>
   const ratios = {{ratios|safe}};
-  const colorDict = {{color_dict|safe}};  // 수정된 부분
+  const colorDict = {{color_dict|safe}};
   const labels = Array.from(new Set([{% for post in posts %}'{{ post.city }}',{% endfor %}]));
-  const colorList = labels.map(label => colorDict[label]);  // 수정된 부분
+  const colorList = labels.map(label => colorDict[label]);
   const canvas = document.getElementById('myChart');
   const ctx = canvas.getContext('2d');
   const chart = new Chart(ctx, {
@@ -242,6 +266,19 @@
               position: 'bottom'
           }
       }
+  });
+</script>
+<script>
+  $(document).ready(function() {
+    // 이전 버튼 클릭 시
+    $('.carousel-control-prev').click(function() {
+      $('#carouselExampleIndicators').carousel('prev');
+    });
+  
+    // 다음 버튼 클릭 시
+    $('.carousel-control-next').click(function() {
+      $('#carouselExampleIndicators').carousel('next');
+    });
   });
 </script>
 {% endblock script %}
