@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load account socialaccount %}
+
+{% block title %}
+  Naver Login
+{% endblock title %}
+
+{% block style %}{% endblock style %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="mt-5 text-center" style="font-family: 'S-CoreDream-3Light';">로그인</h1>
+    <hr>
+    <div class="row mt-5 d-flex justify-content-center">
+      <div class="col align-self-center text-center " style="max-width: 25rem;">
+        {% get_providers as socialaccount_providers %}
+        <form action="{% url 'accounts:login' %}" method="POST">
+          {% csrf_token %}
+          <div class="mb-2" style="font-family: 'S-CoreDream-3Light';">
+            <label class="ps-3" for="{{ form.username_id_for_label }}">아이디</label>
+            {{ form.username }}
+          </div>
+          <div style="font-family: 'S-CoreDream-3Light';">
+            <label for="{{ form.password_id_for_label }}">비밀번호</label>
+            {{ form.password }}
+          </div>
+          <div class="mt-3 d-flex justify-content-between">
+            <input type="submit" value="로그인" class="btn btn-success fw-bold" style="font-family: 'TheJamsil5Bold';width:100%; padding:10px; font-size:22px;">
+          </div>
+          {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+          {% endif %}
+        </form>
+        {% if socialaccount_providers %}
+
+          <div class="my-2">
+            <a href="/accounts/naver/login/?process=login&{{ redirect_field_name }}={{ redirect_field_value }}" role="button" class="btn btn btn-light my-1" style="display:block">
+              <i class="far fa-naver"></i>
+              Login with Naver</a>
+            <a href="/accounts/google/login/?process=login&{{ redirect_field_name }}={{ redirect_field_value }}" role="button" class="btn btn btn-light my-1" style="display:block">
+              <i class="fab fa-google"></i>
+              Login with Google</a>
+          </div>
+          {% include "socialaccount/snippets/login_extra.html" %}
+
+        {% else %}
+          <p>{% blocktrans %}If you have not created an account yet, then please
+            <a href="{{ signup_url }}">sign up</a>
+            first.{% endblocktrans %}</p>
+        {% endif %}
+
+      </div>
+    </div>
+    <div style="width:100%; height:184px">
+      <div></div>
+    </div>
+  </div>
+{% endblock content %}
