@@ -4,16 +4,14 @@ form.forEach( (likeform) => {
   likeform.addEventListener('submit', function (event) {
     event.preventDefault()
     const postId = event.target.dataset.postId
-    console.log(likeform)
     axios({
       method: 'POST',
-      url: `/${postId}/like/`,
+      url: `http://127.0.0.1:8000/${postId}/like/`,
       headers: {'X-CSRFToken':csrftoken,}
     })
     .then((response) => {
+      const likeBtn = document.querySelector(`#like-${postId}`)
       const islikeusers = response.data.is_like_users
-      const likeBtn = document.querySelector('#likeform > div > input[type=submit]')
-      console.log(likeBtn)
       if (islikeusers === true) {
         likeBtn.value = "Cancel"
       } else {
@@ -22,23 +20,3 @@ form.forEach( (likeform) => {
     })
   })
 })
-// form.addEventListener('submit', function (event) {
-//   event.preventDefault()
-//   const postId = event.target.dataset.postId
-//   axios({
-//     method: 'POST',
-//     url: `/${postId}/like/`,
-//     headers: {'X-CSRFToken':csrftoken,}
-//   })
-//   .then((response) => {
-//     const islikeusers = response.data.is_like_users
-//     const likeBtn = document.querySelector('#like-form > div > input[type=submit]')
-//     console.log(likeBtn)
-//     console.log(likeBtn)
-//     if (islikeusers === true) {
-//       likeBtn.value = "Cancel"
-//     } else {
-//       likeBtn.value = "Like"
-//     }
-//   })
-// })

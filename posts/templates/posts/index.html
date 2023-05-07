@@ -155,11 +155,11 @@
             <p class="card-text m-0 text" style="font-size:small">{{ post.user.username }}님의 후기</p>
             <p class="card-text m-0 text" style="font-size:small">{{ post.user.title }}</p>
             <div class="mb-2">
-              <form id= "likeform" data-post-id="{{ post.pk }}>
+              <form id= "likeform" data-post-id="{{ post.pk }}">
                 {% csrf_token %}
                 {% if request.user in post.like_users.all %}
                     <div class="mt-2 d-flex justify-content-between">
-                      <input class="d-flex justify-content-center btn btn-outline-success" type="submit" value="Cancel">
+                      <input class="d-flex justify-content-center btn btn-outline-success" type="submit" value="Cancel" id="like-{{post.pk}}">
                       <div class="text-center align-self-center">
                         💚
                         {{ post.like_users.count }}
@@ -167,7 +167,7 @@
                     </div>
                   {% else %}
                     <div class="mt-2 d-flex justify-content-between">
-                      <input class="d-flex justify-content-center btn btn-success" type="submit" value="Like">
+                      <input class="d-flex justify-content-center btn btn-success" type="submit" value="Like" id="like-{{post.pk}}">
                       <div class="text-center align-self-center">
                         💚
                         {{ post.like_users.count }}

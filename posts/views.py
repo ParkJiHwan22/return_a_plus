@@ -176,20 +176,3 @@ def like(request, post_pk):
 
 def Our_Service(request):
     return render(request, 'posts/Our_Service.html')
-
-# @login_required
-# def like (request, post_pk):
-#     post =Post.objects.get(pk=post_pk)
-
-#     if post != request.user:
-#         if post.like_users.filter(pk=request.user.pk).exists():
-#             post.like_users.remove(request.user)
-#             is_like_users = False
-#         else:
-#             post.like_users.add(request.user)
-#             is_like_users = True
-#         context = {
-#             'is_like_users':is_like_users
-#         }
-#         return JsonResponse(context,)
-#     return redirect('posts:index')
