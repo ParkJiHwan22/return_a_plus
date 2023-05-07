@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from accounts.models import User
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 class Post(models.Model):
     name = models.CharField(max_length=140)
@@ -27,6 +29,25 @@ class Post(models.Model):
     checkbox10 = models.BooleanField(default=False)
 
 
+    def __str__(self):
+        return self.name
+
+
+class PostImage(models.Model):
+    def default_image():
+        return "default_image_path.jpg"
+    post = models.ForeignKey(to=Post, on_delete=models.CASCADE, related_name='post_images')
+    image = ProcessedImageField(
+        upload_to='posts/images',
+        processors=[ResizeToFill(900, 900)],
+        format='JPEG',
+        options={'quality': 90},
+        default=default_image,
+    )
+    
+    def __str__(self):
+        return f'{self.post.name} - {self.id}'
+
 class Review(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -39,3 +60,18 @@ class Review(models.Model):
     review_image = models.ImageField(blank=True, upload_to='review_images/')
     created_at = models.DateTimeField(auto_now_add=True)
     
+
+    
+class ReviewImage(models.Model):
+    def default_image():
+        return "default_image_path.jpg"
+    review = models.ForeignKey(to='posts.Review', on_delete=models.CASCADE, related_name='review_images')
+    image = ProcessedImageField(
+        upload_to='reviews/images',
+        processors=[ResizeToFill(600, 600)],
+        format='JPEG',
+        options={'quality': 90},
+        default=default_image,
+        blank=True,
+        null=True,
+    )

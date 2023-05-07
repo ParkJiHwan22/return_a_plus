@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Post, Review
+from .models import Post, Review, PostImage, ReviewImage
 from accounts.models import User
-from .forms import PostForm, ReviewForm
+from .forms import PostForm, ReviewForm, PostForm, PostImageForm, ReviewImageForm
 from django.db.models import Count
 import googlemaps
 from django.contrib.auth import get_user_model
+from django.http import JsonResponse
 
 colors = [
     'rgba(255, 99, 132, 0.7)',
@@ -73,15 +74,21 @@ def index(request):
 def create(request):
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
+        imageForm = PostImageForm(request.POST, request.FILES)
+        if form.is_valid() and imageForm.is_valid():
             post = form.save(commit=False)
             post.user = request.user
             post.save()
+            
+            for image in request.FILES.getlist("image"):
+                PostImage.objects.create(post=post, image=image)
             return redirect('posts:index')
     else:
         form = PostForm()
+        imageForm = PostImageForm()
     context = {
         'form':form,
+        'imageForm': imageForm,
     }
     return render(request, 'posts/create.html', context)
 
@@ -91,17 +98,22 @@ def detail(request, posts_pk):
     reviews = post.review_set.all()
     person = User.objects.get(username=request.user)
     review_form = ReviewForm(request.POST, request.FILES)
+    imageForm = ReviewImageForm(request.POST, request.FILES) # 댓글 다중 이미지
+    post_images = PostImage.objects.filter(post=post) # 게시글 다중 이미지
+    # review_images = ReviewImage.objects.filter(review__post=post) # 댓글 다중 이미지
+    
     post.views += 1
     post.save()
     my_key = "AIzaSyAd9M3rcxiyzS9IxbErxaMv45mw94kQFxY"
     maps = googlemaps.Client(key=my_key)
     places = [post.address]
-    print(places)
+    # print(places)
     geo_location = maps.geocode(places)[0].get('geometry')
     location = geo_location['location']
-    print(location)
     context = {
         'post': post,
+        "post_images": post_images,
+        'imageForm': imageForm,
         'review_form': review_form,
         'reviews': reviews,
         'location':location,
@@ -140,17 +152,31 @@ def update(request, posts_pk):
 @login_required
 def review_create(request, posts_pk):
     post = Post.objects.get(pk=posts_pk)
-    review_form = ReviewForm(request.POST, request.FILES)
-    if review_form.is_valid():
-        review = review_form.save(commit=False)
-        review.user = request.user
-        review.post = post
-        review.save()
-        return redirect('posts:detail', post.pk)
+    post_form = PostForm(request.POST)
+    # print(post, post_form)
+    if request.method == 'POST':
+        review_form = ReviewForm(request.POST)
+        imageForm = ReviewImageForm(request.POST, request.FILES)
+        if review_form.is_valid() and imageForm.is_valid():
+            review = review_form.save(commit=False)
+            review.post = post
+            review.user = request.user
+            review.save()
+            
+            for image in request.FILES.getlist("image"):
+                ReviewImage.objects.create(review=review, image=image)
+            return redirect('posts:detail', post.pk)
+    
+    else:
+        review_form = ReviewForm()
+        imageForm = ReviewImageForm()
+        
     context = {
         'post': post,
         'review_form': review_form,
+        'imageForm': imageForm,
     }
+
     return render(request, 'posts/detail.html', context)
 
 
@@ -166,8 +192,14 @@ def like(request, post_pk):
     post = Post.objects.get(pk=post_pk)
     if request.user in post.like_users.all():
         post.like_users.remove(request.user)
+        is_like_users = False
     else:
         post.like_users.add(request.user)
+        is_like_users = True
+        context = {
+            'is_like_users':is_like_users
+        }
+        return JsonResponse(context,)
     return redirect('posts:index')
 
 

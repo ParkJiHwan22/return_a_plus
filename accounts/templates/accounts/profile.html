@@ -140,7 +140,7 @@
             <div class="row g-0" style="overflow: hidden;">
               <div class="col-2" style="overflow: hidden;">
                 {% if post.post_image %}
-                  <img src="{{ post.post_image.url }}" alt="post_image" style="overflow: hidden; object-fit: cover; width: 100%; height:100%; max-width:100%; max-height:100%;" class="card-img rounded-start" onload="resizeImage(this)">
+                  <img src="{{ post.post_image.url }}" alt="post_image" class="card-img rounded-start">
                 {% else %}
                   <img src="{% static 'no_image.jpg' %}" alt="no_image" style="overflow: hidden; object-fit: cover; width: 100%; height:100%; max-width:100%; max-height:100%;" class="card-img rounded-start">
                 {% endif %}
@@ -177,7 +177,7 @@
               <div class="row g-0">
                 <div class="col-2">
                   {% if post.post_image %}
-                    <img src="{{ post.post_image.url }}" alt="post_image" style="overflow: hidden; object-fit: cover; width: 100%; height:100%; max-width:100%; max-height:100%;" class="card-img rounded-start">
+                    <img src="{{ post.post_image.url }}" alt="post_image" class="card-img rounded-start">
                   {% else %}
                     <img src="{% static 'no_image.jpg' %}" alt="no_image" style="overflow: hidden; object-fit: cover; width: 100%; height:100%; max-width:100%; max-height:100%;" class="card-img rounded-start">
                   {% endif %}
