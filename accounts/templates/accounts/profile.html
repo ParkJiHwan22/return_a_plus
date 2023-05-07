@@ -158,7 +158,7 @@
             <div class="row g-0">
               <div class="col-2">
                 {% if post.post_image %}
-                  <img src="{{ post.post_image.url }}" alt="post_image" class="card-img rounded-start">
+                  <img src="{{ post.post_images.first.image.url }}" alt="post_image" class="card-img rounded-start">
                 {% else %}
                   <img src="{% static 'no_image.jpg' %}" alt="no_image" class="card-img rounded-start">
                 {% endif %}
@@ -195,7 +195,7 @@
               <div class="row g-0">
                 <div class="col-2">
                   {% if post.post_image %}
-                    <img src="{{ post.post_image.url }}" alt="post_image" class="card-img rounded-start">
+                    <img src="{{ post.post_images.first.image.url }}" alt="post_image" class="card-img rounded-start">
                   {% else %}
                     <img src="{% static 'no_image.jpg' %}" alt="no_image" class="card-img rounded-start">
                   {% endif %}

@@ -1,6 +1,9 @@
+
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
+import imagekit.models.fields
+import posts.models
 
 
 class Migration(migrations.Migration):
@@ -52,6 +55,22 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='posts.post')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='ReviewImage',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('image', imagekit.models.fields.ProcessedImageField(blank=True, default=posts.models.ReviewImage.default_image, null=True, upload_to='reviews/images')),
+                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='review_images', to='posts.review')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='PostImage',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('image', imagekit.models.fields.ProcessedImageField(default=posts.models.PostImage.default_image, upload_to='posts/images')),
+                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='post_images', to='posts.post')),
             ],
         ),
     ]
