@@ -37,7 +37,7 @@
     <h1 class="mt-5 text-center my-3" style="font-family: 'S-CoreDream-3Light';">회원정보 입력</h1>
     <hr>
     <div class='d-flex justify-content-center box'>
-      <form action="{% url 'accounts:signup' %}" method="POST" enctype="multipart/form-data">
+      <form action="{% url 'accounts:signup' %}" method="POST" enctype="multipart/form-data" style="font-family: 'S-CoreDream-3Light';">
         {% csrf_token %}
         <div class="signup-size">
           {{ form.as_p }}
@@ -48,7 +48,7 @@
             숫자로만 이루어진 비밀번호는 사용할 수 없습니다.
           </p>
         </div>
-        <input type="submit" value='회원 가입' class="btn btn-success fw-bold  mb-5" style="font-family: 'TheJamsil5Bold'; width:100%; padding:15px; font-size: 22px;">
+        <input type="submit" value='회원 가입' class="btn btn-success fw-bold  mb-5" style="font-family: 'S-CoreDream-3Light'; width:100%; padding:15px; font-size: 22px;">
       </div>
     </form>
   </div>
